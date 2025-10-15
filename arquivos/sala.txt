@@ -1,0 +1,9 @@
+101/Sala Imax/200/3D/Sim  
+102/Sala Lux/120/2D/Sim  
+103/Sala Premium/150/3D/Não  
+104/Sala Clássica/80/2D/Sim  
+105/Sala Júnior/60/Infantil/Sim  
+106/Sala Noturna/100/2D/Não  
+107/Sala Gold/180/3D/Sim  
+108/Sala Popcorn/90/2D/Não  
+109/Sala Family/70/Infantil/Sim  
