@@ -76,12 +76,13 @@ def excluir(sala_dict):
     file.close()
 
     i = 0
-    for linha in content:
-        elementos = linha.split("/")
+    excluido = False
+    while i < len(content) and not excluido:
+        elementos = content[i].split("/")
         print(elementos[0])
         if elementos[0] == chave:
             del content[i]
-            break
+            excluido = True
         i += 1
     
     # Atualiza o arquivo e depois o fecha
