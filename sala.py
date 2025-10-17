@@ -13,22 +13,83 @@ def menu():
             print("Escolha inválida")
         else:
             return escolha
-        
+ 
 def listar_todos(sala_dict):
     print(sala_dict)
 
 def listar_especifico(sala_dict):
-    print("listar_especifico")
+    codigo = input("Digite o codigo da sala que deseja buscar: ")
+    if codigo in sala_dict:
+        return sala_dict[codigo]
+    else:
+        print("Chave não encontrada.")
+        return None
 
 def incluir(sala_dict):
-    print("incluir")
+    # Garante a entrada de um código único
+    codigo = input("codigo: ")
+    while codigo in sala_dict.keys():
+        codigo = input("código já em uso, insira outro: ")
+    
+    # Obtém todos os outros atributos
+    nome = input("Nome: ")
+    duracao = input("Capacidade: ")
+    classificacao = input("Tipo de exibição: ")
+    disponivel = input("Acessível: ")
+
+    # Formatar o conteúdo na estrutura do arquivo
+    conteudo = "\n" + codigo + "/" + nome + "/" + duracao + "/" + classificacao + "/" + disponivel
+
+    # Escrever no arquivo
+    arquivo = open("arquivos/sala.txt", "a")
+    arquivo.write(conteudo)
+    arquivo.close()
+
+    # Adicionar ao dicionário que está em memória
+    sala_dict[codigo] = [nome, duracao, classificacao, disponivel]
 
 def alterar(sala_dict):
-    print("alterar")
+    codigo = input("Digite o código do elemento que deseja alterar: ")
+
+    if codigo not in sala_dict:
+        print("Código não encontrado.")
+        return
+
+    print(f"Dados atuais do '{codigo}': {listar_especifico(sala_dict)}")
+
+    posicao = 0
+    while posicao not in [1, 2, 3]:
+        posicao = int(input("Qual elemento deseja mudar? (1, 2 ou 3): "))
+
+    novo_valor = input("Digite o novo valor: ")
+    sala_dict[codigo][posicao - 1] = novo_valor
+
+    print(f"Valor atualizado com sucesso!\nNovo conteúdo de '{codigo}': {sala_dict[codigo]}")
 
 def excluir(sala_dict):
-    print("excluir")
+    chave = input("Digite a chave do elemento que deseja alterar: ")
+    while chave not in sala_dict.keys():
+        chave = input("Chave não encontrada, tente novamente: ")
 
+    file = open("arquivos/sala.txt", "+r")
+    content = file.readlines()
+    file.close()
+
+    i = 0
+    for linha in content:
+        elementos = linha.split("/")
+        print(elementos[0])
+        if elementos[0] == chave:
+            del content[i]
+            break
+        i += 1
+    
+    # Atualiza o arquivo e depois o fecha
+    file = open("arquivos/sala.txt", "w")
+    file.writelines(content)
+    file.close()
+    
+    
 def main():
     # Abre o arquivo, salva seu conteúdo divido por linhas em uma variável local e depois fecha arquivo
     arquivo = open("arquivos/sala.txt")
@@ -39,6 +100,7 @@ def main():
     sala_dict = {}
     for linha in conteudo:
         elementos = linha.split("/")
+        print(elementos)
         sala_dict[elementos[0]] = [elementos[1], elementos[2]]
 
     escolha = 0
