@@ -1,5 +1,5 @@
 def menu():
-    # Força uma entrada válida de "escolha"
+    # Retorna a escolha de qual ação o usuário deseja realizar baseado em opções numeradas
     escolha = 0
     while escolha > 5 or escolha < 1:
         print("1- Listar todos")
@@ -15,12 +15,16 @@ def menu():
             return escolha
  
 def listar_todos(sala_dict):
+    # Exibe todas as salas sem distinção
     print(sala_dict)
 
 def listar_especifico(sala_dict):
+    # Coleta o código que o usuário deseja exibir as informações sobre
     codigo = input("Digite o codigo da sala que deseja buscar: ")
+
+    # Exibe caso o codigo realmente existe no dicionário
     if codigo in sala_dict:
-        return sala_dict[codigo]
+        print(sala_dict[codigo]) 
     else:
         print("Chave não encontrada.")
         return None
@@ -37,15 +41,15 @@ def incluir(sala_dict):
     classificacao = input("Tipo de exibição: ")
     disponivel = input("Acessível: ")
 
-    # Formatar o conteúdo na estrutura do arquivo
+    # Formata o conteúdo na estrutura do arquivo
     conteudo = "\n" + codigo + "/" + nome + "/" + duracao + "/" + classificacao + "/" + disponivel
 
-    # Escrever no arquivo
+    # Escreve no arquivo
     arquivo = open("arquivos/sala.txt", "a")
     arquivo.write(conteudo)
     arquivo.close()
 
-    # Adicionar ao dicionário que está em memória
+    # Adiciona ao dicionário que está em memória
     sala_dict[codigo] = [nome, duracao, classificacao, disponivel]
 
 def alterar(sala_dict):
