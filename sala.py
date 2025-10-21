@@ -2,7 +2,8 @@ def menu():
     # Força uma entrada válida para escolha
     escolha = 0
     while escolha > 6 or escolha < 1:
-        print("\n1- Listar todos")
+        print("\nSubmenu de salas:")
+        print("1- Listar todos")
         print("2- Listar um elemento específico")
         print("3- Incluir (sem repetição)")
         print("4- Alterar um elemento")
@@ -10,7 +11,7 @@ def menu():
         print("6- Sair")
         escolha = int(input("\nEscolha: "))
 
-        if escolha > 5 or escolha < 1:
+        if escolha > 6 or escolha < 1:
             print("Escolha inválida")
         else:
             return escolha
@@ -22,7 +23,7 @@ def listar_todos(sala_dict):
     print()
 
 def listar_especifico(sala_dict, codigo = None):
-    # Coleta o código que o usuário deseja exibir caso já não tenho sido passado por parâmetro (funcao alterar)
+    # Coleta o código que o usuário deseja exibir caso já não tenho sido passado por parâmetro (funcão alterar)
     if codigo == None:
         codigo = input("Código: ")
 
@@ -57,10 +58,18 @@ def incluir(sala_dict):
     build_dict(sala_dict)
 
 def alterar(sala_dict):
+    # Força uma entrada válida de código para continuar com a operação
     codigo = input("Código: ")
-    codigo = listar_especifico(sala_dict, codigo)
+    if codigo in sala_dict:
+        listar_especifico(sala_dict, codigo)
+    else:
+        print("Código não encontrado")
+        return
 
+    # Declara dicionário referenciando a ordem dos dados (posicao) e o que eles se referem no sala_dict
     posicoes_dict = {1: "Nome", 2: "Capacidade", 3: "Tipo de exibição", 4: "Acessível"}
+
+    # Força uma entrada válida de qual dado o usuário quer alterar (posicao)
     posicao = 0
     while posicao not in posicoes_dict.keys():
         posicao = int(input(f"\nQual dado deseja mudar? \n1- {posicoes_dict[1]}\n2- {posicoes_dict[2]}\n3- {posicoes_dict[3]}\n4- {posicoes_dict[4]}\nEscolha: "))
@@ -68,23 +77,47 @@ def alterar(sala_dict):
         if posicao not in posicoes_dict.keys():
             print("Posição inválida!")
 
+    # Coleta o valor que vai ser substituir o anterior
     novo_valor = input("Digite o novo valor: ")
+    
+    # Verifica se o usuário realmente deseja confirmar a operação
     confirmacao = ""
-    while confirmacao.lower() != "sim" and confirmacao.lower() != "nao" and confirmacao.lower() != "nao":
+    while confirmacao.lower() != "sim" and confirmacao.lower() != "nao":
         confirmacao = input(f"{sala_dict[codigo][posicao-1]} -> {novo_valor} \nConfirma essa troca? (entre apenas 'sim' ou 'nao'): ")
     sala_dict[codigo][posicao - 1] = novo_valor
 
-    print(f"Valor atualizado com sucesso!")
+    # Outputs de acordo com a resposta
+    if confirmacao == "sim":
+        print(f"Valor atualizado com sucesso!")
+    else:
+        print("operação cancelada!")
 
 def excluir(sala_dict):
-    codigo = input("Digite a chave do elemento que deseja alterar: ")
-    while codigo not in sala_dict.keys():
-        codigo = input("Chave não encontrada, tente novamente: ")
+    # Força uma entrada válida de código para continuar com a operação
+    codigo = input("Código: ")
+    if codigo not in sala_dict.keys():
+        codigo = input("Código não encontrado")
+        return
 
+    # Verifica se o usuário realmente deseja confirmar a operação
+    confirmacao = ""
+    while confirmacao.lower() != "sim" and confirmacao.lower() != "nao":
+        confirmacao = input(f"Confirma a exclusao dos elementos de código {codigo}? (entre apenas 'sim' ou 'nao'): ")
+        
+        if confirmacao.lower() != "sim" and confirmacao.lower() != "nao":
+            print("resposta inválida")
+
+    # Encerra a operação caso a resposta seja negativa
+    if confirmacao.lower() == "nao":
+        print("Operação cancelada!")
+        return
+
+    # Cria cópia do conteúdo escrito no arquivo
     file = open("arquivos/sala.txt", "+r")
     content = file.readlines()
     file.close()
 
+    # Encontra e apaga a linha referente ao código que se deseja apagar
     i = 0
     while i < len(content):
         elementos = content[i].split("/")
@@ -92,31 +125,29 @@ def excluir(sala_dict):
             del content[i]
             break
         i += 1
-    
-    confirmacao = ""
-    while confirmacao.lower() != "sim" and confirmacao.lower() != "nao" and confirmacao.lower() != "nao":
-        confirmacao = input(f"Confirma a exclusao dos elementos do código {codigo}? (entre apenas 'sim' ou 'nao'): ")
 
-    # Atualiza o arquivo e depois o fecha
+    # Sobrescreve o arquivo com a linha removida
     file = open("arquivos/sala.txt", "w")
     file.writelines(content)
     file.close()
     
 def build_dict(sala_dict):
-    # Abre o arquivo, salva seu conteúdo divido por linhas em uma variável local e depois fecha arquivo
+    # Salva O conteúdo dividido por linhas
     arquivo = open("arquivos/sala.txt")
     conteudo = arquivo.readlines()
     arquivo.close()
 
-    # Extrai a chave e seus atributos organizados a cada linha separados por /
+    # Extrai a chave e seus atributos organizados a cada linha separados por '/'
     for linha in conteudo:
         elementos = linha.split("/")
         sala_dict[elementos[0]] = [elementos[1], elementos[2], elementos[3], elementos[4]]
 
 def main():
+    # Declara e monta o dicionário da sala 
     sala_dict = {}
     build_dict(sala_dict)
 
+    # Continua oferecendo opções até o usuário decidir sair (6)
     escolha = 0
     while escolha != 6:
         escolha = menu()
