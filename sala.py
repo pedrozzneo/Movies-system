@@ -2,7 +2,7 @@ def menu():
     # Retorna a escolha de qual ação o usuário deseja realizar baseado em opções numeradas
     escolha = 0
     while escolha > 5 or escolha < 1:
-        print("1- Listar todos")
+        print("\n1- Listar todos")
         print("2- Listar um elemento específico")
         print("3- Incluir (sem repetição)")
         print("4- Alterar um elemento")
