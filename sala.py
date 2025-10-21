@@ -51,8 +51,8 @@ def incluir(sala_dict):
     arquivo.write(conteudo)
     arquivo.close()
 
-    # Adiciona ao dicionário que está em memória
-    sala_dict[codigo] = [nome, duracao, classificacao, disponivel]
+    # Reseta o dicionário com a nova inclusão (essa abordagem é devido a quebra de linha)
+    build_dict(sala_dict)
 
 def alterar(sala_dict):
     posicoes_dict = {1: "Nome", 2: "Capacidade", 3: "Tipo de exibição", 4: "Acessível"}
