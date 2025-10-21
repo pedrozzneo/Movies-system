@@ -74,24 +74,26 @@ def alterar(sala_dict):
     print(f"Valor atualizado com sucesso!")
 
 def excluir(sala_dict):
-    chave = input("Digite a chave do elemento que deseja alterar: ")
-    while chave not in sala_dict.keys():
-        chave = input("Chave não encontrada, tente novamente: ")
+    codigo = input("Digite a chave do elemento que deseja alterar: ")
+    while codigo not in sala_dict.keys():
+        codigo = input("Chave não encontrada, tente novamente: ")
 
     file = open("arquivos/sala.txt", "+r")
     content = file.readlines()
     file.close()
 
     i = 0
-    excluido = False
-    while i < len(content) and not excluido:
+    while i < len(content):
         elementos = content[i].split("/")
-        print(elementos[0])
-        if elementos[0] == chave:
+        if elementos[0] == codigo:
             del content[i]
-            excluido = True
+            break
         i += 1
     
+    confirmacao = ""
+    while confirmacao.lower() != "sim" and confirmacao.lower() != "nao" and confirmacao.lower() != "nao":
+        confirmacao = input(f"Confirma a exclusao dos elementos do código {codigo}? (entre apenas 'sim' ou 'nao'): ")
+
     # Atualiza o arquivo e depois o fecha
     file = open("arquivos/sala.txt", "w")
     file.writelines(content)
