@@ -12,3 +12,4 @@ def main():
         sessao_dict[elementos[0]] = [elementos[1], elementos[2], elementos[3], elementos[4].strip()]
     
     print(sessao_dict)
+    print("Enxurrada de flecha")
