@@ -22,14 +22,14 @@ def listar_todos(sala_dict):
 
 def listar_especifico(sala_dict):
     # Coleta o código que o usuário deseja exibir as informações sobre
-    codigo = input("Digite o codigo da sala que deseja buscar: ")
+    codigo = input("Código: ")
 
     # Exibe caso o codigo realmente existe no dicionário
     if codigo in sala_dict:
-        print(f"Código: {codigo} // Nome: {sala_dict[codigo][0]} // Capacidade: {sala_dict[codigo][1]} // Tipo de exibição: {sala_dict[codigo][2]} // Acessível: {sala_dict[codigo][3]}", end = "")
+        print(f"Nome: {sala_dict[codigo][0]} // Capacidade: {sala_dict[codigo][1]} // Tipo de exibição: {sala_dict[codigo][2]} // Acessível: {sala_dict[codigo][3]}", end = "")
+        return codigo
     else:
         print("Chave não encontrada.")
-        return None
 
 def incluir(sala_dict):
     # Garante a entrada de um código único
@@ -55,22 +55,23 @@ def incluir(sala_dict):
     sala_dict[codigo] = [nome, duracao, classificacao, disponivel]
 
 def alterar(sala_dict):
-    codigo = input("Digite o código do elemento que deseja alterar: ")
-
-    if codigo not in sala_dict:
-        print("Código não encontrado.")
-        return
-
-    print(f"Dados atuais do '{codigo}': {listar_especifico(sala_dict)}")
+    posicoes_dict = {1: "Nome", 2: "Capacidade", 3: "Tipo de exibição", 4: "Acessível"}
+    codigo = listar_especifico(sala_dict)
 
     posicao = 0
-    while posicao not in [1, 2, 3]:
-        posicao = int(input("Qual elemento deseja mudar? (1, 2 ou 3): "))
+    while posicao not in posicoes_dict.keys():
+        posicao = int(input(f"\nQual dado deseja mudar? \n1- {posicoes_dict[1]}\n2- {posicoes_dict[2]}\n3- {posicoes_dict[3]}\n4- {posicoes_dict[4]}\nEscolha: "))
+        
+        if posicao not in posicoes_dict.keys():
+            print("Posição inválida!")
 
     novo_valor = input("Digite o novo valor: ")
+    confirmacao = ""
+    while confirmacao.lower() != "sim" and confirmacao.lower() != "nao" and confirmacao.lower() != "nao":
+        confirmacao = input(f"{sala_dict[codigo][posicao-1]} -> {novo_valor} \nConfirma essa troca? (entre apenas 'sim' ou 'nao'): ")
     sala_dict[codigo][posicao - 1] = novo_valor
 
-    print(f"Valor atualizado com sucesso!\nNovo conteúdo de '{codigo}': {sala_dict[codigo]}")
+    print(f"Valor atualizado com sucesso!")
 
 def excluir(sala_dict):
     chave = input("Digite a chave do elemento que deseja alterar: ")
