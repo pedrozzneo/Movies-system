@@ -7,7 +7,7 @@ def menu():
         print("3- Incluir (sem repetição)")
         print("4- Alterar um elemento")
         print("5- Excluir (após confirmação dos dados)")
-        escolha = int(input("Escolha: "))
+        escolha = int(input("\nEscolha: "))
 
         if escolha > 5 or escolha < 1:
             print("Escolha inválida")
@@ -15,8 +15,10 @@ def menu():
             return escolha
  
 def listar_todos(sala_dict):
-    # Exibe todas as salas sem distinção
-    print(sala_dict)
+    # Exibe todas as salas sem distinção 
+    for key in sala_dict.keys():
+        print(f"Código: {key}: Nome: {sala_dict[key][0]} // Capacidade: {sala_dict[key][1]} // Tipo de exibição: {sala_dict[key][2]} // Acessível: {sala_dict[key][3]}", end = "")
+    print(end = "\n\n")
 
 def listar_especifico(sala_dict):
     # Coleta o código que o usuário deseja exibir as informações sobre
@@ -105,8 +107,7 @@ def main():
     sala_dict = {}
     for linha in conteudo:
         elementos = linha.split("/")
-        print(elementos)
-        sala_dict[elementos[0]] = [elementos[1], elementos[2]]
+        sala_dict[elementos[0]] = [elementos[1], elementos[2], elementos[3], elementos[4]]
 
     escolha = 0
     while escolha != 5:

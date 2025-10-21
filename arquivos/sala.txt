@@ -1,6 +1,2 @@
 101/Sala Imax/200/3D/Sim
-102/Sala Lux/120/2D/Sim
-107/Sala Gold/180/3D/Sim
-108/Sala Popcorn/90/2D/Não
-109/Sala Family/70/Infantil/Sim
-110/os ianos/50/adulto/sim101/Sala Imax/200/3D/Sim
+1/carlos/30/n sei/sim
