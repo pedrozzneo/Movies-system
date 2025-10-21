@@ -17,8 +17,8 @@ def menu():
 def listar_todos(sala_dict):
     # Exibe todas as salas sem distinção 
     for key in sala_dict.keys():
-        print(f"Código: {key}: Nome: {sala_dict[key][0]} // Capacidade: {sala_dict[key][1]} // Tipo de exibição: {sala_dict[key][2]} // Acessível: {sala_dict[key][3]}", end = "")
-    print(end = "\n\n")
+        print(f"Código: {key} // Nome: {sala_dict[key][0]} // Capacidade: {sala_dict[key][1]} // Tipo de exibição: {sala_dict[key][2]} // Acessível: {sala_dict[key][3]}", end = "")
+    print()
 
 def listar_especifico(sala_dict):
     # Coleta o código que o usuário deseja exibir as informações sobre
@@ -26,7 +26,7 @@ def listar_especifico(sala_dict):
 
     # Exibe caso o codigo realmente existe no dicionário
     if codigo in sala_dict:
-        print(sala_dict[codigo]) 
+        print(f"Código: {codigo} // Nome: {sala_dict[codigo][0]} // Capacidade: {sala_dict[codigo][1]} // Tipo de exibição: {sala_dict[codigo][2]} // Acessível: {sala_dict[codigo][3]}", end = "")
     else:
         print("Chave não encontrada.")
         return None
