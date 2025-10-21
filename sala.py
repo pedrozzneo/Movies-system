@@ -130,6 +130,9 @@ def excluir(sala_dict):
     file = open("arquivos/sala.txt", "w")
     file.writelines(content)
     file.close()
+
+    # Atualiza sala_dict
+    del sala_dict[codigo]
     
 def build_dict(sala_dict):
     # Salva O conteúdo dividido por linhas
