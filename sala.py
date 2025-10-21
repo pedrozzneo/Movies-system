@@ -1,12 +1,13 @@
 def menu():
-    # Retorna a escolha de qual ação o usuário deseja realizar baseado em opções numeradas
+    # Força uma entrada válida para escolha
     escolha = 0
-    while escolha > 5 or escolha < 1:
+    while escolha > 6 or escolha < 1:
         print("\n1- Listar todos")
         print("2- Listar um elemento específico")
         print("3- Incluir (sem repetição)")
         print("4- Alterar um elemento")
         print("5- Excluir (após confirmação dos dados)")
+        print("6- Sair")
         escolha = int(input("\nEscolha: "))
 
         if escolha > 5 or escolha < 1:
@@ -20,14 +21,15 @@ def listar_todos(sala_dict):
         print(f"Código: {key} // Nome: {sala_dict[key][0]} // Capacidade: {sala_dict[key][1]} // Tipo de exibição: {sala_dict[key][2]} // Acessível: {sala_dict[key][3]}", end = "")
     print()
 
-def listar_especifico(sala_dict):
-    # Coleta o código que o usuário deseja exibir as informações sobre
-    codigo = input("Código: ")
+def listar_especifico(sala_dict, codigo = None):
+    # Coleta o código que o usuário deseja exibir caso já não tenho sido passado por parâmetro (funcao alterar)
+    if codigo == None:
+        codigo = input("Código: ")
 
-    # Exibe caso o codigo realmente existe no dicionário
+    # Exibe caso o codigo realmente exista no dicionário
     if codigo in sala_dict:
         print(f"Nome: {sala_dict[codigo][0]} // Capacidade: {sala_dict[codigo][1]} // Tipo de exibição: {sala_dict[codigo][2]} // Acessível: {sala_dict[codigo][3]}", end = "")
-        return codigo
+        return codigo #return útil para a função alterar
     else:
         print("Chave não encontrada.")
 
@@ -55,9 +57,10 @@ def incluir(sala_dict):
     build_dict(sala_dict)
 
 def alterar(sala_dict):
-    posicoes_dict = {1: "Nome", 2: "Capacidade", 3: "Tipo de exibição", 4: "Acessível"}
-    codigo = listar_especifico(sala_dict)
+    codigo = input("Código: ")
+    codigo = listar_especifico(sala_dict, codigo)
 
+    posicoes_dict = {1: "Nome", 2: "Capacidade", 3: "Tipo de exibição", 4: "Acessível"}
     posicao = 0
     while posicao not in posicoes_dict.keys():
         posicao = int(input(f"\nQual dado deseja mudar? \n1- {posicoes_dict[1]}\n2- {posicoes_dict[2]}\n3- {posicoes_dict[3]}\n4- {posicoes_dict[4]}\nEscolha: "))
@@ -115,7 +118,7 @@ def main():
     build_dict(sala_dict)
 
     escolha = 0
-    while escolha != 5:
+    while escolha != 6:
         escolha = menu()
 
         if escolha == 1:
@@ -128,3 +131,5 @@ def main():
             alterar(sala_dict)
         elif escolha == 5:
             excluir(sala_dict)
+        elif escolha == 6:
+            return
