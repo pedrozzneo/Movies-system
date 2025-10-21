@@ -96,7 +96,7 @@ def excluir(sala_dict):
     # Força uma entrada válida de código para continuar com a operação
     codigo = input("Código: ")
     if codigo not in sala_dict.keys():
-        codigo = input("Código não encontrado")
+        print("Código não encontrado")
         return
 
     # Verifica se o usuário realmente deseja confirmar a operação
