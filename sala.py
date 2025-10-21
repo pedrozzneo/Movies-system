@@ -19,8 +19,7 @@ def menu():
 def listar_todos(sala_dict):
     # Exibe todas as salas sem distinção 
     for key in sala_dict.keys():
-        print(f"Código: {key} // Nome: {sala_dict[key][0]} // Capacidade: {sala_dict[key][1]} // Tipo de exibição: {sala_dict[key][2]} // Acessível: {sala_dict[key][3]}", end = "")
-    print()
+        print(f"Código: {key} // Nome: {sala_dict[key][0]} // Capacidade: {sala_dict[key][1]} // Tipo de exibição: {sala_dict[key][2]} // Acessível: {sala_dict[key][3]}")
 
 def listar_especifico(sala_dict, codigo = None):
     # Coleta o código que o usuário deseja exibir caso já não tenho sido passado por parâmetro (funcão alterar)
@@ -29,8 +28,8 @@ def listar_especifico(sala_dict, codigo = None):
 
     # Exibe caso o codigo realmente exista no dicionário
     if codigo in sala_dict:
-        print(f"Nome: {sala_dict[codigo][0]} // Capacidade: {sala_dict[codigo][1]} // Tipo de exibição: {sala_dict[codigo][2]} // Acessível: {sala_dict[codigo][3]}", end = "")
-        return codigo #return útil para a função alterar
+        print(f"Nome: {sala_dict[codigo][0]} // Capacidade: {sala_dict[codigo][1]} // Tipo de exibição: {sala_dict[codigo][2]} // Acessível: {sala_dict[codigo][3]}")
+        return 
     else:
         print("Chave não encontrada.")
 
@@ -54,8 +53,8 @@ def incluir(sala_dict):
     arquivo.write(conteudo)
     arquivo.close()
 
-    # Reseta o dicionário com a nova inclusão (essa abordagem é devido a quebra de linha)
-    build_dict(sala_dict)
+    # Adiciona ao dicionário a nova chave e seus elementos
+    sala_dict[codigo] = [nome, duracao, classificacao, disponivel]
 
 def alterar(sala_dict):
     # Força uma entrada válida de código para continuar com a operação
@@ -143,7 +142,7 @@ def build_dict(sala_dict):
     # Extrai a chave e seus atributos organizados a cada linha separados por '/'
     for linha in conteudo:
         elementos = linha.split("/")
-        sala_dict[elementos[0]] = [elementos[1], elementos[2], elementos[3], elementos[4]]
+        sala_dict[elementos[0]] = [elementos[1], elementos[2], elementos[3], elementos[4].replace("\n", "")]
 
 def main():
     # Declara e monta o dicionário da sala 
