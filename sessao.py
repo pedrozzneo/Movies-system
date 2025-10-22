@@ -28,9 +28,7 @@ def listar_especifico(sessao_dict, key=None):
         sala = input("Código do sala: ")
         data = input("Data: ")
         horario = input("Horario: ")
-
-    # Forma a chave 
-    key = (filme, sala, data, horario)
+        key = (filme, sala, data, horario)
 
     # Exibe caso o codigo exista no dicionário
     if key in sessao_dict:
@@ -40,20 +38,23 @@ def listar_especifico(sessao_dict, key=None):
         print("Chave não encontrada.")
 
 def incluir(sessao_dict):
-    # Garante a entrada de um código único
-    codigo = input("Código da Sessão: ")
-    while codigo in sessao_dict.keys():
-        codigo = input("Código já em uso, insira outro: ")
+    # Constrói a chave
+    filme = input("Código do filme: ")
+    sala = input("Código do sala: ")
+    data = input("Data: ")
+    horario = input("Horario: ")
+    key = (filme, sala, data, horario)
+
+    # Retorna caso não seja inserida uma nova chave
+    if key in sessao_dict.keys():
+        print("Chave já em uso!")
+        return
     
-    # Obtém todos os outros atributos
-    cod_filme = input("Código do Filme: ")
-    cod_sala = input("Código da Sala: ")
-    data = input("Data (DD/MM/AAAA): ")
-    horario = input("Horário (HH:MM): ")
+    # Obtém o valor da key
     preco = input("Preço do Ingresso: ")
 
     # Formata o conteúdo na estrutura do arquivo
-    conteudo = "\n" + codigo + "/" + cod_filme + "/" + cod_sala + "/" + data + "/" + horario + "/" + preco
+    conteudo = "\n" + filme + "/" + sala + "/" + data + "/" + horario + "/" + preco
 
     # Escreve no arquivo
     arquivo = open("arquivos/sessao.txt", "a")
@@ -61,7 +62,7 @@ def incluir(sessao_dict):
     arquivo.close()
 
     # Adiciona ao dicionário a nova chave e seus elementos
-    sessao_dict[codigo] = [cod_filme, cod_sala, data, horario, preco]
+    sessao_dict[key] = [filme, sala, data, horario, preco]
 
 def alterar(sessao_dict):
     # Força uma entrada válida de código para continuar com a operação
