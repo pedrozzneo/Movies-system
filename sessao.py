@@ -21,14 +21,20 @@ def listar_todos(sessao_dict):
     for key in sessao_dict.keys():
         print(f"Código do Filme: {key[0]} // Código da Sala: {key[1]} // Data: {key[2]} // Horário: {key[3]} // Preço do Ingresso: {sessao_dict[key]}")
 
-def listar_especifico(sessao_dict, codigo=None):
-    # Coleta o código que o usuário deseja exibir caso já não tenha sido passado por parâmetro (função alterar)
-    if codigo == None:
-        codigo = input("Código da Sessão: ")
+def listar_especifico(sessao_dict, key=None):
+    # Constrói a chave que o usuário deseja exibir caso já não tenha sido passado por parâmetro (função alterar)
+    if key == None:
+        filme = input("Código do filme: ")
+        sala = input("Código do sala: ")
+        data = input("Data: ")
+        horario = input("Horario: ")
+
+    # Forma a chave 
+    key = (filme, sala, data, horario)
 
     # Exibe caso o codigo exista no dicionário
-    if codigo in sessao_dict:
-        print(f"Código do Filme: {sessao_dict[codigo][0]} // Código da Sala: {sessao_dict[codigo][1]} // Data: {sessao_dict[codigo][2]} // Horário: {sessao_dict[codigo][3]} // Preço do Ingresso: {sessao_dict[codigo][4]}")
+    if key in sessao_dict:
+        print(f"Código do Filme: {key[0]} // Código da Sala: {key[1]} // Data: {key[2]} // Horário: {key[3]} // Preço do Ingresso: {sessao_dict[key]}")
         return 
     else:
         print("Chave não encontrada.")
