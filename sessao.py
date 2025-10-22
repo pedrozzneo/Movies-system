@@ -65,45 +65,57 @@ def incluir(sessao_dict):
     sessao_dict[key] = [filme, sala, data, horario, preco]
 
 def alterar(sessao_dict):
-    # Força uma entrada válida de código para continuar com a operação
-    codigo = input("Código da Sessão: ")
-    if codigo in sessao_dict:
-        listar_especifico(sessao_dict, codigo)
+    # Constrói a chave
+    filme = input("Código do filme: ")
+    sala = input("Código do sala: ")
+    data = input("Data: ")
+    horario = input("Horario: ")
+    key = (filme, sala, data, horario)
+
+    if key in sessao_dict.keys():
+        listar_especifico(sessao_dict, key)
     else:
         print("Código não encontrado")
         return
 
-    # Declara dicionário referenciando a ordem dos dados (posição) e o que eles se referem no sessao_dict
-    posicoes_dict = {
-        1: "Código do Filme",
-        2: "Código da Sala",
-        3: "Data",
-        4: "Horário",
-        5: "Preço do Ingresso"
-    }
-
-    # Força uma entrada válida de qual dado o usuário quer alterar (posição)
-    posicao = 0
-    while posicao not in posicoes_dict.keys():
-        posicao = int(input(f"\nQual dado deseja mudar? \n1- {posicoes_dict[1]}\n2- {posicoes_dict[2]}\n3- {posicoes_dict[3]}\n4- {posicoes_dict[4]}\n5- {posicoes_dict[5]}\nEscolha: "))
-        
-        if posicao not in posicoes_dict.keys():
-            print("Posição inválida!")
-
     # Coleta o valor que vai substituir o anterior
-    novo_valor = input("Digite o novo valor: ")
+    novo_preco = input("Digite o novo valor: ")
     
     # Verifica se o usuário realmente deseja confirmar a operação
     confirmacao = ""
     while confirmacao.lower() != "sim" and confirmacao.lower() != "nao":
-        confirmacao = input(f"{sessao_dict[codigo][posicao-1]} -> {novo_valor} \nConfirma essa troca? (entre apenas 'sim' ou 'nao'): ")
+        confirmacao = input(f"{sessao_dict[key]} -> {novo_preco} \nConfirma essa troca? (entre apenas 'sim' ou 'nao'): ")
     
-    # Outputs de acordo com a resposta
-    if confirmacao.lower() == "sim":
-        sessao_dict[codigo][posicao - 1] = novo_valor
-        print(f"Valor atualizado com sucesso!")
-    else:
+    # Retorna se a respota for nao
+    if confirmacao.lower() == "nao":
         print("Operação cancelada!")
+        return
+    
+    # Cria cópia do conteúdo escrito no arquivo
+    file = open("arquivos/sessao.txt", "+r")
+    content = file.readlines()
+    file.close()
+
+    # Encontra e altera o valor da key 
+    i = 0
+    while i < len(content):
+        elementos = content[i].split("/")
+        key_atual = (elementos[0], elementos[1], elementos[2], elementos[3])
+        
+        # Atualiza a linha quando achar a chave correspondente
+        if key_atual == key:
+            content[i] = filme + "/" + sala + "/" + data + "/" + horario + "/" + novo_preco
+            break
+        i += 1
+
+    # Sobrescreve o arquivo com a linha removida
+    file = open("arquivos/sessao.txt", "w")
+    file.writelines(content)
+    file.close()
+
+    # Atualiza o dicionário
+    sessao_dict[key] = novo_preco
+    print(f"Valor atualizado com sucesso!")
 
 def excluir(sessao_dict):
     # Força uma entrada válida de código para continuar com a operação
