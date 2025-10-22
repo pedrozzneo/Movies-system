@@ -26,7 +26,7 @@ def listar_especifico(sala_dict, codigo = None):
     if codigo == None:
         codigo = input("Código: ")
 
-    # Exibe caso o codigo realmente exista no dicionário
+    # Exibe caso o codigo exista no dicionário
     if codigo in sala_dict:
         print(f"Nome: {sala_dict[codigo][0]} // Capacidade: {sala_dict[codigo][1]} // Tipo de exibição: {sala_dict[codigo][2]} // Acessível: {sala_dict[codigo][3]}")
         return 
