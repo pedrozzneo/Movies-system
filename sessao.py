@@ -19,7 +19,7 @@ def menu():
 def listar_todos(sessao_dict):
     # Exibe todas as sessões sem distinção 
     for key in sessao_dict.keys():
-        print(f"Código da Sessão: {key} // Código do Filme: {sessao_dict[key][0]} // Código da Sala: {sessao_dict[key][1]} // Data: {sessao_dict[key][2]} // Horário: {sessao_dict[key][3]} // Preço do Ingresso: {sessao_dict[key][4]}")
+        print(f"Código do Filme: {key[0]} // Código da Sala: {key[1]} // Data: {key[2]} // Horário: {key[3]} // Preço do Ingresso: {sessao_dict[key]}")
 
 def listar_especifico(sessao_dict, codigo=None):
     # Coleta o código que o usuário deseja exibir caso já não tenha sido passado por parâmetro (função alterar)
@@ -146,16 +146,11 @@ def build_dict(sessao_dict):
     conteudo = arquivo.readlines()
     arquivo.close()
 
-    # Extrai a chave e seus atributos organizados a cada linha separados por '/'
+    # Monta a chave e seu único atributo a partir da separação dos dados do arquivo pelas '/'
     for linha in conteudo:
         elementos = linha.split("/")
-        sessao_dict[elementos[0]] = [
-            elementos[1],
-            elementos[2],
-            elementos[3],
-            elementos[4],
-            elementos[5].replace("\n", "")
-        ]
+        key = (elementos[0], elementos[1], elementos[2], elementos[3])
+        sessao_dict[key] = elementos[4].replace("\n", "")
 
 def main():
     # Declara e monta o dicionário de sessões 

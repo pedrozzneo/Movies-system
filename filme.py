@@ -69,5 +69,3 @@ def main():
             print("Função em produção")
         elif escolha == 6:
             return
-
-main()
