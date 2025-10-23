@@ -20,25 +20,23 @@ def listar_todos(sala_dict):
     # Confere se a lista está vazia
     if len(sala_dict) == 0:
         print("Lista de salas está vazia")
-        print()
-        return False
+        return
 
     # Exibe todas as salas sem distinção 
     for key in sala_dict.keys():
         print(f"Código: {key} // Nome: {sala_dict[key][0]} // Capacidade: {sala_dict[key][1]} // Tipo de exibição: {sala_dict[key][2]} // Acessível: {sala_dict[key][3]}", end = "")
     print()
 
-def listar_especifico(sala_dict, codigo = None):
-    # Coleta o código que o usuário deseja exibir caso já não tenho sido passado por parâmetro (funcão alterar)
-    if codigo == None:
-        codigo = input("Código: ")
+def listar_especifico(sala_dict):
+    # Coleta o código que o usuário deseja exibir 
+    codigo = input("Código: ")
 
     # Exibe caso o codigo exista no dicionário
     if codigo in sala_dict:
         print(f"Nome: {sala_dict[codigo][0]} // Capacidade: {sala_dict[codigo][1]} // Tipo de exibição: {sala_dict[codigo][2]} // Acessível: {sala_dict[codigo][3]}")
-        return 
+        return True
     else:
-        print("Chave não encontrada.")
+        return False
 
 def incluir(sala_dict):
     # Garante a entrada de um código único
@@ -95,7 +93,7 @@ def alterar(sala_dict):
 
     # retorna caso o usuário escolheu interromper a operação
     if confirmacao == "nao":
-        return
+        return False
     
     # Cria cópia do conteúdo escrito no arquivo
     file = open("arquivos/sala.txt", "+r")
@@ -144,7 +142,7 @@ def excluir(sala_dict):
     # Encerra a operação caso a resposta seja negativa
     if confirmacao.lower() == "nao":
         print("Operação cancelada!")
-        return
+        return False
 
     # Atualiza o dicionário
     del sala_dict[codigo]
@@ -168,9 +166,9 @@ def excluir(sala_dict):
     file.writelines(content)
     file.close()
     
-def build_dict(sala_dict):
+def build_dict_through_file(sala_dict, file):
     # Salva O conteúdo dividido por linhas
-    arquivo = open("arquivos/sala.txt")
+    arquivo = open(rf"arquivos/{file}.txt")
     conteudo = arquivo.readlines()
     arquivo.close()
 
@@ -182,32 +180,23 @@ def build_dict(sala_dict):
 def main():
     # Declara e monta o dicionário da sala 
     sala_dict = {}
-    build_dict(sala_dict)
+    build_dict_through_file(sala_dict, "sala")
 
     # Continua oferecendo opções até o usuário decidir sair (6)
     escolha = 0
     while escolha != 6:
         escolha = menu()
 
+        # Trata cada uma das escolhas
         if escolha == 1:
-            response = listar_todos(sala_dict)
-            if response == False:
-                print("Não há nenhuma sala registrada ou há dados corrompidos")
+           listar_todos(sala_dict)
         elif escolha == 2:
-            response = listar_especifico(sala_dict)
-            if response == False:
-                print("Não há nenhuma sala registrada ou há dados corrompidos")
+            listar_especifico(sala_dict)
         elif escolha == 3:
             incluir(sala_dict)
         elif escolha == 4:
-            response = alterar(sala_dict)
-            if response == False:
-                print("Não foi possível alterar a sala")
-                print()
+            alterar(sala_dict)
         elif escolha == 5:
-            response = excluir(sala_dict)
-            if response == False:
-                print("Não foi possível excluir a sala")
-                print()
+            excluir(sala_dict)
         elif escolha == 6:
             return
