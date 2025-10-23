@@ -62,7 +62,7 @@ def incluir(sessao_dict):
     arquivo.close()
 
     # Adiciona ao dicionário a nova chave e seus elementos
-    sessao_dict[key] = [filme, sala, data, horario, preco]
+    sessao_dict[key] = preco
 
 def alterar(sessao_dict):
     # Constrói a chave
