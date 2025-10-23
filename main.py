@@ -20,7 +20,6 @@ def menu():
             return escolha
 
 def main():
-    print("to aqui!!")
     escolha = 0
     while escolha != 5:
         escolha = menu()
