@@ -119,46 +119,52 @@ def alterar(sessao_dict):
     print(f"Valor atualizado com sucesso!")
 
 def excluir(sessao_dict):
-    # Força uma entrada válida de código para continuar com a operação
-    codigo = input("Código da Sessão: ")
-    if codigo not in sessao_dict.keys():
-        print("Código não encontrado")
-        return
+    # Constrói a chave
+    filme = input("Código do filme: ")
+    sala = input("Código do sala: ")
+    data = input("Data: ")
+    horario = input("Horario: ")
+    key = (filme, sala, data, horario)
+
+    if key not in sessao_dict.keys():
+        print("Chave não encontrada")
+        return False
 
     # Verifica se o usuário realmente deseja confirmar a operação
     confirmacao = ""
     while confirmacao.lower() != "sim" and confirmacao.lower() != "nao":
-        confirmacao = input(f"Confirma a exclusão da sessão de código {codigo}? (entre apenas 'sim' ou 'nao'): ")
+        confirmacao = input(f"Confirma a exclusao de todos os dados dessa chave? (entre apenas 'sim' ou 'nao'): ")
         
+        # Output se fez entrada inválida
         if confirmacao.lower() != "sim" and confirmacao.lower() != "nao":
-            print("Resposta inválida")
+            print("resposta inválida")
 
     # Encerra a operação caso a resposta seja negativa
     if confirmacao.lower() == "nao":
         print("Operação cancelada!")
         return
 
-    # Cria cópia do conteúdo escrito no arquivo
-    file = open("arquivos/sessao.txt", "+r")
-    content = file.readlines()
-    file.close()
+    # Atualiza sessao_dict
+    del sessao_dict[key]
 
-    # Encontra e apaga a linha referente ao código que se deseja apagar
-    i = 0
-    while i < len(content):
-        elementos = content[i].split("/")
-        if elementos[0] == codigo:
-            del content[i]
-            break
-        i += 1
+    # Escreve o novo conteúdo do arquivo removendo a key escolhida
+    content = ""
+    linha = 1
+    for key in sessao_dict.keys():
+        # Desestrutura a key e seu valor para escrever na linha separados por '/'
+        content += key[0] + "/" + key[1] + "/" + key[2] + "/" + key[3] + "/" + sessao_dict[key]
+        
+        # Só quebra para a proxíma linha se houver conteúdo para colocar nela
+        if linha + 1 <= len(sessao_dict):
+            content += "\n"
+
+        # Acompanha a linha que será escrita
+        linha += 1
 
     # Sobrescreve o arquivo com a linha removida
     file = open("arquivos/sessao.txt", "w")
     file.writelines(content)
     file.close()
-
-    # Atualiza sessao_dict
-    del sessao_dict[codigo]
     
 def build_dict(sessao_dict):
     # Salva o conteúdo dividido por linhas

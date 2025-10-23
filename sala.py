@@ -20,6 +20,8 @@ def listar_todos(sala_dict):
     # Exibe todas as salas sem distinção 
     for key in sala_dict.keys():
         print(f"Código: {key} // Nome: {sala_dict[key][0]} // Capacidade: {sala_dict[key][1]} // Tipo de exibição: {sala_dict[key][2]} // Acessível: {sala_dict[key][3]}")
+    if len(sala_dict) == 0:
+        print("Não há nenhuma sala registrada")
 
 def listar_especifico(sala_dict, codigo = None):
     # Coleta o código que o usuário deseja exibir caso já não tenho sido passado por parâmetro (funcão alterar)
@@ -128,6 +130,7 @@ def excluir(sala_dict):
     while confirmacao.lower() != "sim" and confirmacao.lower() != "nao":
         confirmacao = input(f"Confirma a exclusao dos elementos de código {codigo}? (entre apenas 'sim' ou 'nao'): ")
         
+        # Output se fez entrada inválida
         if confirmacao.lower() != "sim" and confirmacao.lower() != "nao":
             print("resposta inválida")
 
@@ -136,27 +139,27 @@ def excluir(sala_dict):
         print("Operação cancelada!")
         return
 
-    # Cria cópia do conteúdo escrito no arquivo
-    file = open("arquivos/sala.txt", "+r")
-    content = file.readlines()
-    file.close()
+    # Atualiza o dicionário
+    del sala_dict[codigo]
 
-    # Encontra e apaga a linha referente ao código que se deseja apagar
-    i = 0
-    while i < len(content):
-        elementos = content[i].split("/")
-        if elementos[0] == codigo:
-            del content[i]
-            break
-        i += 1
+    # Escreve o novo conteúdo do arquivo removendo a key escolhida
+    content = ""
+    linha = 1
+    for codigo in sala_dict.keys():
+        # Desestrutura a key e seu valor para escrever na linha separados por '/'
+        content += codigo + "/" +  sala_dict[codigo][0] + "/" + sala_dict[codigo][1] + "/" + sala_dict[codigo][2] + "/" + sala_dict[codigo][3]
+        
+        # Só quebra para a proxíma linha se houver conteúdo para colocar nela
+        if linha + 1 <= len(sala_dict):
+            content += "\n"
+
+        # Acompanha a linha que será escrita
+        linha += 1
 
     # Sobrescreve o arquivo com a linha removida
     file = open("arquivos/sala.txt", "w")
     file.writelines(content)
     file.close()
-
-    # Atualiza sala_dict
-    del sala_dict[codigo]
     
 def build_dict(sala_dict):
     # Salva O conteúdo dividido por linhas
