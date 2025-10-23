@@ -94,7 +94,7 @@ def alterar(sala_dict):
     content = file.readlines()
     file.close()
 
-    # Encontra e altera o valor da key 
+    # Encontra a linha e o elemento exato onde deve ser feita a alteração 
     i = 0
     while i < len(content):
         # Desestrutura os elementos separados por '/'
