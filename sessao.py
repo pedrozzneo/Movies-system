@@ -96,9 +96,10 @@ def alterar(sessao_dict):
     content = file.readlines()
     file.close()
 
-    # Encontra e altera o valor da key 
+    # Encontra a linha que deve ser feita a alteração do valor 
     i = 0
     while i < len(content):
+        # Desestrutura os elementos separados por '/'
         elementos = content[i].split("/")
         key_atual = (elementos[0], elementos[1], elementos[2], elementos[3])
         
