@@ -17,11 +17,16 @@ def menu():
             return escolha
  
 def listar_todos(sala_dict):
+    # Confere se a lista está vazia
+    if len(sala_dict) == 0:
+        print("Lista de salas está vazia")
+        print()
+        return False
+
     # Exibe todas as salas sem distinção 
     for key in sala_dict.keys():
-        print(f"Código: {key} // Nome: {sala_dict[key][0]} // Capacidade: {sala_dict[key][1]} // Tipo de exibição: {sala_dict[key][2]} // Acessível: {sala_dict[key][3]}")
-    if len(sala_dict) == 0:
-        print("Não há nenhuma sala registrada")
+        print(f"Código: {key} // Nome: {sala_dict[key][0]} // Capacidade: {sala_dict[key][1]} // Tipo de exibição: {sala_dict[key][2]} // Acessível: {sala_dict[key][3]}", end = "")
+    print()
 
 def listar_especifico(sala_dict, codigo = None):
     # Coleta o código que o usuário deseja exibir caso já não tenho sido passado por parâmetro (funcão alterar)
@@ -65,7 +70,8 @@ def alterar(sala_dict):
         listar_especifico(sala_dict, codigo)
     else:
         print("Código não encontrado")
-        return
+        print()
+        return False
 
     # Declara dicionário referenciando a ordem dos dados (posicao) e o que eles se referem no sala_dict
     posicoes_dict = {1: "Nome", 2: "Capacidade", 3: "Tipo de exibição", 4: "Acessível"}
@@ -123,7 +129,8 @@ def excluir(sala_dict):
     codigo = input("Código: ")
     if codigo not in sala_dict.keys():
         print("Código não encontrado")
-        return
+        print()
+        return False
 
     # Verifica se o usuário realmente deseja confirmar a operação
     confirmacao = ""
@@ -183,14 +190,24 @@ def main():
         escolha = menu()
 
         if escolha == 1:
-            listar_todos(sala_dict)
+            response = listar_todos(sala_dict)
+            if response == False:
+                print("Não há nenhuma sala registrada ou há dados corrompidos")
         elif escolha == 2:
-            listar_especifico(sala_dict)
+            response = listar_especifico(sala_dict)
+            if response == False:
+                print("Não há nenhuma sala registrada ou há dados corrompidos")
         elif escolha == 3:
             incluir(sala_dict)
         elif escolha == 4:
-            alterar(sala_dict)
+            response = alterar(sala_dict)
+            if response == False:
+                print("Não foi possível alterar a sala")
+                print()
         elif escolha == 5:
-            excluir(sala_dict)
+            response = excluir(sala_dict)
+            if response == False:
+                print("Não foi possível excluir a sala")
+                print()
         elif escolha == 6:
             return
