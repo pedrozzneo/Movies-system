@@ -1,4 +1,4 @@
 101/Sala Imax/200/3D/Sim
-1/carlos/30/n sei/sim
+1/lucas/30/n sei/sim
 105/pedro/20/aquela lá/sim
 107/pf/fk/ks/a

@@ -85,12 +85,37 @@ def alterar(sala_dict):
         confirmacao = input(f"{sala_dict[codigo][posicao-1]} -> {novo_valor} \nConfirma essa troca? (entre apenas 'sim' ou 'nao'): ")
     sala_dict[codigo][posicao - 1] = novo_valor
 
-    # Outputs de acordo com a resposta
-    if confirmacao == "sim":
-        print(f"Valor atualizado com sucesso!")
-    else:
-        print("operação cancelada!")
+    # retorna caso o usuário escolheu interromper a operação
+    if confirmacao == "nao":
+        return
+    
+    # Cria cópia do conteúdo escrito no arquivo
+    file = open("arquivos/sala.txt", "+r")
+    content = file.readlines()
+    file.close()
 
+    # Encontra e altera o valor da key 
+    i = 0
+    while i < len(content):
+        # Desestrutura os elementos separados por '/'
+        elementos = content[i].split("/")
+
+        # Atualiza a linha quando achar o código correspondente
+        if elementos[0] == codigo:
+            elementos[posicao] = novo_valor
+            content[i] = elementos[0] + "/" +  elementos[1] + "/" + elementos[2] + "/" + elementos[3] + "/" + elementos[4]
+            break
+        i += 1
+
+    # Sobrescreve o arquivo com a linha removida
+    file = open("arquivos/sala.txt", "w")
+    file.writelines(content)
+    file.close()
+
+    # Atualiza o dicionário
+    sala_dict[codigo][posicao - 1] = novo_valor
+    print(f"Valor atualizado com sucesso!")
+    
 def excluir(sala_dict):
     # Força uma entrada válida de código para continuar com a operação
     codigo = input("Código: ")
