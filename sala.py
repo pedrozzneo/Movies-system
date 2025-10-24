@@ -46,12 +46,12 @@ def incluir(sala_dict):
     
     # Obtém todos os outros atributos
     nome = input("Nome: ")
-    duracao = input("Capacidade: ")
-    classificacao = input("Tipo de exibição: ")
-    disponivel = input("Acessível: ")
+    capacidade = input("Capacidade: ")
+    exibicao = input("Tipo de exibição: ")
+    acessivel = input("Acessível: ")
 
     # Formata o conteúdo na estrutura do arquivo
-    conteudo = "\n" + codigo + "/" + nome + "/" + duracao + "/" + classificacao + "/" + disponivel
+    conteudo = "\n" + codigo + "/" + nome + "/" + capacidade + "/" + exibicao + "/" + acessivel
 
     # Escreve no arquivo
     arquivo = open("arquivos/sala.txt", "a")
@@ -59,7 +59,7 @@ def incluir(sala_dict):
     arquivo.close()
 
     # Adiciona ao dicionário a nova chave e seus elementos
-    sala_dict[codigo] = [nome, duracao, classificacao, disponivel]
+    sala_dict[codigo] = [nome, capacidade, exibicao, acessivel]
 
 def alterar(sala_dict):
     # Força uma entrada válida de código para continuar com a operação
