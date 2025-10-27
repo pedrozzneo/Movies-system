@@ -24,8 +24,7 @@ def listar_todos(sala_dict):
 
     # Exibe todas as salas sem distinção 
     for key in sala_dict.keys():
-        print(f"Código: {key} // Nome: {sala_dict[key][0]} // Capacidade: {sala_dict[key][1]} // Tipo de exibição: {sala_dict[key][2]} // Acessível: {sala_dict[key][3]}", end = "")
-    print()
+        print(f"Código: {key} // Nome: {sala_dict[key][0]} // Capacidade: {sala_dict[key][1]} // Tipo de exibição: {sala_dict[key][2]} // Acessível: {sala_dict[key][3]}")
 
 def listar_especifico(sala_dict):
     # Coleta o código que o usuário deseja exibir 
