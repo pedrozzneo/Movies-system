@@ -166,5 +166,3 @@ def main():
             excluir(sala_dict)
         elif escolha == 6:
             return
-        
-main()
