@@ -145,7 +145,7 @@ def main():
         # Trata a escolha de sair
         elif escolha == 6:
             # Salva todas as alterações no arquivo antes de sair
-            utils.save_dict_to_file("arquivos/sala.txt", sala_dict)
+            utils.save_dict_to_file("sala", sala_dict)
             return "EXIT"
 
         # Espera confirmação do usuário para continuar

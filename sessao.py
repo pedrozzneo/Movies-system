@@ -160,7 +160,7 @@ def main():
         # Trata a escolha de sair
         elif escolha == 6:
             # Salva todas as alterações no arquivo antes de sair
-            utils.save_dict_to_file("arquivos/sessao.txt", sessao_dict)
+            utils.save_dict_to_file("sessao", sessao_dict)
             return "EXIT"
 
         # Espera confirmação do usuário para continuar em qualquer fluxo

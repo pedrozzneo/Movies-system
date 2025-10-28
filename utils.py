@@ -30,43 +30,42 @@ def build_dict_through_file(file_name):
             value = partes[4]
             dict[key] = value
 
-        # Os outros seguem o mesmo padrão
-        else:
+        # Tratamento específico de sala
+        elif file_name == "sala":
             key = partes[0]
             value = partes[1:]
             dict[key] = value
+
+        # Tratamento específico de filme
+        # elif file_name == "filme":
+        #     key = partes[0]
+        #     value = partes[1:]
+        #     dict[key] = value
 
     # Fecha o arquivo e retorna o dicionário
     arquivo.close()
     return dict
 
-def save_dict_to_file(file_path, data_dict):
+def save_dict_to_file(file_name, dict):
     # Abre o arquivo para escrita
-    file = open(file_path, "w")
+    file = open(f"arquivos/{file_name}.txt", "w")
     
-    # Escreve cada linha diretamente no arquivo
-    first_line_written = False
-    for key in data_dict:
-        if isinstance(key, tuple):
-            # Sessao: chave com 4 partes
-            value = data_dict[key]
-            if isinstance(value, list):
-                partes = list(key) + value
-            else:
-                partes = list(key) + [value]
-            linha = "/".join(partes)
-        else:
-            # Demais: chave string + lista de valores
-            partes = [key] + data_dict[key]
-            linha = "/".join(partes)
-        if first_line_written:
-            file.write("\n")
-        file.write(linha)
-        first_line_written = True
+    # Tratamento específico do sessao
+    if file_name == "sessao":
+        # Escreve cada linha diretamente no arquivo
+        for key in dict:
+            # Converte key e value para texto separados por "/"
+            linha = key[0] + "/" key[1] + "/" +  key[2] + "/" +  key[3] + "/" + dict[key]
+            dict[key] = value
+
+    # Os outros seguem o mesmo padrão
+    else:
+        key = partes[0]
+        value = partes[1:]
+        dict[key] = value
     
     # Fecha o arquivo
     file.close()
-    
     return True
 
 
