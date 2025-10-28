@@ -102,3 +102,4 @@ def main():
 
         # Espera confirmação do usuário para continuar em qualquer fluxo
         input("\nPressione alguma tecla para continuar...")
+
