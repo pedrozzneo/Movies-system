@@ -9,34 +9,34 @@ def build_dict_through_file(file_name):
     # Declara o caminho para acessar o arquivo
     file_path = f"arquivos/{file_name}.txt"
     
+    # Declara o dicionário
+    dict = {}
+
     # Verifica se o arquivo existe
     if not file_exists(file_path):
-        print(f"Arquivo {file_path} não encontrado. Dados vazios serão usados.")
-        return {}
+        return dict
     
     # Abre o arquivo e lê o conteúdo
     arquivo = open(file_path, "r")
 
-    # Monta o dicionário a partir do arquivo
-    dict = {}
+    # Percorre cada linha do arquivo para montar o dict
     for linha in arquivo:
         # Separa os dados pelo separador '/'
         partes = linha.split("/")
         
-        # Tratamento específico do sessao
+        # Tratamento específico de sessao para construir suas keys e values
         if file_name == "sessao":
-            # Constrói a key e o value para colocar no dict
             key = (partes[0], partes[1], partes[2], partes[3])
             value = partes[4]
             dict[key] = value
 
-        # Tratamento específico de sala
+        # Tratamento específico de sala para construir suas keys e values
         elif file_name == "sala":
             key = partes[0]
             value = partes[1:]
             dict[key] = value
 
-        # Tratamento específico de filme
+        # Tratamento específico de filme para construir suas keys e values
         # elif file_name == "filme":
         #     key = partes[0]
         #     value = partes[1:]
@@ -50,21 +50,26 @@ def save_dict_to_file(file_name, dict):
     # Abre o arquivo para escrita
     file = open(f"arquivos/{file_name}.txt", "w")
     
-    # Tratamento específico do sessao
-    if file_name == "sessao":
-        # Escreve cada linha diretamente no arquivo
-        for key in dict:
-            # Converte key e value para texto separados por "/"
-            linha = key[0] + "/" key[1] + "/" +  key[2] + "/" +  key[3] + "/" + dict[key]
-            dict[key] = value
+    # Percorre todo o dicionário para codificar seus dados em strings
+    for key, i in dict:
+        # Tratamento específico de sessao para converter seus itens em texto
+        if file_name == "sessao":
+            linha = key[0] + "/" + key[1] + "/" +  key[2] + "/" +  key[3] + "/" + dict[key]
 
-    # Os outros seguem o mesmo padrão
-    else:
-        key = partes[0]
-        value = partes[1:]
-        dict[key] = value
-    
-    # Fecha o arquivo
+        # Tratamento específico de sala para converter seus itens em texto
+        elif file_name == "sala":
+            linha = key + "/" + dict[key][0] + "/" +  dict[key][1] + "/" +  dict[key][2] + "/" + dict[key][3]
+
+        # Tratamento específico de sessao para converter seus itens em texto
+        # elif file_name == "sessao":
+        #     linha = key + "/" + dict[key][0] + "/" +  dict[key][1] + "/" +  dict[key][2] + "/" + dict[key][3]
+
+        # Coloca o '\n' desde que não seja o último item para evitar linhas em branco
+        if i != len(dict) - 1:
+            linha += "\n"
+
+    # Escreve e fecha o arquivo
+    file.write(linha)
     file.close()
     return True
 
@@ -73,6 +78,7 @@ def menu(titulo):
     # Força uma entrada válida para escolha
     escolha = 0
     while escolha > 6 or escolha < 1:
+        # Exibe as opções e coleta a escolha do usuário no final
         print(f"\nSubmenu de {titulo}:")
         print("1- Listar todos")
         print("2- Listar um elemento específico")
@@ -82,6 +88,7 @@ def menu(titulo):
         print("6- Sair")
         escolha = int(input("\nEscolha: "))
 
+        # Informa caso a entrada foi inválida
         if escolha > 6 or escolha < 1:
             print("Escolha inválida")
         else:
