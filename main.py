@@ -7,7 +7,8 @@ def menu():
     # Força uma entrada válida de "escolha"
     escolha = 0
     while escolha > 5 or escolha < 1:
-        print("\n1- Submenu de Salas")
+        print("\nMenu principal:")
+        print("1- Submenu de Salas")
         print("2- Submenu de Filmes")
         print("3- Submenu de Sessões")
         print("4- Submenu de Relatórios")
@@ -21,6 +22,7 @@ def menu():
 
 def main():
     escolha = 0
+    # Fica oferecendo as opções até o usuário decidir sair com valor 5
     while escolha != 5:
         escolha = menu()
         
@@ -32,7 +34,4 @@ def main():
             sessao.main()
         elif escolha == 4:
             relatorio.main()
-        elif escolha == 5:
-            print("Saindo...")
-
 main()
