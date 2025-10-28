@@ -19,12 +19,13 @@ def menu():
 def listar_todos(sala_dict):
     # Confere se a lista está vazia
     if len(sala_dict) == 0:
-        print("Lista de salas está vazia")
-        return
+        return "NO_DATA"
 
     # Exibe todas as salas sem distinção 
     for key in sala_dict.keys():
         print(f"Código: {key} // Nome: {sala_dict[key][0]} // Capacidade: {sala_dict[key][1]} // Tipo de exibição: {sala_dict[key][2]} // Acessível: {sala_dict[key][3]}")
+    
+    return "SUCCESS"
 
 def listar_especifico(sala_dict):
     # Coleta o código que o usuário deseja exibir 
@@ -33,9 +34,9 @@ def listar_especifico(sala_dict):
     # Exibe caso o codigo exista no dicionário
     if codigo in sala_dict:
         print(f"Nome: {sala_dict[codigo][0]} // Capacidade: {sala_dict[codigo][1]} // Tipo de exibição: {sala_dict[codigo][2]} // Acessível: {sala_dict[codigo][3]}")
-        return True
+        return "SUCCESS"
     else:
-        return False
+        return "NO_DATA"
 
 def incluir(sala_dict):
     # Garante a entrada de um código único
@@ -59,16 +60,17 @@ def incluir(sala_dict):
 
     # Adiciona ao dicionário a nova chave e seus elementos
     sala_dict[codigo] = [nome, capacidade, exibicao, acessivel]
+    
+    return "SUCCESS"
 
 def alterar(sala_dict):
     # Força uma entrada válida de código para continuar com a operação
     codigo = input("Código: ")
-    if codigo in sala_dict:
-        listar_especifico(sala_dict, codigo)
-    else:
-        print("Código não encontrado")
-        print()
-        return False
+    if codigo not in sala_dict:
+        return "NO_DATA"
+    
+    # Exibe os dados atuais para o usuário
+    print(f"Nome: {sala_dict[codigo][0]} // Capacidade: {sala_dict[codigo][1]} // Tipo de exibição: {sala_dict[codigo][2]} // Acessível: {sala_dict[codigo][3]}")
 
     # Declara dicionário referenciando a ordem dos dados (posicao) e o que eles se referem no sala_dict
     posicoes_dict = {1: "Nome", 2: "Capacidade", 3: "Tipo de exibição", 4: "Acessível"}
@@ -92,7 +94,7 @@ def alterar(sala_dict):
 
     # retorna caso o usuário escolheu interromper a operação
     if confirmacao == "nao":
-        return False
+        return "CANCELLED"
     
     # Cria cópia do conteúdo escrito no arquivo
     file = open("arquivos/sala.txt", "+r")
@@ -119,29 +121,23 @@ def alterar(sala_dict):
 
     # Atualiza o dicionário
     sala_dict[codigo][posicao - 1] = novo_valor
-    print(f"Valor atualizado com sucesso!")
+    
+    return "SUCCESS"
     
 def excluir(sala_dict):
     # Força uma entrada válida de código para continuar com a operação
     codigo = input("Código: ")
     if codigo not in sala_dict.keys():
-        print("Código não encontrado")
-        print()
-        return False
+        return "NO_DATA"
 
     # Verifica se o usuário realmente deseja confirmar a operação
     confirmacao = ""
     while confirmacao.lower() != "sim" and confirmacao.lower() != "nao":
         confirmacao = input(f"Confirma a exclusao dos elementos de código {codigo}? (entre apenas 'sim' ou 'nao'): ")
-        
-        # Output se fez entrada inválida
-        if confirmacao.lower() != "sim" and confirmacao.lower() != "nao":
-            print("resposta inválida")
 
     # Encerra a operação caso a resposta seja negativa
     if confirmacao.lower() == "nao":
-        print("Operação cancelada!")
-        return False
+        return "CANCELLED"
 
     # Atualiza o dicionário
     del sala_dict[codigo]
@@ -165,6 +161,8 @@ def excluir(sala_dict):
     file.writelines(content)
     file.close()
     
+    return "SUCCESS"
+    
 def build_dict_through_file(sala_dict, file):
     # Salva O conteúdo dividido por linhas
     arquivo = open(rf"arquivos/{file}.txt")
@@ -186,16 +184,44 @@ def main():
     while escolha != 6:
         escolha = menu()
 
-        # Trata cada uma das escolhas
+        # Trata a escolha de listar todos
         if escolha == 1:
-           listar_todos(sala_dict)
+           result = listar_todos(sala_dict)
+           if result == "NO_DATA":
+               print("Lista de salas está vazia")
+
+        # Trata a escolha de listar um elemento específico
         elif escolha == 2:
-            listar_especifico(sala_dict)
+            result = listar_especifico(sala_dict)
+            if result == "NO_DATA":
+                print("Código não encontrado")
+
+        # Trata a escolha de incluir um novo elemento
         elif escolha == 3:
-            incluir(sala_dict)
+            result = incluir(sala_dict)
+            if result == "SUCCESS":
+                print("Sala incluída com sucesso")
+
+        # Trata a escolha de alterar um elemento existente
         elif escolha == 4:
-            alterar(sala_dict)
+            result = alterar(sala_dict)
+            if result == "NO_DATA":
+                print("Código não encontrado")
+            elif result == "CANCELLED":
+                print("Operação cancelada")
+            elif result == "SUCCESS":
+                print("Alteração realizada com sucesso")
+
+        # Trata a escolha de excluir um elemento existente
         elif escolha == 5:
-            excluir(sala_dict)
+            result = excluir(sala_dict)
+            if result == "NO_DATA":
+                print("Código não encontrado")
+            elif result == "CANCELLED":
+                print("Operação cancelada")
+            elif result == "SUCCESS":
+                print("Exclusão realizada com sucesso")
+
+        # Trata a escolha de sair
         elif escolha == 6:
             return

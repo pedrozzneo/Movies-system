@@ -8,3 +8,4 @@
 108/Sala Vip/145/3D/sim
 109/Sala Clássica/115/2D/sim
 110/Sala Futuro/170/4DX/sim
+111/sala google/2/7DX/nao
