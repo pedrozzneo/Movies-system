@@ -50,7 +50,7 @@ def main():
     # Continua oferecendo opções até o usuário decidir sair (6)
     escolha = 0
     while escolha != 6:
-        escolha = utils.menu("salas")
+        escolha = utils.menu("filmes")
 
         # Trata cada uma das escolhas
         if escolha == 1:

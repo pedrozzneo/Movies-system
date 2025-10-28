@@ -115,7 +115,7 @@ def main():
     escolha = 0
     while escolha != 6:
         # Coleta a escolha do usuário a partir do menu
-        escolha = utils.menu("salas")
+        escolha = utils.menu("sessao")
 
         # Trata a escolha de listar todos
         if escolha == 1:
