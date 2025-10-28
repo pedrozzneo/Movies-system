@@ -1,4 +1,10 @@
-101/Sala Imax/200/3D/Sim
-1/carlos/30/n sei/sim
-105/pedro/20/aquela lá/sim
-107/pf/fk/ks/a
+101/Sala Azul/120/2D/sim
+102/Sala Vermelha/130/3D/nao
+103/Sala Premium/150/IMAX/sim
+104/Sala Verde/110/2D/sim
+105/Sala Ouro/140/3D/sim
+106/Sala Kids/100/2D/sim
+107/Sala Noturna/160/IMAX/nao
+108/Sala Vip/145/3D/sim
+109/Sala Clássica/115/2D/sim
+110/Sala Futuro/170/4DX/sim

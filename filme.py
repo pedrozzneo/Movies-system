@@ -43,7 +43,7 @@ def build_dict(filme_dict, nome_arquivo): # Abre o arquivo, salva seu conteúdo 
         arquivo.close()
         incluir_filme(filme_dict,nome_arquivo)
 
-def incluir_filme(filme_dict,nome_arquivo):
+def incluir_filme(filme_dict,nome_arquivo): # Inclui um novo filme no dicionário e registra em arquivo
     # Garante a entrada de um código único
     codigo = input("Código: ")
     while codigo in filme_dict.keys():
@@ -76,7 +76,7 @@ def incluir_filme(filme_dict,nome_arquivo):
     # Adiciona ao dicionário a nova chave e seus elementos
     filme_dict[codigo] = [titulo, lancamento, diretor, elenco]
 
-def detalhar_filme(filme_dict, key):
+def detalhar_filme(filme_dict, key): # Exibe as informações de um filme
     if key in filme_dict:
         print(f"Título: {filme_dict[key][0]} // Ano de Lançamento: {filme_dict[key][1]}\n\tDiretor: {filme_dict[key][2]} // Elenco principal: {filme_dict[key][3]}\n")
     else:
@@ -84,15 +84,20 @@ def detalhar_filme(filme_dict, key):
         input("Pressione Enter para retornar ao menu inicial.")
         print()
 
-def alterar_filme(filme_dict, key):
+def alterar_filme(filme_dict, key): # Altera uma das informações de um filme
     detalhar_filme(filme_dict,key)
-    print("\nMenu de alteração de filmes:\n\t1 - Título\n\t2 - Ano de lançamento\n\t3 - Diretor\n\t4 - Elenco")
-    opc = int(input("Escolha um para alterar: "))
-    while opc < 1 and opc > 4:
-        opc = int(input("Opção inválida, escolha de 1 à 4! Escolha um para alterar: "))
-    novo_valor = input("Digite o novo valor: ")
-    filme_dict[key][opc] = novo_valor
-
+    continua = 'sim'
+    while continua.lower() == 'sim':
+        print("\nMenu de alteração de filmes:\n\t1 - Título\n\t2 - Ano de lançamento\n\t3 - Diretor\n\t4 - Elenco")
+        opc = int(input("Escolha um para alterar: "))
+        while opc < 1 and opc > 4:
+            opc = int(input("Opção inválida, escolha de 1 à 4! Escolha um para alterar: "))
+        novo_valor = input("Digite o novo valor: ")
+        filme_dict[key][opc-1] = novo_valor
+        continua = input("Alteração efetuada com sucesso, deseja efetuar outra alteração? (Entre com sim ou nao)\n")
+        while continua.lower() != 'sim' and continua.lower() != 'nao':
+            continua = input("ERRO: Digite apenas sim ou nao, deseja efetuar outra alteração? ")
+        
 def main():
     # Declara e monta o dicionário do filme
     filme_dict = {}
@@ -127,3 +132,5 @@ def main():
             print("Função em produção")
         elif escolha == 6:
             return
+
+main()

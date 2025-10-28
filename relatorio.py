@@ -85,4 +85,8 @@ def main():
             listSessionFromDateToDate(session_dict)
         elif escolha == 4:
             return
+<<<<<<< HEAD
             
+=======
+            
+>>>>>>> 41f6d4487537221036e8daa55c60dfb99ac8a54b

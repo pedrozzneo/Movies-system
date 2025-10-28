@@ -199,4 +199,8 @@ def main():
         elif escolha == 5:
             excluir(sessao_dict)
         elif escolha == 6:
+<<<<<<< HEAD
             return
+=======
+            return
+>>>>>>> 41f6d4487537221036e8daa55c60dfb99ac8a54b
