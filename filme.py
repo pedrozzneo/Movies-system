@@ -21,19 +21,29 @@ def listar_dict(filme_dict):
     for key in filme_dict.keys():
         print(f"Código: {key}\n\tTítulo: {filme_dict[key][0]} // Ano de Lançamento: {filme_dict[key][1]}\n\tDiretor: {filme_dict[key][2]} // Elenco principal: {filme_dict[key][3]}\n")
 
-def build_dict(filme_dict):
-    # Abre o arquivo, salva seu conteúdo dividido por linhas em uma variável local e depois fecha o arquivo
-    arquivo = open("arquivos/filme.txt")
-    conteudo = arquivo.readlines()
-    arquivo.close()
+def existe_arquivo(nome_arquivo):
+    import os
+    if os.path.exists(nome_arquivo):
+        return True
+    else:
+        return False
 
-    # Extrai a chave e seus atributos organizados a cada linha separados por /
-    for linha in conteudo:
-        elementos = linha.split("/")
-        # Código, Nome, Ano, Diretor, Atores
-        filme_dict[elementos[0]] = [elementos[1], elementos[2], elementos[3], elementos[4].replace("\n","").strip()]
+def build_dict(filme_dict, nome_arquivo): # Abre o arquivo, salva seu conteúdo dividido por linhas diretamente no dicionário
+    if existe_arquivo(nome_arquivo):
+        arquivo = open(nome_arquivo, 'r')
+        # Extrai a chave e seus atributos organizados a cada linha separados por '/'
+        for linha in arquivo:
+            elementos = linha.split("/")
+            # Código, Nome, Ano, Diretor, Atores
+            filme_dict[elementos[0]] = [elementos[1], elementos[2], elementos[3], elementos[4].replace("\n","").strip()]
+        arquivo.close()
+    else:
+        print("Não foi encontrado arquivo de dados.\nVocê será redirecionado para inclusão de dados em novo arquivo.\n")
+        arquivo = open(nome_arquivo, 'w')
+        arquivo.close()
+        incluir_filme(filme_dict,nome_arquivo)
 
-def incluir_filme(filme_dict):
+def incluir_filme(filme_dict,nome_arquivo):
     # Garante a entrada de um código único
     codigo = input("Código: ")
     while codigo in filme_dict.keys():
@@ -59,7 +69,7 @@ def incluir_filme(filme_dict):
     conteudo = "\n" + codigo + "/" + titulo + "/" + lancamento + "/" + diretor + "/" + elenco
 
     # Escreve no arquivo
-    arquivo = open("arquivos/filme.txt", "a")
+    arquivo = open(nome_arquivo, "a")
     arquivo.write(conteudo)
     arquivo.close()
 
@@ -74,30 +84,46 @@ def detalhar_filme(filme_dict, key):
         input("Pressione Enter para retornar ao menu inicial.")
         print()
 
+def alterar_filme(filme_dict, key):
+    detalhar_filme(filme_dict,key)
+    print("\nMenu de alteração de filmes:\n\t1 - Título\n\t2 - Ano de lançamento\n\t3 - Diretor\n\t4 - Elenco")
+    opc = int(input("Escolha um para alterar: "))
+    while opc < 1 and opc > 4:
+        opc = int(input("Opção inválida, escolha de 1 à 4! Escolha um para alterar: "))
+    novo_valor = input("Digite o novo valor: ")
+    filme_dict[key][opc] = novo_valor
+
 def main():
     # Declara e monta o dicionário do filme
     filme_dict = {}
-    build_dict(filme_dict)
+    nome_arquivo = "./arquivos/filme.txt"
+    build_dict(filme_dict,nome_arquivo)
 
     # Oferece opções até o usuário decidir sair (6)
     escolha = 0
     while escolha != 6:
         escolha = menu()
-        if escolha == 1:
+        if escolha == 1: # Listar todos os filmes no catálogo
             listar_dict(filme_dict)
             input("Pressione Enter para retornar ao menu principal...")
-        elif escolha == 2:
+
+        elif escolha == 2: # Listar um filme específico
             key = input("Informe o código do filme: ")
+            while key not in filme_dict.keys():
+                key = input("Código inexistente! Informe o código do filme que deseja detalhar: ")
             detalhar_filme(filme_dict, key)
-        elif escolha == 3:
+
+        elif escolha == 3: # Incluir novo filme no catálogo
             incluir_filme(filme_dict)
-        elif escolha == 4:
-            #alterar_filme(filme_dict, key)
-            print("Função em produção")
-        elif escolha == 5:
+
+        elif escolha == 4: # Alterar dados de um filme do catálogo (não é possível alterar Chave/Key/Código)
+            key = input("Informe o código do filme que deseja alterar: ")
+            while key not in filme_dict.keys():
+                key = input("Código inexistente! Informe o código do filme que deseja alterar: ")
+            alterar_filme(filme_dict,key)
+
+        elif escolha == 5: # Excluir um filme do catálogo
             #excluir_filme(filme_dict, key)
             print("Função em produção")
         elif escolha == 6:
             return
-
-main()
