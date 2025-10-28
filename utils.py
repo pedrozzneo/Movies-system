@@ -1,10 +1,16 @@
+def file_exists(nome_arquivo):
+    import os
+    if os.path.exists(nome_arquivo):
+        return True
+    else:
+        return False
+
 def build_dict_through_file(file_name):
     # Declara o caminho para acessar o arquivo
     file_path = f"arquivos/{file_name}.txt"
     
     # Verifica se o arquivo existe
-    import os
-    if not os.path.exists(file_path):
+    if not file_exists(file_path):
         print(f"Arquivo {file_path} não encontrado. Dados vazios serão usados.")
         return {}
     
