@@ -18,27 +18,27 @@ def build_dict_through_file(file_name):
     arquivo = open(file_path, "r")
 
     # Monta o dicionário a partir do arquivo
-    data_dict = {}
+    dict = {}
     for linha in arquivo:
-        partes = linha.strip().split("/")
-        if not partes or partes == ['']:
-            continue
+        # Separa os dados pelo separador '/'
+        partes = linha.split("/")
+        
+        # Tratamento específico do sessao
         if file_name == "sessao":
-            if len(partes) < 5:
-                # Linha inválida para sessao; ignora
-                continue
+            # Constrói a key e o value para colocar no dict
             key = (partes[0], partes[1], partes[2], partes[3])
-            resto = partes[4:]
-            value = resto[0] if len(resto) == 1 else resto
-            data_dict[key] = value
+            value = partes[4]
+            dict[key] = value
+
+        # Os outros seguem o mesmo padrão
         else:
             key = partes[0]
             value = partes[1:]
-            data_dict[key] = value
+            dict[key] = value
 
     # Fecha o arquivo e retorna o dicionário
     arquivo.close()
-    return data_dict
+    return dict
 
 def save_dict_to_file(file_path, data_dict):
     # Abre o arquivo para escrita
