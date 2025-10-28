@@ -1,9 +1,9 @@
-201/Interstellar/2014/Christopher Nolan/Matthew McConaughey Anne Hathaway  
-202/Avatar 2/2022/James Cameron/Sam Worthington Zoe Saldana  
-203/Parasita/2019/Bong Joon-ho/Song Kang-ho Cho Yeo-jeong  
-204/Oppenheimer/2023/Christopher Nolan/Cillian Murphy Robert Downey Jr  
-205/Top Gun Maverick/2022/Joseph Kosinski/Tom Cruise Miles Teller  
-206/Barbie/2023/Greta Gerwig/Margot Robbie Ryan Gosling  
-207/John Wick 4/2023/Chad Stahelski/Keanu Reeves Donnie Yen  
-208/Duna 2/2024/Denis Villeneuve/Timothée Chalamet Zendaya  
-209/Homem-Aranha Sem Volta Para Casa/2021/Jon Watts/Tom Holland Zendaya  
+201/Interstellar/2014/Christopher Nolan/Matthew McConaughey Anne Hathaway
+202/Avatar: O caminho da Agua/2022/James Cameron/Sam Worthington Zoe Saldana
+203/Parasita/2019/Bong Joon-ho/Song Kang-ho Cho Yeo-jeong
+204/Oppenheimer/2023/Christopher Nolan/Cillian Murphy Robert Downey Jr
+205/Top Gun Maverick/2022/Joseph Kosinski/Tom Cruise Miles Teller
+206/Barbie/2023/Greta Gerwig/Margot Robbie Ryan Gosling
+207/John Wick 4/2023/Chad Stahelski/Keanu Reeves Donnie Yen
+208/Duna 2/2024/Denis Villeneuve/Timothée Chalamet Zendaya
+209/Homem-Aranha Sem Volta Para Casa/2021/Jon Watts/Tom Holland Zendaya
