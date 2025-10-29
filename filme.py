@@ -14,7 +14,7 @@ def menu():
 
         escolha = int(input("\nEscolha: "))
         if escolha > 6 or escolha < 1:
-                input("Opção inexistente (escolha de 1 a 6)! Pressione enter para ser redirecionado ao menu novamente.")
+            print("Opção inexistente (escolha de 1 a 6)!")
         else:
             return escolha
 
@@ -76,8 +76,6 @@ def detalhar_filme(filme_dict, key): # Exibe as informações de um filme
         print(f"Título: {filme_dict[key][0]} // Ano de Lançamento: {filme_dict[key][1]}\n\tDiretor: {filme_dict[key][2]} // Elenco principal: {filme_dict[key][3]}\n")
     else:
         print("Código não encontrado!")
-        input("Pressione Enter para retornar ao menu inicial.")
-        print()
 
 def alterar_filme(filme_dict, key, nome_arquivo): # Altera uma das informações de um filme
     detalhar_filme(filme_dict,key)
@@ -109,7 +107,6 @@ def main():
         escolha = menu()
         if escolha == 1: # Listar todos os filmes no catálogo
             listar_dict(filme_dict)
-            input("Pressione Enter para retornar ao menu principal...")
 
         elif escolha == 2: # Listar um filme específico
             key = input("Informe o código do filme: ")

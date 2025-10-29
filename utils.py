@@ -86,9 +86,9 @@ def menu(titulo):
         print("4- Alterar um elemento")
         print("5- Excluir (após confirmação dos dados)")
         print("6- Sair")
+        
+        # Permite o usuário escolher e valida
         escolha = int(input("\nEscolha: "))
-
-        # Informa caso a entrada foi inválida
         if escolha > 6 or escolha < 1:
             print("Escolha inválida")
         else:

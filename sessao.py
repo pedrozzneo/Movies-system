@@ -162,6 +162,3 @@ def main():
             # Salva todas as alterações no arquivo antes de sair
             utils.save_dict_to_file("sessao", sessao_dict)
             return "EXIT"
-
-        # Espera confirmação do usuário para continuar em qualquer fluxo
-        input("\nPressione alguma tecla para continuar...")
