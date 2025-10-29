@@ -99,7 +99,3 @@ def main():
                 print("Nenhuma sessão encontrada no período especificado")
         elif escolha == 4:
             return "EXIT"
-
-        # Espera confirmação do usuário para continuar em qualquer fluxo
-        input("\nPressione alguma tecla para continuar...")
-

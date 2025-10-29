@@ -14,7 +14,7 @@ def menu():
 
         escolha = int(input("\nEscolha: "))
         if escolha > 6 or escolha < 1:
-                input("Opção inexistente (escolha de 1 a 6)! Pressione enter para ser redirecionado ao menu novamente.")
+            print("Opção inexistente (escolha de 1 a 6)!")
         else:
             return escolha
 
@@ -33,20 +33,20 @@ def listar_dict(filme_dict): # Lista os filmes, ordenados por inclusão no siste
     for key in filme_dict.keys():
         print(f"Código: {key}\n\tTítulo: {filme_dict[key][0]} // Ano de Lançamento: {filme_dict[key][1]}\n\tDiretor: {filme_dict[key][2]} // Elenco principal: {filme_dict[key][3]}\n")
     
-def build_dict(filme_dict, nome_arquivo): # Abre o arquivo, salva seu conteúdo dividido por linhas diretamente no dicionário
-    if utils.file_exists(nome_arquivo):
-        arquivo = open(nome_arquivo, 'r')
-        # Extrai a chave e seus atributos organizados a cada linha separados por '/'
-        for linha in arquivo:
-            elementos = linha.split("/")
-            # Código, Nome, Ano, Diretor, Atores
-            filme_dict[elementos[0]] = [elementos[1], elementos[2], elementos[3], elementos[4].replace("\n","").strip()]
-        arquivo.close()
-    else:
-        print("Não foi encontrado arquivo de dados.\nVocê será redirecionado para inclusão de dados em novo arquivo.\n")
-        arquivo = open(nome_arquivo, 'w')
-        arquivo.close()
-        incluir_filme(filme_dict,nome_arquivo)
+# def build_dict(filme_dict, nome_arquivo): # Abre o arquivo, salva seu conteúdo dividido por linhas diretamente no dicionário
+#     if utils.file_exists(nome_arquivo):
+#         arquivo = open(nome_arquivo, 'r')
+#         # Extrai a chave e seus atributos organizados a cada linha separados por '/'
+#         for linha in arquivo:
+#             elementos = linha.split("/")
+#             # Código, Nome, Ano, Diretor, Atores
+#             filme_dict[elementos[0]] = [elementos[1], elementos[2], elementos[3], elementos[4].replace("\n","").strip()]
+#         arquivo.close()
+#     else:
+#         print("Não foi encontrado arquivo de dados.\nVocê será redirecionado para inclusão de dados em novo arquivo.\n")
+#         arquivo = open(nome_arquivo, 'w')
+#         arquivo.close()
+#         incluir_filme(filme_dict,nome_arquivo)
 
 def incluir_filme(filme_dict,nome_arquivo): # Inclui um novo filme no dicionário e registra em arquivo
     # Garante a entrada de um código único
@@ -86,8 +86,6 @@ def detalhar_filme(filme_dict, key): # Exibe as informações de um filme
         print(f"Título: {filme_dict[key][0]} // Ano de Lançamento: {filme_dict[key][1]}\n\tDiretor: {filme_dict[key][2]} // Elenco principal: {filme_dict[key][3]}\n")
     else:
         print("Código não encontrado!")
-        input("Pressione Enter para retornar ao menu inicial.")
-        print()
 
 def alterar_filme(filme_dict, key, nome_arquivo): # Altera uma das informações de um filme
     detalhar_filme(filme_dict,key)
@@ -110,7 +108,7 @@ def main():
     # Declara e monta o dicionário do filme
     filme_dict = {}
     nome_arquivo = "./arquivos/filme.txt"
-    build_dict(filme_dict,nome_arquivo)
+    # build_dict(filme_dict,nome_arquivo)
 
     # Oferece opções até o usuário decidir sair (6)
     escolha = 0
@@ -150,5 +148,3 @@ def main():
         elif escolha == 6:
             salvar_arquivo(filme_dict,nome_arquivo)
             return
-
-main()

@@ -35,7 +35,7 @@ def incluir(sala_dict):
 
     # Adiciona ao dicionário a nova chave e seus elementos
     sala_dict[codigo] = [nome, capacidade, exibicao, acessivel]
-    return "SUCCESS"
+    return True
 
 def alterar(sala_dict):
     # Força uma entrada válida de código para continuar com a operação
@@ -106,47 +106,44 @@ def main():
 
         # Trata a escolha de listar todos
         if escolha == 1:
-            result = listar_todos(sala_dict)
-            if not result:
-               print("Lista de salas está vazia")
+            status = listar_todos(sala_dict)
+            if not status:
+                print("Lista de salas está vazia")
 
         # Trata a escolha de listar um elemento específico
         elif escolha == 2:
-            result = listar_especifico(sala_dict)
-            if not result:
+            status = listar_especifico(sala_dict)
+            if not status:
                 print("Código não encontrado")
 
         # Trata a escolha de incluir um novo elemento
         elif escolha == 3:
-            result = incluir(sala_dict)
-            if result == "SUCCESS":
+            status = incluir(sala_dict)
+            if status:
                 print("Sala incluída com sucesso")
         
         # Trata a escolha de alterar um elemento existente
         elif escolha == 4:
-            result = alterar(sala_dict)
-            if result == "NO_DATA":
+            status = alterar(sala_dict)
+            if status == "NO_DATA":
                 print("Código não encontrado")
-            elif result == "CANCELLED":
+            elif status == "CANCELLED":
                 print("Operação cancelada")
-            elif result == "SUCCESS":
+            elif status == "SUCCESS":
                 print("Alteração realizada com sucesso")
         
         # Trata a escolha de excluir um elemento existente
         elif escolha == 5:
-            result = excluir(sala_dict)
-            if result == "NO_DATA":
+            status = excluir(sala_dict)
+            if status == "NO_DATA":
                 print("Código não encontrado")
-            elif result == "CANCELLED":
+            elif status == "CANCELLED":
                 print("Operação cancelada")
-            elif result == "SUCCESS":
+            elif status == "SUCCESS":
                 print("Exclusão realizada com sucesso")
         
         # Trata a escolha de sair
         elif escolha == 6:
             # Salva todas as alterações no arquivo antes de sair
-            utils.save_dict_to_file("arquivos/sala.txt", sala_dict)
+            utils.save_dict_to_file("sala", sala_dict)
             return "EXIT"
-
-        # Espera confirmação do usuário para continuar
-        input("\nPressione alguma tecla para continuar...")

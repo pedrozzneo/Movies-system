@@ -9,71 +9,79 @@ def build_dict_through_file(file_name):
     # Declara o caminho para acessar o arquivo
     file_path = f"arquivos/{file_name}.txt"
     
+    # Declara o dicionário
+    dict = {}
+
     # Verifica se o arquivo existe
     if not file_exists(file_path):
-        print(f"Arquivo {file_path} não encontrado. Dados vazios serão usados.")
-        return {}
+        return dict
     
     # Abre o arquivo e lê o conteúdo
     arquivo = open(file_path, "r")
 
-    # Monta o dicionário a partir do arquivo
-    data_dict = {}
+    # Percorre cada linha do arquivo para montar o dict
     for linha in arquivo:
-        partes = linha.strip().split("/")
-        if not partes or partes == ['']:
-            continue
+        # Separa os dados pelo separador '/'
+        partes = linha.replace("\n","").split("/")
+        
+        # Tratamento específico de sessao para construir suas keys e values
         if file_name == "sessao":
-            if len(partes) < 5:
-                # Linha inválida para sessao; ignora
-                continue
             key = (partes[0], partes[1], partes[2], partes[3])
-            resto = partes[4:]
-            value = resto[0] if len(resto) == 1 else resto
-            data_dict[key] = value
-        else:
+            value = partes[4]
+
+        # Tratamento específico de sala para construir suas keys e values
+        elif file_name == "sala":
             key = partes[0]
             value = partes[1:]
-            data_dict[key] = value
+
+        # Tratamento específico de filme para construir suas keys e values
+        elif file_name == "filme":
+            key = partes[0]
+            partes[4] = value[partes[4]].split(", ") # É pra ser uma lista de atores
+            value = partes[1:]
+        
+        # Coloca na estrutura de dicionários
+        dict[key] = value
 
     # Fecha o arquivo e retorna o dicionário
     arquivo.close()
-    return data_dict
+    return dict
 
-def save_dict_to_file(file_path, data_dict):
+def save_dict_to_file(file_name, dict):
     # Abre o arquivo para escrita
-    file = open(file_path, "w")
+    file = open(f"arquivos/{file_name}.txt", "w")
     
-    # Escreve cada linha diretamente no arquivo
-    first_line_written = False
-    for key in data_dict:
-        if isinstance(key, tuple):
-            # Sessao: chave com 4 partes
-            value = data_dict[key]
-            if isinstance(value, list):
-                partes = list(key) + value
-            else:
-                partes = list(key) + [value]
-            linha = "/".join(partes)
-        else:
-            # Demais: chave string + lista de valores
-            partes = [key] + data_dict[key]
-            linha = "/".join(partes)
-        if first_line_written:
-            file.write("\n")
-        file.write(linha)
-        first_line_written = True
-    
-    # Fecha o arquivo
-    file.close()
-    
-    return True
+    # Percorre todo o dicionário para codificar seus dados em strings no loop de contador e chave
+    for i, key in enumerate(dict):
+        # Converte os itens de sessao para texto no formato correto 
+        if file_name == "sessao":
+            linha = f"{"/".join(key)}/{dict[key]}"
 
+        # Converte os itens de sala para texto no formato correto 
+        elif file_name == "sala":
+            linha = f"{key}/{"/".join(dict[key])}" 
+
+        # Converte os itens de sessao para texto no formato correto
+        elif file_name == "sessao":
+            dict[key][3] = ", ".join(dict[key][3])
+            linha = f"{key}/{"/".join(dict[key])}"
+
+        # Coloca o '\n' desde que não seja o último item para evitar linhas em branco
+        if i != len(dict) - 1:
+            linha += "\n"
+
+        # Escreve a linha no arquivo
+        file.write(linha)
+    
+    # fecha o arquivo e retorna
+    file.close()
+    return True
 
 def menu(titulo):
     # Força uma entrada válida para escolha
     escolha = 0
     while escolha > 6 or escolha < 1:
+        # Exibe as opções e coleta a escolha do usuário no final
         print(f"\nSubmenu de {titulo}:")
         print("1- Listar todos")
         print("2- Listar um elemento específico")
@@ -81,8 +89,9 @@ def menu(titulo):
         print("4- Alterar um elemento")
         print("5- Excluir (após confirmação dos dados)")
         print("6- Sair")
+        
+        # Permite o usuário escolher e valida
         escolha = int(input("\nEscolha: "))
-
         if escolha > 6 or escolha < 1:
             print("Escolha inválida")
         else:
