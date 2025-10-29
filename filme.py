@@ -18,133 +18,105 @@ def menu():
         else:
             return escolha
 
-def salvar_arquivo(filme_dict, nome_arquivo): # Sobreescreve o arquivo com o dicionário / chamada apenas no encerramento
-    arquivo = open(nome_arquivo,'w')
-    contador = 0
-    for key in filme_dict.keys():
-        if contador == len(filme_dict)-1:
-            arquivo.write(key+'/'+filme_dict[key][0]+'/'+filme_dict[key][1]+'/'+filme_dict[key][2]+'/'+filme_dict[key][3])
-        else:
-            arquivo.write(key+'/'+filme_dict[key][0]+'/'+filme_dict[key][1]+'/'+filme_dict[key][2]+'/'+filme_dict[key][3]+'\n')
-        contador+=1
-    arquivo.close
+def list_dict(film_dict):# Lista os filmes, ordenados por inclusão no sistema
+    for key in film_dict.keys():
+        print(f"Código: {key}")
+        print(f"\tTítulo: {film_dict[key][0]} // Ano de Lançamento: {film_dict[key][1]}")
+        print(f"\tDiretor: {film_dict[key][2]} // Elenco principal: {film_dict[key][3]}\n")
 
-def listar_dict(filme_dict): # Lista os filmes, ordenados por inclusão no sistema
-    for key in filme_dict.keys():
-        print(f"Código: {key}\n\tTítulo: {filme_dict[key][0]} // Ano de Lançamento: {filme_dict[key][1]}\n\tDiretor: {filme_dict[key][2]} // Elenco principal: {filme_dict[key][3]}\n")
-    
-# def build_dict(filme_dict, nome_arquivo): # Abre o arquivo, salva seu conteúdo dividido por linhas diretamente no dicionário
-#     if utils.file_exists(nome_arquivo):
-#         arquivo = open(nome_arquivo, 'r')
-#         # Extrai a chave e seus atributos organizados a cada linha separados por '/'
-#         for linha in arquivo:
-#             elementos = linha.split("/")
-#             # Código, Nome, Ano, Diretor, Atores
-#             filme_dict[elementos[0]] = [elementos[1], elementos[2], elementos[3], elementos[4].replace("\n","").strip()]
-#         arquivo.close()
-#     else:
-#         print("Não foi encontrado arquivo de dados.\nVocê será redirecionado para inclusão de dados em novo arquivo.\n")
-#         arquivo = open(nome_arquivo, 'w')
-#         arquivo.close()
-#         incluir_filme(filme_dict,nome_arquivo)
-
-def incluir_filme(filme_dict,nome_arquivo): # Inclui um novo filme no dicionário e registra em arquivo
+def include_film(film_dict): # Inclui um novo filme no dicionário e registra em arquivo
     # Garante a entrada de um código único
-    codigo = input("Código: ")
-    while codigo in filme_dict.keys():
-        codigo = input("Código já em uso, insira outro: ")
+    key = input("Código: ")
+    while key in film_dict.keys():
+        key = input("Código já em uso, insira outro: ")
     
     # Obtém os atributos do filme
-    titulo = input("Informe o título do filme: ")
-    lancamento = input("Informe o ano de lançamento do filme: ")
-    diretor = input("Informe o nome do diretor: ")
+    title = input("Informe o título do filme: ")
+    year = input("Informe o ano de lançamento do filme: ")
+    director = input("Informe o nome do diretor: ")
 
     # Obtém os nomes dos atores/atrizes e armazena em uma única string
-    elenco = ""
-    tamanhoElenco = int(input("Informe quantos atores/atrizes quer incluir no elenco: "))
+    actors = []
+    actors_length = int(input("Informe quantos atores/atrizes quer incluir no elenco: "))
     i=0
-    while i < tamanhoElenco:
+    while i < actors_length:
         i+=1
-        nome = input(f"Informe o nome do {i}º Ator/Atriz: ")
-        elenco = elenco + nome
-        if i < tamanhoElenco:
-            elenco = elenco + " "
+        actor_name = input(f"Informe o nome do {i}º Ator/Atriz: ")
+        if i < actors_length:
+            actors.append(actor_name + ", ")
+        else:
+            actors.append(actor_name)
 
     # Formata o conteúdo na estrutura do arquivo
-    conteudo = "\n" + codigo + "/" + titulo + "/" + lancamento + "/" + diretor + "/" + elenco
+    #film = "\n" + key + "/" + title + "/" + year + "/" + director + "/"
+    
+    #for a in actors
+    #    film += a
 
     # Escreve no arquivo
-    arquivo = open(nome_arquivo, "a")
-    arquivo.write(conteudo)
-    arquivo.close()
+    #file = open(file_name, "a")
+    #file.write(film)
+    #file.close()
 
     # Adiciona ao dicionário a nova chave e seus elementos
-    filme_dict[codigo] = [titulo, lancamento, diretor, elenco]
+    film_dict[key] = [title, year, director, actors]
+    list_film(film_dict,key)
 
-def detalhar_filme(filme_dict, key): # Exibe as informações de um filme
-    if key in filme_dict:
-        print(f"Título: {filme_dict[key][0]} // Ano de Lançamento: {filme_dict[key][1]}\n\tDiretor: {filme_dict[key][2]} // Elenco principal: {filme_dict[key][3]}\n")
+def list_film(film_dict, key): # Exibe as informações de um filme
+    if key in film_dict:
+        print(f"Título: {film_dict[key][0]} // Ano de Lançamento: {film_dict[key][1]}\n\tDiretor: {film_dict[key][2]} // Elenco principal: {film_dict[key][3]}\n")
     else:
         print("Código não encontrado!")
 
-def alterar_filme(filme_dict, key, nome_arquivo): # Altera uma das informações de um filme
-    detalhar_filme(filme_dict,key)
-    print("\nMenu de alteração de filmes:\n\t1 - Título\n\t2 - Ano de lançamento\n\t3 - Diretor\n\t4 - Elenco")
-    # Força uma entrada válida
-    opc = int(input("Escolha um para alterar: "))
-    while opc < 1 and opc > 4:
-        opc = int(input("Opção inválida, escolha de 1 à 4! Escolha um para alterar: "))
-    novo_valor = input("Informe o novo valor: ")
-    confirma = input(f"Confirmação de alteração:\n\tSerá alterado: {filme_dict[key][opc-1]} \n\tpor: {novo_valor}\nConfirma a alteração? (Entre com sim ou nao): ")
-    while confirma.lower() != 'sim' and confirma.lower() != 'nao':
-        confirma = input("Erro! Digite apenas sim ou nao.\nConfirma alteração? ")
-    if confirma.lower() == 'sim':
-        filme_dict[key][opc-1] = novo_valor
-        return True
-    else:
-        return False
-
+def alterar_filme(film_dict, key, file_name): # Altera uma das informações de um filme
+    list_film(film_dict,key)
+    continua = 'sim'
+    while continua.lower() == 'sim':
+        print("\nMenu de alteração de filmes:\n\t1 - Título\n\t2 - Ano de lançamento\n\t3 - Diretor\n\t4 - Elenco")
+        opc = int(input("Escolha um para alterar: "))
+        while opc < 1 and opc > 4:
+            opc = int(input("Opção inválida, escolha de 1 à 4! Escolha um para alterar: "))
+        novo_valor = input("Digite o novo valor: ")
+        film_dict[key][opc-1] = novo_valor
+        continua = input("Alteração efetuada com sucesso, deseja efetuar outra alteração? (Entre com sim ou nao)\n")
+        while continua.lower() != 'sim' and continua.lower() != 'nao':
+            continua = input("ERRO: Digite apenas sim ou nao, deseja efetuar outra alteração? ")
+        arquivo = open(file_name,'w')
+        #for key in film_dict.keys():
+        #    arquivo.write(film_dict)
+        #arquivo.close
+        
 def main():
     # Declara e monta o dicionário do filme
-    filme_dict = {}
-    nome_arquivo = "./arquivos/filme.txt"
-    # build_dict(filme_dict,nome_arquivo)
+    file_name = "filme"
+    film_dict = utils.build_dict_through_file(file_name)
+    # build_dict(film_dict,file_name)
 
     # Oferece opções até o usuário decidir sair (6)
     escolha = 0
     while escolha != 6:
         escolha = menu()
         if escolha == 1: # Listar todos os filmes no catálogo
-            listar_dict(filme_dict)
+            list_dict(film_dict)
 
         elif escolha == 2: # Listar um filme específico
             key = input("Informe o código do filme: ")
-            while key not in filme_dict.keys():
+            while key not in film_dict.keys():
                 key = input("Código inexistente! Informe o código do filme que deseja detalhar: ")
-            detalhar_filme(filme_dict, key)
+            list_film(film_dict, key)
 
         elif escolha == 3: # Incluir novo filme no catálogo
-            incluir_filme(filme_dict)
+            include_film(film_dict)
 
         elif escolha == 4: # Alterar dados de um filme do catálogo (não é possível alterar Chave/Key/Código)
-            continua = 'sim'
-            while continua.lower() == 'sim':
-                # Força entrada de dados válida para Código do filme
-                key = input("Informe o código do filme que deseja alterar: ")
-                while key not in filme_dict.keys():
-                    key = input("Código inexistente! Informe o código do filme que deseja alterar: ")
-                
-                if alterar_filme(filme_dict,key,nome_arquivo):
-                    print("Alterado com sucesso!!")
-                    continua = input("Deseja realizar outra alteração? (Entre apenas com sim ou nao): ")
-                    while continua.lower() != 'sim' and continua.lower() != 'nao':
-                        continua = input("Erro! Digite apenas sim ou nao, deseja efetuar outra alteração? ")
-                else:
-                    print("Alteração cancelada! Redirecionando ao menu principal!")
+            key = input("Informe o código do filme que deseja alterar: ")
+            while key not in film_dict.keys():
+                key = input("Código inexistente! Informe o código do filme que deseja alterar: ")
+            alterar_filme(film_dict,key,file_name)
 
         elif escolha == 5: # Excluir um filme do catálogo
-            #excluir_filme(filme_dict, key)
+            #excluir_filme(film_dict, key)
             print("Função em produção")
         elif escolha == 6:
-            salvar_arquivo(filme_dict,nome_arquivo)
+            utils.save_dict_to_file(file_name, film_dict)
             return

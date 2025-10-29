@@ -23,7 +23,7 @@ def build_dict_through_file(file_name):
     for linha in arquivo:
         # Separa os dados pelo separador '/'
         partes = linha.replace("\n","").split("/")
-        
+
         # Tratamento específico de sessao para construir suas keys e values
         if file_name == "sessao":
             key = (partes[0], partes[1], partes[2], partes[3])
@@ -39,10 +39,10 @@ def build_dict_through_file(file_name):
             key = partes[0]
             partes[4] = value[partes[4]].split(", ") # É pra ser uma lista de atores
             value = partes[1:]
-        
+
         # Coloca na estrutura de dicionários
         dict[key] = value
-
+        
     # Fecha o arquivo e retorna o dicionário
     arquivo.close()
     return dict
@@ -61,8 +61,8 @@ def save_dict_to_file(file_name, dict):
         elif file_name == "sala":
             linha = f"{key}/{"/".join(dict[key])}" 
 
-        # Converte os itens de sessao para texto no formato correto
-        elif file_name == "sessao":
+        # Converte os itens de filme para texto no formato correto
+        elif file_name == "filme":
             dict[key][3] = ", ".join(dict[key][3])
             linha = f"{key}/{"/".join(dict[key])}"
 
