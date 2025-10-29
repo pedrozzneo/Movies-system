@@ -37,3 +37,4 @@ def main():
         elif escolha == 4:
             relatorio.main()
         return "EXIT"
+main()

@@ -37,8 +37,8 @@ def build_dict_through_file(file_name):
         # Tratamento específico de filme para construir suas keys e values
         elif file_name == "filme":
             key = partes[0]
-            actors = value[partes[4]].split(", ")
-            value = partes[1:4] + actors
+            partes[4] = value[partes[4]].split(", ") # É pra ser uma lista de atores
+            value = partes[1:]
         
         # Coloca na estrutura de dicionários
         dict[key] = value
@@ -51,29 +51,31 @@ def save_dict_to_file(file_name, dict):
     # Abre o arquivo para escrita
     file = open(f"arquivos/{file_name}.txt", "w")
     
-    # Percorre todo o dicionário para codificar seus dados em strings
-    for key, i in dict:
-        # Tratamento específico de sessao para converter seus itens em texto
+    # Percorre todo o dicionário para codificar seus dados em strings no loop de contador e chave
+    for i, key in enumerate(dict):
+        # Converte os itens de sessao para texto no formato correto 
         if file_name == "sessao":
-            linha = key[0] + "/" + key[1] + "/" +  key[2] + "/" +  key[3] + "/" + dict[key]
+            linha = f"{"/".join(key)}/{dict[key]}"
 
-        # Tratamento específico de sala para converter seus itens em texto
+        # Converte os itens de sala para texto no formato correto 
         elif file_name == "sala":
-            linha = key + "/" + dict[key][0] + "/" +  dict[key][1] + "/" +  dict[key][2] + "/" + dict[key][3]
+            linha = f"{key}/{"/".join(dict[key])}" 
 
-        # Tratamento específico de sessao para converter seus itens em texto
-        # elif file_name == "sessao":
-        #     linha = key + "/" + dict[key][0] + "/" +  dict[key][1] + "/" +  dict[key][2] + "/" + dict[key][3]
+        # Converte os itens de sessao para texto no formato correto
+        elif file_name == "sessao":
+            dict[key][3] = ", ".join(dict[key][3])
+            linha = f"{key}/{"/".join(dict[key])}"
 
         # Coloca o '\n' desde que não seja o último item para evitar linhas em branco
         if i != len(dict) - 1:
             linha += "\n"
 
-    # Escreve e fecha o arquivo
-    file.write(linha)
+        # Escreve a linha no arquivo
+        file.write(linha)
+    
+    # fecha o arquivo e retorna
     file.close()
     return True
-
 
 def menu(titulo):
     # Força uma entrada válida para escolha
