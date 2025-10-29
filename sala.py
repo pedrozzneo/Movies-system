@@ -21,58 +21,59 @@ def listar_especifico(sala_dict):
     else:
         return False
 
-def incluir(sala_dict):
-    # Garante a entrada de um código único
-    codigo = input("codigo: ")
-    while codigo in sala_dict.keys():
-        codigo = input("código já em uso, insira outro: ")
+def incluir(dict):
+    # Recebe a key código
+    key = input("codigo: ")
     
-    # Obtém todos os outros atributos
+    # Retorna caso essa key já esteja em uso
+    if key in dict.keys():
+        return False
+    
+    # Obtém todos os valores
     nome = input("Nome: ")
     capacidade = input("Capacidade: ")
     exibicao = input("Tipo de exibição: ")
     acessivel = input("Acessível: ")
 
     # Adiciona ao dicionário a nova chave e seus elementos
-    sala_dict[codigo] = [nome, capacidade, exibicao, acessivel]
+    dict[key] = [nome, capacidade, exibicao, acessivel]
     return True
 
-def alterar(sala_dict):
-    # Força uma entrada válida de código para continuar com a operação
-    codigo = input("Código: ")
-    if codigo not in sala_dict:
-        return "NO_DATA"
+def alterar(dict):
+    # Recebe a key código
+    key = input("codigo: ")
     
-    # Exibe os dados atuais para o escolher o que alterar
-    print(f"Nome: {sala_dict[codigo][0]} // Capacidade: {sala_dict[codigo][1]} // Tipo de exibição: {sala_dict[codigo][2]} // Acessível: {sala_dict[codigo][3]}")
+    # Retorna caso essa key não exista no dicionário
+    if key not in dict:
+        return "NO_DATA"
 
-    # Declara dicionário que referencia cada tipo de dado e sua posição no sala_dict
-    posicoes_dict = {1: "Nome", 2: "Capacidade", 3: "Tipo de exibição", 4: "Acessível"}
+    # Exibe as opções que podem ser trocadas da key escolhida pela posicao
+    print(f"\nQual dado deseja mudar?\n1- Nome: {dict[key][0]} // 2- Capacidade: {dict[key][1]} // 3- Tipo de exibição: {dict[key][2]} // 4- Acessível: {dict[key][3]}")
 
-    # Força uma entrada válida de qual dado o usuário quer alterar pela posicao
+    # Força uma posição válida para alterar
     posicao = 0
-    while posicao not in posicoes_dict.keys():
-        # Exibe as opções que podem ser trocadas ao usuário
-        posicao = int(input(f"\nQual dado deseja mudar? \n1- {posicoes_dict[1]}\n2- {posicoes_dict[2]}\n3- {posicoes_dict[3]}\n4- {posicoes_dict[4]}\nEscolha: "))
-        
+    while posicao < 1 or posicao > 4:
+        # Coleta a posição do dado que o usuário quer alterar
+        posicao = int(input(f"\nEscolha: "))
+
         # Verifica se a posição é inválida
-        if posicao not in posicoes_dict.keys():
+        if posicao < 1 or posicao > 4:
             print("Posição inválida!")
 
-    # Coleta o valor que vai ser substituir o anterior
+    # Coleta o novo valor que vai substituir o anterior
     novo_valor = input("Digite o novo valor: ")
     
     # Verifica se o usuário realmente deseja confirmar a operação
     confirmacao = ""
     while confirmacao.lower() != "sim" and confirmacao.lower() != "nao":
-        confirmacao = input(f"{sala_dict[codigo][posicao-1]} -> {novo_valor} \nConfirma essa troca? (entre apenas 'sim' ou 'nao'): ")
+        confirmacao = input(f"{dict[key][posicao-1]} -> {novo_valor} \nConfirma essa troca? (entre apenas 'sim' ou 'nao'): ")
     
     # Retorna caso o usuário escolheu interromper a operação
     if confirmacao == "nao":
         return "CANCELLED"
     
-    # Atualiza o dicionário
-    sala_dict[codigo][posicao - 1] = novo_valor
+    # Atualiza o dicionário e retorna sucesso
+    dict[key][posicao - 1] = novo_valor
     return "SUCCESS"
 
 def excluir(sala_dict):

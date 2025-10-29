@@ -27,18 +27,18 @@ def listar_especifico(sessao_dict, key=None):
         return False
 
 def incluir(sessao_dict):
-    # Constrói a chave
+    # Constrói a key
     filme = input("Código do filme: ")
     sala = input("Código do sala: ")
     data = input("Data: ")
     horario = input("Horario: ")
     key = (filme, sala, data, horario)
 
-    # Retorna caso não seja inserida uma nova chave
+    # Retorna caso essa key já esteja em uso
     if key in sessao_dict.keys():
         return False
     
-    # Obtém o valor da key
+    # Obtém o preco associado a essa key
     preco = input("Preço do Ingresso: ")
 
     # Adiciona ao dicionário a nova chave e seus elementos
@@ -46,19 +46,19 @@ def incluir(sessao_dict):
     return True
 
 def alterar(sessao_dict):
-    # Constrói a chave na estrutura tupla pois é imutável
+    # Constrói a key
     filme = input("Código do filme: ")
     sala = input("Código do sala: ")
     data = input("Data: ")
     horario = input("Horario: ")
     key = (filme, sala, data, horario)
 
-    # Verifica se a key já está em uso
+    # Retorna caso essa key não exista no dicionário
     if key not in sessao_dict.keys():
         return "NO_DATA"
     
-    # Exibe os dados atuais para o usuário
-    print(f"Código do Filme: {key[0]} // Código da Sala: {key[1]} // Data: {key[2]} // Horário: {key[3]} // Preço do Ingresso: {sessao_dict[key]}")
+    # Exibe o preco atual associado a essa key
+    print(f"Preço do Ingresso: {sessao_dict[key]}")
 
     # Coleta o valor que vai substituir o anterior
     novo_preco = input("Digite o novo valor: ")
@@ -72,7 +72,7 @@ def alterar(sessao_dict):
     if confirmacao.lower() == "nao":
         return "CANCELLED"
     
-    # Atualiza o dicionário
+    # Atualiza o dicionário e retorna sucesso
     sessao_dict[key] = novo_preco
     return "SUCCESS"
 
