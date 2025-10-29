@@ -26,8 +26,10 @@ def main():
     escolha = 0
     # Fica oferecendo as opções até o usuário decidir sair com valor 5
     while escolha != 5:
+        # Exibe o menu e coleta a escolha do usuário
         escolha = menu()
-        
+
+        # Atribui a escolha do usuário a uma função
         if escolha == 1:
             sala.main()
         elif escolha == 2:
@@ -36,5 +38,6 @@ def main():
             sessao.main()
         elif escolha == 4:
             relatorio.main()
-        return "EXIT"
+        elif escolha == 5:
+            return "EXIT"
 main()

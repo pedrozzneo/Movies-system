@@ -101,15 +101,9 @@ def excluir(sessao_dict):
     del sessao_dict[key]
     return "SUCCESS"
 
-def build_dict():
-    return utils.build_dict_through_file("sessao")
-
-def salvar_arquivo(sessao_dict, file_path):
-    return
-
 def main():
     # Declara e monta o dicionário de sessões 
-    sessao_dict = build_dict()
+    sessao_dict = utils.build_dict_through_file("sessao")
 
     # Continua oferecendo opções até o usuário decidir sair (6)
     escolha = 0

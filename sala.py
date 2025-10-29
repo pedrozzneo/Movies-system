@@ -43,13 +43,13 @@ def alterar(sala_dict):
     if codigo not in sala_dict:
         return "NO_DATA"
     
-    # Exibe os dados atuais para o usuário
+    # Exibe os dados atuais para o escolher o que alterar
     print(f"Nome: {sala_dict[codigo][0]} // Capacidade: {sala_dict[codigo][1]} // Tipo de exibição: {sala_dict[codigo][2]} // Acessível: {sala_dict[codigo][3]}")
 
-    # Declara dicionário referenciando a ordem dos dados (posicao) e o que eles se referem no sala_dict
+    # Declara dicionário que referencia cada tipo de dado e sua posição no sala_dict
     posicoes_dict = {1: "Nome", 2: "Capacidade", 3: "Tipo de exibição", 4: "Acessível"}
 
-    # Força uma entrada válida de qual dado o usuário quer alterar (posicao)
+    # Força uma entrada válida de qual dado o usuário quer alterar pela posicao
     posicao = 0
     while posicao not in posicoes_dict.keys():
         # Exibe as opções que podem ser trocadas ao usuário
