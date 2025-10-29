@@ -28,19 +28,20 @@ def build_dict_through_file(file_name):
         if file_name == "sessao":
             key = (partes[0], partes[1], partes[2], partes[3])
             value = partes[4]
-            dict[key] = value
 
         # Tratamento específico de sala para construir suas keys e values
         elif file_name == "sala":
             key = partes[0]
             value = partes[1:]
-            dict[key] = value
 
         # Tratamento específico de filme para construir suas keys e values
-        # elif file_name == "filme":
-        #     key = partes[0]
-        #     value = partes[1:]
-        #     dict[key] = value
+        elif file_name == "filme":
+            key = partes[0]
+            actors = value[partes[4]].split(", ")
+            value = partes[1:4] + actors
+        
+        # Coloca na estrutura de dicionários
+        dict[key] = value
 
     # Fecha o arquivo e retorna o dicionário
     arquivo.close()
