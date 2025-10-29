@@ -22,7 +22,7 @@ def build_dict_through_file(file_name):
     # Percorre cada linha do arquivo para montar o dict
     for linha in arquivo:
         # Separa os dados pelo separador '/'
-        partes = linha.replace("\n", "").split("/")
+        partes = linha.replace("\n","").split("/")
         
         # Tratamento específico de sessao para construir suas keys e values
         if file_name == "sessao":
