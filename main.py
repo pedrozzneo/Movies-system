@@ -2,6 +2,7 @@ import sala
 import filme
 import relatorio
 import sessao
+import utils
 
 def menu():
     # Força uma entrada válida de "escolha"
@@ -14,8 +15,9 @@ def menu():
         print("3- Submenu de Sessões")
         print("4- Submenu de Relatórios")
         print("5- Sair")
-        escolha = int(input("\nEscolha: "))
-
+        
+        print("\nEscolha", end="")
+        escolha = utils.valid_int()
         # Trata a escolha do usuário
         if escolha > 5 or escolha < 1:
             print("escolha inválida")

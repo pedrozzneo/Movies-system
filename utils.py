@@ -1,4 +1,4 @@
-def file_exists(nome_arquivo):
+def file_exists(nome_arquivo): # Verifica existência de arquivo para construir dicionários
     # Importa biblioteca para lidar com arquivos no armazenamento do pc
     import os
 
@@ -8,7 +8,7 @@ def file_exists(nome_arquivo):
     else:
         return False
 
-def build_dict_through_file(file_name):
+def build_dict_through_file(file_name): # Constrói dicionários ao abrir submenu
     # Declara o caminho para acessar o arquivo
     file_path = f"arquivos/{file_name}.txt"
     
@@ -25,7 +25,7 @@ def build_dict_through_file(file_name):
     # Percorre cada linha do arquivo para montar o dict
     for linha in arquivo:
         # Separa os dados pelo separador '/'
-        partes = linha.replace("\n","").split("/")
+        partes = linha.upper().replace("\n","").split("/")
 
         # Tratamento específico de sessao para construir suas keys e values
         if file_name == "sessao":
@@ -40,7 +40,7 @@ def build_dict_through_file(file_name):
         # Tratamento específico de filme para construir suas keys e values
         elif file_name == "filme":
             key = partes[0]
-            partes[4] = value[partes[4]].split(", ") # É pra ser uma lista de atores
+            partes[4] = partes[4].split(", ") # É pra ser uma lista de atores
             value = partes[1:]
 
         # Coloca na estrutura de dicionários
@@ -50,7 +50,7 @@ def build_dict_through_file(file_name):
     arquivo.close()
     return dict
 
-def save_dict_to_file(file_name, dict):
+def save_dict_to_file(file_name, dict): # Exporta dicionários aos arquivos ao fechar cada submenu
     # Abre o arquivo para escrita
     file = open(f"arquivos/{file_name}.txt", "w")
     
@@ -94,13 +94,14 @@ def menu(titulo):
         print("6- Sair")
         
         # Permite o usuário escolher e valida
-        escolha = int(input("\nEscolha: "))
+        print("\nEscolha", end="")
+        escolha = valid_int()
         if escolha > 6 or escolha < 1:
             print("Escolha inválida")
         else:
             return escolha
 
-def valid_int():
+def valid_int(): # Validação de dados (inteiros) para evitar erro
     # Loop em que só é possivel sair ao entra um inteiro válido
     while True:
         # Se a conversão para inteiro for bem sucedida, retorna
@@ -111,7 +112,7 @@ def valid_int():
         except:
             print("valor deve ser um inteiro!")
 
-def valid_date():
+def valid_date(): # Validação de dados (data) para evitar erro
     # Importa biblioteca para lidar com datas
     from datetime import date
 
@@ -125,5 +126,22 @@ def valid_date():
          # Se deu erro, informa! 
         except:
             print("valor deve ser uma data válida (DD-MM-AAAA)")
-    
-        
+
+def delete_element_in_dict(dict):
+    # Força uma entrada válida de código para continuar com a operação
+    codigo = input("Código: ").upper()
+    if codigo not in dict.keys():
+        return "NO_DATA"
+
+    # Verifica se o usuário realmente deseja confirmar a operação
+    confirmacao = ""
+    while confirmacao != "SIM" and confirmacao != "NAO":
+        confirmacao = input(f"Confirma a exclusao dos elementos de código {codigo}? (entre apenas 'SIM' ou 'NAO'): ").upper()
+
+    # Encerra a operação caso a resposta seja negativa
+    if confirmacao == "NAO":
+        return "CANCELLED"
+
+    # Atualiza o dicionário
+    del dict[codigo]
+    return "SUCCESS"
