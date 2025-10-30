@@ -81,7 +81,7 @@ def alterar_filme(film_dict, key, file_name): # Altera uma das informações de 
         continua = input("Alteração efetuada com sucesso, deseja efetuar outra alteração? (Entre com sim ou nao)\n")
         while continua.lower() != 'sim' and continua.lower() != 'nao':
             continua = input("ERRO: Digite apenas sim ou nao, deseja efetuar outra alteração? ")
-        arquivo = open(file_name,'w')
+        #arquivo = open(file_name,'w')
         #for key in film_dict.keys():
         #    arquivo.write(film_dict)
         #arquivo.close
