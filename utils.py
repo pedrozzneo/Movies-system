@@ -30,7 +30,7 @@ def build_dict_through_file(file_name): # Constrói dicionários ao abrir submen
         # Tratamento específico de sessao para construir suas keys e values
         if file_name == "sessao":
             key = (partes[0], partes[1], partes[2], partes[3])
-            value = partes[4]
+            value = [partes[4]]
 
         # Tratamento específico de sala para construir suas keys e values
         elif file_name == "sala":
@@ -58,7 +58,7 @@ def save_dict_to_file(file_name, dict): # Exporta dicionários aos arquivos ao f
     for i, key in enumerate(dict):
         # Converte os itens de sessao para texto no formato correto 
         if file_name == "sessao":
-            linha = f"{'/'.join(key)}/{dict[key]}"
+            linha = f"{'/'.join(key)}/{dict[key][0]}"
 
         # Converte os itens de sala para texto no formato correto 
         elif file_name == "sala":
@@ -118,30 +118,18 @@ def valid_date(): # Validação de dados (data) para evitar erro
 
     # Loop em que só é possivel sair ao entra um date válido
     while True:
-        # Se a conversão para date for bem sucedida, retorna
+        # Se a conversão para date for bem sucedida, retorna o texto
         try:
+            # Quebra cada informação de texto para verificar se é uma data válida
             values = input(": ").split("-")
-            return date(int(values[2]), int(values[1]), int(values[0]))
+            date(int(values[2]), int(values[1]), int(values[0]))
+            
+            # Volta a data ao formato original de texto
+            values = "-".join(values)
+            return values
 
          # Se deu erro, informa! 
         except:
             print("valor deve ser uma data válida (DD-MM-AAAA)")
 
-def delete_element_in_dict(dict):
-    # Força uma entrada válida de código para continuar com a operação
-    codigo = input("Código: ").upper()
-    if codigo not in dict.keys():
-        return "NO_DATA"
-
-    # Verifica se o usuário realmente deseja confirmar a operação
-    confirmacao = ""
-    while confirmacao != "SIM" and confirmacao != "NAO":
-        confirmacao = input(f"Confirma a exclusao dos elementos de código {codigo}? (entre apenas 'SIM' ou 'NAO'): ").upper()
-
-    # Encerra a operação caso a resposta seja negativa
-    if confirmacao == "NAO":
-        return "CANCELLED"
-
-    # Atualiza o dicionário
-    del dict[codigo]
-    return "SUCCESS"
+# change_dict foi movido para dict.py (dict_utils.change_dict)

@@ -1,4 +1,5 @@
 import utils
+import dict as dict_utils
 
 def listar_todos(sessao_dict):
     # Confere se a lista está vazia
@@ -7,7 +8,7 @@ def listar_todos(sessao_dict):
     
     # Exibe todas as sessões sem distinção 
     for key in sessao_dict.keys():
-        print(f"Código do Filme: {key[0]} // Código da Sala: {key[1]} // Data: {key[2]} // Horário: {key[3]} // Preço do Ingresso: {sessao_dict[key]}")
+        print(f"Código do Filme: {key[0]} // Código da Sala: {key[1]} // Data: {key[2]} // Horário: {key[3]} // Preço do Ingresso: {sessao_dict[key][0]}")
     return True
 
 def listar_especifico(sessao_dict, key=None):
@@ -16,13 +17,13 @@ def listar_especifico(sessao_dict, key=None):
         filme = input("Código do filme: ").upper()
         sala = input("Código do sala: ").upper()
         print("Data (DD-MM-AAAA)", end="")
-        data = utils.valid_date().strftime("%d-%m-%Y")
+        data = utils.valid_date()
         horario = input("Horario: ")
         key = (filme, sala, data, horario)
 
     # Exibe caso o codigo exista no dicionário
     if key in sessao_dict:
-        print(f"Preço do Ingresso: {sessao_dict[key]}")
+        print(f"Preço do Ingresso: {sessao_dict[key][0]}")
         return True
     else:
         return False
@@ -44,7 +45,7 @@ def incluir(sessao_dict):
     preco = input("Preço do Ingresso: ")
 
     # Adiciona ao dicionário a nova chave e seus elementos
-    sessao_dict[key] = preco
+    sessao_dict[key] = [preco]
     return True
 
 def alterar(sessao_dict):
@@ -52,7 +53,7 @@ def alterar(sessao_dict):
     filme = input("Código do filme: ").upper()
     sala = input("Código do sala: ").upper()
     print("Data (DD-MM-AAAA)", end="")
-    data = utils.valid_date().strftime("%d-%m-%Y")
+    data = utils.valid_date()
     horario = input("Horario: ")
     key = (filme, sala, data, horario)
 
@@ -61,30 +62,20 @@ def alterar(sessao_dict):
         return "NO_DATA"
     
     # Exibe o preco atual associado a essa key
-    print(f"Preço do Ingresso: {sessao_dict[key]}")
+    print(f"Preço do Ingresso: {sessao_dict[key][0]}")
 
     # Coleta o valor que vai substituir o anterior
     novo_preco = input("Digite o novo valor: ")
-    
-    # Verifica se o usuário realmente deseja confirmar a operação
-    confirmacao = ""
-    while confirmacao != "SIM" and confirmacao != "NAO":
-        confirmacao = (input(f"{sessao_dict[key]} -> {novo_preco} \nConfirma essa troca? (entre apenas 'SIM' ou 'NAO'): ")).upper()
-    
-    # Encerra a operação caso a resposta seja negativa
-    if confirmacao == "NAO":
-        return "CANCELLED"
-    
-    # Atualiza o dicionário e retorna sucesso
-    sessao_dict[key] = novo_preco
-    return "SUCCESS"
+
+    # Confirma e aplica via utilitário compartilhado (posicao 0 para lista de 1 elemento)
+    return dict_utils.change_dict(sessao_dict, key, 0, novo_preco)
 
 def excluir(sessao_dict):
     # Constrói a key
     filme = input("Código do filme: ").upper()
     sala = input("Código do sala: ").upper()
     print("Data (DD-MM-AAAA)", end="")
-    data = utils.valid_date().strftime("%d-%m-%Y")
+    data = utils.valid_date()
     horario = input("Horario: ")
     key = (filme, sala, data, horario)
 
@@ -92,18 +83,8 @@ def excluir(sessao_dict):
     if key not in sessao_dict.keys():
         return "NO_DATA"
 
-    # Verifica se o usuário realmente deseja confirmar a operação
-    confirmacao = ""
-    while confirmacao != "SIM" and confirmacao != "NAO":
-        confirmacao = input(f"Confirma a exclusao de todos os dados dessa chave? (entre apenas 'SIM' ou 'NAO'): ").upper()
-
-    # Encerra a operação caso a resposta seja negativa
-    if confirmacao == "NAO":
-        return "CANCELLED"
-
-    # Atualiza o dicionário
-    del sessao_dict[key]
-    return "SUCCESS"
+    # Delegar confirmação e exclusão para função compartilhada
+    return dict_utils.delete_element_in_dict(sessao_dict, key)
 
 def main():
     # Declara e monta o dicionário de sessões 

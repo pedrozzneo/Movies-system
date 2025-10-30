@@ -1,4 +1,5 @@
 import utils
+import dict as dict_utils
 
 def listar_todos(sala_dict):
     # Confere se a lista está vazia
@@ -62,45 +63,18 @@ def alterar(dict):
             print("Posição inválida!")
 
     # Coleta o novo valor que vai substituir o anterior
-    novo_valor = input("Digite o novo valor: ")
-    if posicao == 1:
-        novo_valor = novo_valor.upper()
-    elif posicao == 3:
-        novo_valor = novo_valor.upper()
-    elif posicao == 4:
-        novo_valor = novo_valor.upper()
-    
-    # Verifica se o usuário realmente deseja confirmar a operação
-    confirmacao = ""
-    while confirmacao != "SIM" and confirmacao != "NAO":
-        confirmacao = input(f"{dict[key][posicao-1]} -> {novo_valor} \nConfirma essa troca? (entre apenas 'SIM' ou 'NAO'): ").upper()
-    
-    # Retorna caso o usuário escolheu interromper a operação
-    if confirmacao == "NAO":
-        return "CANCELLED"
-    
-    # Atualiza o dicionário e retorna sucesso
-    dict[key][posicao - 1] = novo_valor
-    return "SUCCESS"
+    novo_valor = (input("Digite o novo valor: ")).upper()
 
+    return dict_utils.change_dict(dict, key, posicao, novo_valor)
+    
 def excluir(sala_dict):
     # Força uma entrada válida de código para continuar com a operação
     codigo = input("Código: ").upper()
     if codigo not in sala_dict.keys():
         return "NO_DATA"
 
-    # Verifica se o usuário realmente deseja confirmar a operação
-    confirmacao = ""
-    while confirmacao != "SIM" and confirmacao != "NAO":
-        confirmacao = input(f"Confirma a exclusao dos elementos de código {codigo}? (entre apenas 'SIM' ou 'NAO'): ").upper()
-
-    # Encerra a operação caso a resposta seja negativa
-    if confirmacao == "NAO":
-        return "CANCELLED"
-
-    # Atualiza o dicionário
-    del sala_dict[codigo]
-    return "SUCCESS"
+    # Delegar confirmação e exclusão para função compartilhada
+    return dict_utils.delete_element_in_dict(sala_dict, codigo)
 
 def main():
     # Declara e monta o dicionário da sala 
