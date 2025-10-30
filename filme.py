@@ -26,22 +26,23 @@ def list_dict(film_dict):# Lista os filmes, ordenados por inclusão no sistema
 
 def include_film(film_dict): # Inclui um novo filme no dicionário e registra em arquivo
     # Garante a entrada de um código único
-    key = input("Código: ")
+    key = input("Código: ").upper()
     while key in film_dict.keys():
-        key = input("Código já em uso, insira outro: ")
+        key = input("Código já em uso, insira outro: ").upper()
     
     # Obtém os atributos do filme
-    title = input("Informe o título do filme: ")
-    year = input("Informe o ano de lançamento do filme: ")
-    director = input("Informe o nome do diretor: ")
+    title = input("Informe o título do filme: ").upper()
+    year = str(utils.valid_int())
+    director = input("Informe o nome do diretor: ").upper()
 
     # Obtém os nomes dos atores/atrizes e armazena em uma única string
     actors = []
-    actors_length = int(input("Informe quantos atores/atrizes quer incluir no elenco: "))
+    print("Informe quantos atores/atrizes quer incluir no elenco", end="")
+    actors_length = utils.valid_int()
     i=0
     while i < actors_length:
         i+=1
-        actor_name = input(f"Informe o nome do {i}º Ator/Atriz: ")
+        actor_name = input(f"Informe o nome do {i}º Ator/Atriz: ").upper()
         if i < actors_length:
             actors.append(actor_name + ", ")
         else:
@@ -71,16 +72,20 @@ def list_film(film_dict, key): # Exibe as informações de um filme
 def alterar_filme(film_dict, key, file_name): # Altera uma das informações de um filme
     list_film(film_dict,key)
     continua = 'sim'
-    while continua.lower() == 'sim':
+    while continua == 'SIM':
         print("\nMenu de alteração de filmes:\n\t1 - Título\n\t2 - Ano de lançamento\n\t3 - Diretor\n\t4 - Elenco")
-        opc = int(input("Escolha um para alterar: "))
+        print("Escolha um para alterar", end="")
+        opc = utils.valid_int()
         while opc < 1 and opc > 4:
-            opc = int(input("Opção inválida, escolha de 1 à 4! Escolha um para alterar: "))
+            print("Opção inválida, escolha de 1 à 4! Escolha um para alterar", end="")
+            opc = utils.valid_int()
         novo_valor = input("Digite o novo valor: ")
+        if opc == 1 or opc == 3:
+            novo_valor = novo_valor.upper()
         film_dict[key][opc-1] = novo_valor
-        continua = input("Alteração efetuada com sucesso, deseja efetuar outra alteração? (Entre com sim ou nao)\n")
-        while continua.lower() != 'sim' and continua.lower() != 'nao':
-            continua = input("ERRO: Digite apenas sim ou nao, deseja efetuar outra alteração? ")
+        continua = input("Alteração efetuada com sucesso, deseja efetuar outra alteração? (Entre com SIM ou NAO)\n").upper()
+        while continua != 'SIM' and continua != 'NAO':
+            continua = input("ERRO: Digite apenas SIM ou NAO, deseja efetuar outra alteração? ").upper()
         #arquivo = open(file_name,'w')
         #for key in film_dict.keys():
         #    arquivo.write(film_dict)
@@ -100,18 +105,18 @@ def main():
             list_dict(film_dict)
 
         elif escolha == 2: # Listar um filme específico
-            key = input("Informe o código do filme: ")
+            key = input("Informe o código do filme: ").upper()
             while key not in film_dict.keys():
-                key = input("Código inexistente! Informe o código do filme que deseja detalhar: ")
+                key = input("Código inexistente! Informe o código do filme que deseja detalhar: ").upper()
             list_film(film_dict, key)
 
         elif escolha == 3: # Incluir novo filme no catálogo
             include_film(film_dict)
 
         elif escolha == 4: # Alterar dados de um filme do catálogo (não é possível alterar Chave/Key/Código)
-            key = input("Informe o código do filme que deseja alterar: ")
+            key = input("Informe o código do filme que deseja alterar: ").upper()
             while key not in film_dict.keys():
-                key = input("Código inexistente! Informe o código do filme que deseja alterar: ")
+                key = input("Código inexistente! Informe o código do filme que deseja alterar: ").upper()
             alterar_filme(film_dict,key,file_name)
 
         elif escolha == 5: # Excluir um filme do catálogo

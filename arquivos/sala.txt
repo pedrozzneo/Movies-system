@@ -1,4 +1,10 @@
-c/c/c/c/c
-a/a/a/a/a
-b/b/b/b/b
-d/d/d/d/d
+S01/Sala Azul/120/2D/Sim
+S02/Sala Verde/80/3D/Nao
+S03/Sala Vermelha/200/IMAX/Sim
+S04/Sala Amarela/150/2D/Nao
+S05/Sala Roxa/90/3D/Sim
+S06/Sala Laranja/110/2D/Sim
+S07/Sala Branca/70/3D/Nao
+S08/Sala Preta/180/IMAX/Sim
+S09/Sala Cinza/95/2D/Nao
+S10/Sala Marrom/140/3D/Sim

@@ -1,5 +1,8 @@
 def file_exists(nome_arquivo):
+    # Importa biblioteca para lidar com arquivos no armazenamento do pc
     import os
+
+    # Informa se o arquivo existe no computador
     if os.path.exists(nome_arquivo):
         return True
     else:
@@ -51,7 +54,7 @@ def save_dict_to_file(file_name, dict):
     # Abre o arquivo para escrita
     file = open(f"arquivos/{file_name}.txt", "w")
     
-    # Percorre todo o dicionário para codificar seus dados em strings no loop de contador e chave
+    # Percorre todo o dicionário para codificar seus dados em strings no loop com contador e chave
     for i, key in enumerate(dict):
         # Converte os itens de sessao para texto no formato correto 
         if file_name == "sessao":
@@ -96,3 +99,31 @@ def menu(titulo):
             print("Escolha inválida")
         else:
             return escolha
+
+def valid_int():
+    # Loop em que só é possivel sair ao entra um inteiro válido
+    while True:
+        # Se a conversão para inteiro for bem sucedida, retorna
+        try:
+            return int(input(": "))
+        
+        # Se deu erro, informa!
+        except:
+            print("valor deve ser um inteiro!")
+
+def valid_date():
+    # Importa biblioteca para lidar com datas
+    from datetime import date
+
+    # Loop em que só é possivel sair ao entra um date válido
+    while True:
+        # Se a conversão para date for bem sucedida, retorna
+        try:
+            values = input(": ").split("-")
+            return date(int(values[2]), int(values[1]), int(values[0]))
+
+         # Se deu erro, informa! 
+        except:
+            print("valor deve ser uma data válida (DD-MM-AAAA)")
+    
+        
