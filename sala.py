@@ -31,7 +31,7 @@ def incluir(dict):
     
     # Obtém todos os valores
     nome = input("Nome: ")
-    capacidade = utils.valid_capacidade()
+    capacidade = utils.valid_int("sala")
     exibicao = input("Tipo de exibição: ")
     acessivel = input("Acessível: ")
 

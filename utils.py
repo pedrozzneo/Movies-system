@@ -97,13 +97,22 @@ def menu(titulo):
         else:
             return escolha
 
-def valid_capacidade():
+# Valida inteiros para permitir as operações com esses dados
+def valid_int(module):
     # Caso consiga fazer a conversao para int o valor é retornado
     try:
-        capacidade = int(input("Capacidade: "))
-        return capacidade
-    
+        if module == "sala":
+            integer = int(input("Capacidade: "))
+        elif module == "filme":
+            integer = int(input("Ano: "))
+        return integer
+
     # Caso a conversao para int não seja possível, avisa e tenta novamente
     except:
         print("capacidade deve ser um inteiro!")
-        return valid_capacidade()
+        return valid_int()
+
+# Valida as dates para permitir as operações com esses dados
+def valid_date(module):
+    print("in development")
+        

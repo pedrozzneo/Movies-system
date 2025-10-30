@@ -32,7 +32,7 @@ def include_film(film_dict): # Inclui um novo filme no dicionário e registra em
     
     # Obtém os atributos do filme
     title = input("Informe o título do filme: ")
-    year = input("Informe o ano de lançamento do filme: ")
+    year = utils.valid_int
     director = input("Informe o nome do diretor: ")
 
     # Obtém os nomes dos atores/atrizes e armazena em uma única string
