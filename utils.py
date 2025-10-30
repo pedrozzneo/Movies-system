@@ -1,5 +1,8 @@
 def file_exists(nome_arquivo):
+    # Importa biblioteca para lidar com arquivos no armazenamento do pc
     import os
+
+    # Informa se o arquivo existe no computador
     if os.path.exists(nome_arquivo):
         return True
     else:
@@ -51,7 +54,7 @@ def save_dict_to_file(file_name, dict):
     # Abre o arquivo para escrita
     file = open(f"arquivos/{file_name}.txt", "w")
     
-    # Percorre todo o dicionário para codificar seus dados em strings no loop de contador e chave
+    # Percorre todo o dicionário para codificar seus dados em strings no loop com contador e chave
     for i, key in enumerate(dict):
         # Converte os itens de sessao para texto no formato correto 
         if file_name == "sessao":

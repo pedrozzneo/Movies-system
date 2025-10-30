@@ -13,8 +13,8 @@ def listar_todos(sessao_dict):
 def listar_especifico(sessao_dict, key=None):
     # Constrói a chave que o usuário deseja exibir caso já não tenha sido passado por parâmetro (função alterar)
     if key == None:
-        filme = input("Código do filme: ")
-        sala = input("Código do sala: ")
+        filme = input("Código do filme: ").upper()
+        sala = input("Código do sala: ").upper()
         print("Data (DD-MM-AAAA)", end="")
         data = utils.valid_date().strftime("%d-%m-%Y")
         horario = input("Horario: ")
@@ -29,8 +29,8 @@ def listar_especifico(sessao_dict, key=None):
 
 def incluir(sessao_dict):
     # Constrói a key
-    filme = input("Código do filme: ")
-    sala = input("Código do sala: ")
+    filme = input("Código do filme: ").upper()
+    sala = input("Código do sala: ").upper()
     print("Data", end = "")
     data = utils.valid_date()
     horario = input("Horario: ")
@@ -49,8 +49,8 @@ def incluir(sessao_dict):
 
 def alterar(sessao_dict):
     # Constrói a key
-    filme = input("Código do filme: ")
-    sala = input("Código do sala: ")
+    filme = input("Código do filme: ").upper()
+    sala = input("Código do sala: ").upper()
     print("Data (DD-MM-AAAA)", end="")
     data = utils.valid_date().strftime("%d-%m-%Y")
     horario = input("Horario: ")
@@ -68,11 +68,11 @@ def alterar(sessao_dict):
     
     # Verifica se o usuário realmente deseja confirmar a operação
     confirmacao = ""
-    while confirmacao != "sim" and confirmacao != "nao":
-        confirmacao = (input(f"{sessao_dict[key]} -> {novo_preco} \nConfirma essa troca? (entre apenas 'sim' ou 'nao'): ")).lower()
+    while confirmacao != "SIM" and confirmacao != "NAO":
+        confirmacao = (input(f"{sessao_dict[key]} -> {novo_preco} \nConfirma essa troca? (entre apenas 'SIM' ou 'NAO'): ")).upper()
     
     # Encerra a operação caso a resposta seja negativa
-    if confirmacao == "nao":
+    if confirmacao == "NAO":
         return "CANCELLED"
     
     # Atualiza o dicionário e retorna sucesso
@@ -81,8 +81,8 @@ def alterar(sessao_dict):
 
 def excluir(sessao_dict):
     # Constrói a key
-    filme = input("Código do filme: ")
-    sala = input("Código do sala: ")
+    filme = input("Código do filme: ").upper()
+    sala = input("Código do sala: ").upper()
     print("Data (DD-MM-AAAA)", end="")
     data = utils.valid_date().strftime("%d-%m-%Y")
     horario = input("Horario: ")
@@ -94,11 +94,11 @@ def excluir(sessao_dict):
 
     # Verifica se o usuário realmente deseja confirmar a operação
     confirmacao = ""
-    while confirmacao != "sim" and confirmacao != "nao":
-        confirmacao = input(f"Confirma a exclusao de todos os dados dessa chave? (entre apenas 'sim' ou 'nao'): ").lower()
+    while confirmacao != "SIM" and confirmacao != "NAO":
+        confirmacao = input(f"Confirma a exclusao de todos os dados dessa chave? (entre apenas 'SIM' ou 'NAO'): ").upper()
 
     # Encerra a operação caso a resposta seja negativa
-    if confirmacao == "nao":
+    if confirmacao == "NAO":
         return "CANCELLED"
 
     # Atualiza o dicionário

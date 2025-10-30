@@ -28,7 +28,7 @@ def listarSalaPorExibicaoCapacidade(sala_dict):
     # Percorre o dicionário e exibe os itens encontrados
     found = False
     for item in sala_dict.items():
-        if int(item[1][1]) >= capacidade and item[1][2] == exibicao:
+        if int(item[1][1]) >= capacidade and str(item[1][2]).upper() == exibicao:
             print(f"Código: {item[0]}// Nome: {item[1][0]}// Capacidade: {item[1][1]}// Exibição {item[1][2]}// Acessível: {item[1][3]}")
             found = True
 

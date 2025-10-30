@@ -12,7 +12,7 @@ def listar_todos(sala_dict):
 
 def listar_especifico(sala_dict):
     # Coleta o código que o usuário deseja exibir 
-    codigo = input("Código: ")
+    codigo = input("Código: ").upper()
 
     # Exibe caso o codigo exista no dicionário
     if codigo in sala_dict:
@@ -23,26 +23,26 @@ def listar_especifico(sala_dict):
 
 def incluir(dict):
     # Recebe a key código
-    key = input("codigo: ")
+    key = input("codigo: ").upper()
     
     # Retorna caso essa key já esteja em uso
     if key in dict.keys():
         return False
     
     # Obtém todos os valores
-    nome = input("Nome: ")
+    nome = input("Nome: ").upper()
     print("Capacidade", end = "")
-    capacidade = utils.valid_int()
-    exibicao = input("Tipo de exibição: ")
-    acessivel = input("Acessível: ")
+    capacidade = str(utils.valid_int())
+    exibicao = input("Tipo de exibição: ").upper()
+    acessivel = input("Acessível: ").upper()
 
     # Adiciona ao dicionário a nova chave e seus elementos
-    dict[key] = [nome, str(capacidade), exibicao, acessivel]
+    dict[key] = [nome, capacidade, exibicao, acessivel]
     return True
 
 def alterar(dict):
     # Recebe a key código
-    key = input("codigo: ")
+    key = input("codigo: ").upper()
     
     # Retorna caso essa key não exista no dicionário
     if key not in dict:
@@ -63,14 +63,20 @@ def alterar(dict):
 
     # Coleta o novo valor que vai substituir o anterior
     novo_valor = input("Digite o novo valor: ")
+    if posicao == 1:
+        novo_valor = novo_valor.upper()
+    elif posicao == 3:
+        novo_valor = novo_valor.upper()
+    elif posicao == 4:
+        novo_valor = novo_valor.upper()
     
     # Verifica se o usuário realmente deseja confirmar a operação
     confirmacao = ""
-    while confirmacao != "sim" and confirmacao != "nao":
-        confirmacao = input(f"{dict[key][posicao-1]} -> {novo_valor} \nConfirma essa troca? (entre apenas 'sim' ou 'nao'): ").lower()
+    while confirmacao != "SIM" and confirmacao != "NAO":
+        confirmacao = input(f"{dict[key][posicao-1]} -> {novo_valor} \nConfirma essa troca? (entre apenas 'SIM' ou 'NAO'): ").upper()
     
     # Retorna caso o usuário escolheu interromper a operação
-    if confirmacao == "nao":
+    if confirmacao == "NAO":
         return "CANCELLED"
     
     # Atualiza o dicionário e retorna sucesso
@@ -79,17 +85,17 @@ def alterar(dict):
 
 def excluir(sala_dict):
     # Força uma entrada válida de código para continuar com a operação
-    codigo = input("Código: ")
+    codigo = input("Código: ").upper()
     if codigo not in sala_dict.keys():
         return "NO_DATA"
 
     # Verifica se o usuário realmente deseja confirmar a operação
     confirmacao = ""
-    while confirmacao != "sim" and confirmacao != "nao":
-        confirmacao = input(f"Confirma a exclusao dos elementos de código {codigo}? (entre apenas 'sim' ou 'nao'): ").lower()
+    while confirmacao != "SIM" and confirmacao != "NAO":
+        confirmacao = input(f"Confirma a exclusao dos elementos de código {codigo}? (entre apenas 'SIM' ou 'NAO'): ").upper()
 
     # Encerra a operação caso a resposta seja negativa
-    if confirmacao == "nao":
+    if confirmacao == "NAO":
         return "CANCELLED"
 
     # Atualiza o dicionário
