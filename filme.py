@@ -32,12 +32,13 @@ def include_film(film_dict): # Inclui um novo filme no dicionário e registra em
     
     # Obtém os atributos do filme
     title = input("Informe o título do filme: ")
-    year = utils.valid_int
+    year = str(utils.valid_int())
     director = input("Informe o nome do diretor: ")
 
     # Obtém os nomes dos atores/atrizes e armazena em uma única string
     actors = []
-    actors_length = int(input("Informe quantos atores/atrizes quer incluir no elenco: "))
+    print("Informe quantos atores/atrizes quer incluir no elenco", end="")
+    actors_length = utils.valid_int()
     i=0
     while i < actors_length:
         i+=1
@@ -73,9 +74,11 @@ def alterar_filme(film_dict, key, file_name): # Altera uma das informações de 
     continua = 'sim'
     while continua.lower() == 'sim':
         print("\nMenu de alteração de filmes:\n\t1 - Título\n\t2 - Ano de lançamento\n\t3 - Diretor\n\t4 - Elenco")
-        opc = int(input("Escolha um para alterar: "))
+        print("Escolha um para alterar", end="")
+        opc = utils.valid_int()
         while opc < 1 and opc > 4:
-            opc = int(input("Opção inválida, escolha de 1 à 4! Escolha um para alterar: "))
+            print("Opção inválida, escolha de 1 à 4! Escolha um para alterar", end="")
+            opc = utils.valid_int()
         novo_valor = input("Digite o novo valor: ")
         film_dict[key][opc-1] = novo_valor
         continua = input("Alteração efetuada com sucesso, deseja efetuar outra alteração? (Entre com sim ou nao)\n")

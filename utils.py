@@ -97,22 +97,30 @@ def menu(titulo):
         else:
             return escolha
 
-# Valida inteiros para permitir as operações com esses dados TEM QUE POR NOS ALTERAR TAMBÉM
-def valid_int(module):
-    # Caso consiga fazer a conversao para int o valor é retornado
-    try:
-        if module == "sala":
-            integer = int(input("Capacidade: "))
-        elif module == "filme":
-            integer = int(input("Ano: "))
-        return integer
+def valid_int():
+    # Loop em que só é possivel sair ao entra um inteiro válido
+    while True:
+        # Se a conversão para inteiro for bem sucedida, retorna
+        try:
+            return int(input(": "))
+        
+        # Se deu erro, informa!
+        except:
+            print("valor deve ser um inteiro!")
 
-    # Caso a conversao para int não seja possível, avisa e tenta novamente
-    except:
-        print("capacidade deve ser um inteiro!")
-        return valid_int()
+def valid_date():
+    # Importa biblioteca para lidar com datas
+    from datetime import date
 
-# Valida as dates para permitir as operações com esses dados
-def valid_date(module):
-    print("in development")
+    # Loop em que só é possivel sair ao entra um date válido
+    while True:
+        # Se a conversão para date for bem sucedida, retorna
+        try:
+            values = input(": ").split("-")
+            return date(int(values[2]), int(values[1]), int(values[0]))
+
+         # Se deu erro, informa! 
+        except:
+            print("valor deve ser uma data válida (DD-MM-AAAA)")
+    
         

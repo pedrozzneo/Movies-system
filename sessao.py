@@ -15,7 +15,8 @@ def listar_especifico(sessao_dict, key=None):
     if key == None:
         filme = input("Código do filme: ")
         sala = input("Código do sala: ")
-        data = input("Data: ")
+        print("Data (DD-MM-AAAA)", end="")
+        data = utils.valid_date().strftime("%d-%m-%Y")
         horario = input("Horario: ")
         key = (filme, sala, data, horario)
 
@@ -30,7 +31,8 @@ def incluir(sessao_dict):
     # Constrói a key
     filme = input("Código do filme: ")
     sala = input("Código do sala: ")
-    data = input("Data: ")
+    print("Data", end = "")
+    data = utils.valid_date()
     horario = input("Horario: ")
     key = (filme, sala, data, horario)
 
@@ -49,7 +51,8 @@ def alterar(sessao_dict):
     # Constrói a key
     filme = input("Código do filme: ")
     sala = input("Código do sala: ")
-    data = input("Data: ")
+    print("Data (DD-MM-AAAA)", end="")
+    data = utils.valid_date().strftime("%d-%m-%Y")
     horario = input("Horario: ")
     key = (filme, sala, data, horario)
 
@@ -80,7 +83,8 @@ def excluir(sessao_dict):
     # Constrói a key
     filme = input("Código do filme: ")
     sala = input("Código do sala: ")
-    data = input("Data: ")
+    print("Data (DD-MM-AAAA)", end="")
+    data = utils.valid_date().strftime("%d-%m-%Y")
     horario = input("Horario: ")
     key = (filme, sala, data, horario)
 

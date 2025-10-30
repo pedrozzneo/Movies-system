@@ -10,7 +10,8 @@ def menu():
         print("2- Listar todos os filmes a partir de um ano")
         print("3- Exibir todas as informações das sessões de uma data determinada até outra")
         print("4- Sair")
-        escolha = int(input("\nEscolha: "))
+        print("\nEscolha: ", end="")
+        escolha = utils.valid_int()
 
         # Trata a escolha do usuário
         if escolha > 4 or escolha < 1:
@@ -21,7 +22,8 @@ def menu():
 def listarSalaPorExibicaoCapacidade(sala_dict):
     # Coleta os filtros do usuário
     exibicao = (input("Exibição: ")).upper()
-    capacidade = int(input("Capacidade: "))
+    print("Capacidade: ", end="")
+    capacidade = utils.valid_int()
 
     # Percorre o dicionário e exibe os itens encontrados
     found = False
@@ -38,7 +40,8 @@ def listarSalaPorExibicaoCapacidade(sala_dict):
 
 def listarFilmeAPartirAno(filme_dict):
     # Coleta o ano mínimo informado pelo usuário
-    ano = int(input("Ano: "))
+    print("Ano: ", end="")
+    ano = utils.valid_int()
 
     # Percorre o dicionário e exibe os filmes a partir do ano informado
     found = False
@@ -58,12 +61,12 @@ def listSessionFromDateToDate(session_dict):
     from datetime import date
 
     # Coleta e formata as datas iniciais
-    fromDate = input("Data início (DD-MM-AAAA): ").split("-")
-    fromDate = date(int(fromDate[2]), int(fromDate[1]), int(fromDate[0]))
+    print("Data início (DD-MM-AAAA)", end="")
+    fromDate = utils.valid_date()
 
     # Coleta e formata as datas finais
-    toDate = input("Data final: ").split("-")
-    toDate = date(int(toDate[2]), int(toDate[1]), int(toDate[0]))
+    print("Data final (DD-MM-AAAA)", end="")
+    toDate = utils.valid_date()
 
     # Percorre as sessões e exibe as que estão no intervalo
     found = False

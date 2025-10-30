@@ -31,12 +31,13 @@ def incluir(dict):
     
     # Obtém todos os valores
     nome = input("Nome: ")
-    capacidade = utils.valid_int("sala")
+    print("Capacidade", end = "")
+    capacidade = utils.valid_int()
     exibicao = input("Tipo de exibição: ")
     acessivel = input("Acessível: ")
 
     # Adiciona ao dicionário a nova chave e seus elementos
-    dict[key] = [nome, capacidade, exibicao, acessivel]
+    dict[key] = [nome, str(capacidade), exibicao, acessivel]
     return True
 
 def alterar(dict):
