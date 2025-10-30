@@ -106,7 +106,12 @@ def valid_int(): # Validação de dados (inteiros) para evitar erro
     while True:
         # Se a conversão para inteiro for bem sucedida, retorna
         try:
-            return int(input(": "))
+            # Tenta fazer a conversão
+            value = int(input(": "))
+            
+            # Quebra de linha e retorna 
+            print()
+            return value
         
         # Se deu erro, informa!
         except:
@@ -126,6 +131,8 @@ def valid_date(): # Validação de dados (data) para evitar erro
             
             # Volta a data ao formato original de texto
             values = "-".join(values)
+
+            # Retorna a data
             return values
 
          # Se deu erro, informa! 

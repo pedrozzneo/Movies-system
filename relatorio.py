@@ -62,22 +62,24 @@ def listSessionFromDateToDate(session_dict):
 
     # Coleta e formata as datas iniciais
     print("Data início (DD-MM-AAAA)", end="")
-    fromDate = utils.valid_date()
+    fromDate = (utils.valid_date()).split("-")
+    fromDate = date(int(fromDate[2]), int(fromDate[1]), int(fromDate[0]))
 
     # Coleta e formata as datas finais
     print("Data final (DD-MM-AAAA)", end="")
-    toDate = utils.valid_date()
+    toDate = (utils.valid_date()).split("-")
+    toDate = date(int(toDate[2]), int(toDate[1]), int(toDate[0]))
 
     # Percorre as sessões e exibe as que estão no intervalo
     found = False
-    for item in session_dict.items():
+    for key in session_dict:
         # Coleta e formata a data da sessao
-        sessionDate = item[1][1].split("-")
+        sessionDate = key[2].split("-")
         sessionDate = date(int(sessionDate[2]), int(sessionDate[1]), int(sessionDate[0]))
 
         # Exibe as sessões que satisfazem os filtros e guarda a informação que pelo menos 1 foi encontado
         if sessionDate >= fromDate and sessionDate <= toDate:
-            print(f"Código do Filme: {item[0]} // Código da Sala: {item[1][0]} // Data: {item[1][1]} // Horário: {item[1][2]} // Preço do Ingresso: {item[1][3]}")
+            print(f"\nCódigo do Filme: {key[0]} // Código da Sala: {key[1]} // Data: {key[2]} // Horário: {key[3]} // Preço do Ingresso: {session_dict[key]}", end = "")
             found = True
 
     # Retorna status booleano conforme encontrou algo
