@@ -96,3 +96,14 @@ def menu(titulo):
             print("Escolha inválida")
         else:
             return escolha
+
+def valid_capacidade():
+    # Caso consiga fazer a conversao para int o valor é retornado
+    try:
+        capacidade = int(input("Capacidade: "))
+        return capacidade
+    
+    # Caso a conversao para int não seja possível, avisa e tenta novamente
+    except:
+        print("capacidade deve ser um inteiro!")
+        return valid_capacidade()

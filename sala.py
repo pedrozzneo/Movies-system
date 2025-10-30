@@ -31,7 +31,7 @@ def incluir(dict):
     
     # Obtém todos os valores
     nome = input("Nome: ")
-    capacidade = input("Capacidade: ")
+    capacidade = utils.valid_capacidade()
     exibicao = input("Tipo de exibição: ")
     acessivel = input("Acessível: ")
 
@@ -65,8 +65,8 @@ def alterar(dict):
     
     # Verifica se o usuário realmente deseja confirmar a operação
     confirmacao = ""
-    while confirmacao.lower() != "sim" and confirmacao.lower() != "nao":
-        confirmacao = input(f"{dict[key][posicao-1]} -> {novo_valor} \nConfirma essa troca? (entre apenas 'sim' ou 'nao'): ")
+    while confirmacao != "sim" and confirmacao != "nao":
+        confirmacao = input(f"{dict[key][posicao-1]} -> {novo_valor} \nConfirma essa troca? (entre apenas 'sim' ou 'nao'): ").lower()
     
     # Retorna caso o usuário escolheu interromper a operação
     if confirmacao == "nao":
@@ -84,11 +84,11 @@ def excluir(sala_dict):
 
     # Verifica se o usuário realmente deseja confirmar a operação
     confirmacao = ""
-    while confirmacao.lower() != "sim" and confirmacao.lower() != "nao":
-        confirmacao = input(f"Confirma a exclusao dos elementos de código {codigo}? (entre apenas 'sim' ou 'nao'): ")
+    while confirmacao != "sim" and confirmacao != "nao":
+        confirmacao = input(f"Confirma a exclusao dos elementos de código {codigo}? (entre apenas 'sim' ou 'nao'): ").lower()
 
     # Encerra a operação caso a resposta seja negativa
-    if confirmacao.lower() == "nao":
+    if confirmacao == "nao":
         return "CANCELLED"
 
     # Atualiza o dicionário
