@@ -65,11 +65,11 @@ def alterar(sessao_dict):
     
     # Verifica se o usuário realmente deseja confirmar a operação
     confirmacao = ""
-    while confirmacao.lower() != "sim" and confirmacao.lower() != "nao":
-        confirmacao = input(f"{sessao_dict[key]} -> {novo_preco} \nConfirma essa troca? (entre apenas 'sim' ou 'nao'): ")
+    while confirmacao != "sim" and confirmacao != "nao":
+        confirmacao = (input(f"{sessao_dict[key]} -> {novo_preco} \nConfirma essa troca? (entre apenas 'sim' ou 'nao'): ")).lower()
     
     # Encerra a operação caso a resposta seja negativa
-    if confirmacao.lower() == "nao":
+    if confirmacao == "nao":
         return "CANCELLED"
     
     # Atualiza o dicionário e retorna sucesso
