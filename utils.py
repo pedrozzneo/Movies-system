@@ -97,7 +97,7 @@ def menu(titulo):
         else:
             return escolha
 
-# Valida inteiros para permitir as operações com esses dados
+# Valida inteiros para permitir as operações com esses dados TEM QUE POR NOS ALTERAR TAMBÉM
 def valid_int(module):
     # Caso consiga fazer a conversao para int o valor é retornado
     try:
