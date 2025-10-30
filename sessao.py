@@ -21,7 +21,7 @@ def listar_especifico(sessao_dict, key=None):
 
     # Exibe caso o codigo exista no dicionário
     if key in sessao_dict:
-        print(f"Código do Filme: {key[0]} // Código da Sala: {key[1]} // Data: {key[2]} // Horário: {key[3]} // Preço do Ingresso: {sessao_dict[key]}")
+        print(f"Preço do Ingresso: {sessao_dict[key]}")
         return True
     else:
         return False
