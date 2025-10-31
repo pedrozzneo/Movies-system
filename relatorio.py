@@ -28,14 +28,14 @@ def gerar_relatorio_sala_por_exibicao_capacidade(sala_dict):
     file = open("arquivos/relatorios.txt", "w")
 
     # Adiciona o título explicando o relatório
-    file.write(f"Salas {exibicao} com capacidade para {capacidade} pessoas\n\n")
+    file.write(f"Salas {exibicao} com capacidade para pelo menos {capacidade} pessoas\n\n")
 
     # Percorre o dicionário e adiciona os itens encontrados ao arquivo
     vazio = True
     for item in sala_dict.items():
         if int(item[1][1]) >= capacidade and str(item[1][2]).upper() == exibicao:
             # Converte a lista de atores para string
-            linha = f"{item[0]}/{item[1][0]}/{item[1][1]}/{item[1][2]}/{item[1][3]}\n"
+            linha = f"Sala {item[1][0]} ({item[0]}) com capacidade para {item[1][1]} pessoas\n"
 
             # Adiciona a linha ao arquivo
             file.write(linha)
@@ -50,7 +50,7 @@ def gerar_relatorio_sala_por_exibicao_capacidade(sala_dict):
     else:
         return False
 
-def gerar_relatorio_filme_apartir_ano(filme_dict):
+def gerar_relatorio_filme_a_partir_ano(filme_dict):
     # Coleta o ano mínimo informado pelo usuário
     ano = utils.valid_int(input_message="Ano: ")
 
@@ -66,9 +66,8 @@ def gerar_relatorio_filme_apartir_ano(filme_dict):
     # Percorre o dicionário e adiciona os filmes a partir do ano informado ao arquivo
     for item in filme_dict.items():
         if int(item[1][1]) >= ano:
-            # Converte a lista de atores para string
-            atores = ", ".join(item[1][3])
-            linha = f"{item[0]}/{item[1][0]}/{item[1][1]}/{item[1][2]}/{atores}\n"
+            
+            linha = f"{item[1][0]}\n"
 
             # Adiciona a linha ao arquivo
             file.write(linha)
@@ -107,16 +106,15 @@ def gerar_relatorio_sessao_por_periodo(session_dict):
     # Percorre as sessões e adiciona as que estão no intervalo ao arquivo
     for key in session_dict:
         # Coleta e formata a data da sessao
-        sessionDate = key[2].split("-")
+        sessionDate = key[1].split("-")
         sessionDate = date(int(sessionDate[2]), int(sessionDate[1]), int(sessionDate[0]))
 
         # Adiciona as sessões que satisfazem os filtros ao arquivo
         if sessionDate >= fromDate and sessionDate <= toDate:
-            # Converte o preço para string formatada
-            preco_formatado = utils.format_cash(session_dict[key][0])
-
             # Define a linha a ser adicionada ao arquivo
-            linha = f"{key[0]}/{key[1]}/{key[2]}/{key[3]}/{preco_formatado}\n"
+            linha = f"sessao do dia {key[1]} as {key[2]} na sala {key[0]} transmitiu o filme {session_dict[key][0]} custando {utils.format_cash(session_dict[key][1])}\n"
+
+            # Adiciona a linha ao arquivo
             file.write(linha)
             vazio = False
 
@@ -150,7 +148,7 @@ def main():
             
         # Trata a escolha de listar filmes a partir de um ano
         elif escolha == 2:
-            if gerar_relatorio_filme_apartir_ano(filme_dict):
+            if gerar_relatorio_filme_a_partir_ano(filme_dict):
                 print("Relatório gerado com sucesso")
             else:
                 print("Nenhum filme encontrado a partir do ano especificado")
