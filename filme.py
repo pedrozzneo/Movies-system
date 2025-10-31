@@ -35,10 +35,8 @@ def include_film(film_dict): # Inclui um novo filme no dicionário e registra em
     actors = []
     print("Informe quantos atores/atrizes quer incluir no elenco", end="")
     actors_length = utils.valid_int()
-    i=0
-    while i < actors_length:
-        i+=1
-        actor_name = input(f"Informe o nome do {i}º Ator/Atriz: ").upper()
+    for i in range(actors_length):
+        actor_name = input(f"Informe o nome do {i+1}º Ator/Atriz: ").upper()
         actors.append(actor_name)
 
     # Adiciona ao dicionário a nova chave e seus elementos
@@ -73,41 +71,42 @@ def list_film(film_dict, key): # Exibe as informações de um filme
     else:
         print("Código não encontrado!")
 
-def alterar_filme(film_dict, key): # Altera uma das informações de um filme
-    list_film(film_dict,key)
-    continua = 'SIM'
-    while continua == 'SIM':
-        print("\nMenu de alteração de filmes:\n\t1 - Título\n\t2 - Ano de lançamento\n\t3 - Diretor\n\t4 - Elenco")
-        print("Escolha um para alterar", end="")
-        opc = utils.valid_int()
-        while opc < 1 and opc > 4:
-            print("Opção inválida, escolha de 1 à 4! Escolha um para alterar", end="")
-            opc = utils.valid_int()
-        if opc == 4: # Se for atores/atrizes preenche nova lista
-            actors = []
-            print("Informe quantos atores/atrizes quer incluir no elenco", end="") 
-            actors_length = utils.valid_int()
-            i=0
-            while i < actors_length:
-                i+=1
-                actor_name = input(f"Informe o nome do {i}º Ator/Atriz: ").upper()
-                if i < actors_length:
-                    actors.append(actor_name)
-                else:
-                    actors.append(actor_name)
-            film_dict[key][3] = actors
-        else:
-            if opc == 1 or opc == 3: # Se for Título ou Diretor entra como .upper()
-                new_value = input("Digite o novo valor: ")
-                new_value = new_value.upper()
-            else: # Se for ano, entra como inteiro (evita letras), depois converte para string.
-                print("Digite o novo valor: ", end="")
-                new_value = str(utils.valid_int())
-            film_dict[key][opc-1] = new_value
-        continua = input("Alteração efetuada com sucesso, deseja efetuar outra alteração? (Entre com SIM ou NAO)\n").upper()
-        while continua != 'SIM' and continua != 'NAO':
-            continua = input("ERRO: Digite apenas SIM ou NAO, deseja efetuar outra alteração? ").upper()
+def edit_film(film_dict): # Altera uma das informações de um filme
+    # Recebe a key código
+    key = input("Código: ").upper()
+    
+    # Retorna caso essa key não exista no dicionário
+    if key not in film_dict:
+        return "NO_DATA"
 
+    # Exibe as opções que podem ser trocadas da key escolhida pela posicao
+    print(f"\nQual dado deseja mudar?\n\t1- Título: {film_dict[key][0]} // 2- Lançamento: {film_dict[key][1]}")
+    print(f"\t3- Diretor: {film_dict[key][2]} // 4- Elenco: {','.join(film_dict[key][3])}")
+    print("Escolha", end='')
+    opcao = utils.valid_int()
+    # Força entrada válida
+    while opcao < 1 and opcao > 4:
+        print("Escolha", end='')
+        opcao = utils.valid_int()
+        if opcao < 1 and opcao > 4:
+            print("\nPosição inválida, escolha de 1 a 4!")
+    # Se opção for atores, cria lista com atores
+    if opcao == 4:
+        new = []
+        print("Informe quantos atores/atrizes quer incluir no elenco", end="")
+        actors_length = utils.valid_int()
+        for i in range(actors_length):
+            actor_name = input(f"Informe o nome do {i+1}º Ator/Atriz: ").upper()
+            new.append(actor_name)
+    # Se opção for ano de lançamento, força entrada em inteiros
+    if opcao == 2:
+        print("Informe o novo valor", end='')
+        new = utils.valid_int()
+    # Se opção for Título ou Diretor, preenche com texto
+    if opcao == 1 or opcao == 3:
+        new = input("Informe o novo valor: ")
+    dict_utils.change_dict(film_dict,key,opcao-1,new)
+    
 def main():
     # Declara e monta o dicionário do filme
     module = "filme"
