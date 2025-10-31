@@ -23,7 +23,7 @@ def listar_especifico(sala_dict):
         return False
 
 def incluir(dict):
-    # Recebe a key código
+    # Recebe a key
     key = input("codigo: ").upper()
     
     # Retorna caso essa key já esteja em uso
@@ -42,12 +42,15 @@ def incluir(dict):
     return True
 
 def alterar(dict):
-    # Recebe a key código
-    key = input("codigo: ").upper()
-    
-    # Retorna caso essa key não exista no dicionário
-    if key not in dict:
-        return "NO_KEY"
+    # Loop que garante a entrada de uma key existente
+    key = None
+    while key not in dict:
+        # Recebe a key 
+        key = input("codigo: ").upper()
+
+        # Avisa que a key é repetida
+        if key not in dict:
+            print("Chave não encontrada!")
 
     # Exibe as opções que podem ser trocadas da key escolhida pela posicao
     print(f"\nQual dado deseja mudar?\n1- Nome: {dict[key][0]} // 2- Capacidade: {dict[key][1]} // 3- Tipo de exibição: {dict[key][2]} // 4- Acessível: {dict[key][3]}")
@@ -99,12 +102,12 @@ def main():
         # Trata a escolha de listar todos
         if escolha == 1:
             if not listar_todos(sala_dict):
-                print("Lista de salas está vazia!")
+                print("Lista vazia!")
 
         # Trata a escolha de listar um elemento específico
         elif escolha == 2:
             if not listar_especifico(sala_dict):
-                print("Código não encontrado!")
+                print("Chave não encontrada!")
 
         # Trata a escolha de incluir um novo elemento
         elif escolha == 3:
@@ -113,12 +116,11 @@ def main():
 
         # Trata a escolha de alterar um elemento existente com status pois há mais possibilidades
         elif escolha == 4:
-            # Alterar retorna um código que indica o que aconteceu
-            code = alterar(sala_dict)
-
-            # Traduz de forma mais clara ao usuário
-            utils.turn_code_into_message(module, code)
-
+            if not alterar(sala_dict):
+                print("Operação cancelada!")
+            else:
+                print("Operação bem sucedida!")
+    
         # Trata a escolha de excluir um elemento existente com status pois há mais possibilidades
         elif escolha == 5:
             # Alterar retorna um código que indica o que aconteceu

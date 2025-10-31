@@ -42,7 +42,7 @@ def valid_int(): # Validação de dados (inteiros) para evitar erro de entrada
         except:
             print("Valor deve ser um inteiro!")
 
-def valid_date(): # Validação de dados (data) para evitar erro de entrada
+def valid_date(input_message): # Validação de dados (data) para evitar erro de entrada
     # Importa biblioteca para lidar com datas
     from datetime import date
 
@@ -51,7 +51,7 @@ def valid_date(): # Validação de dados (data) para evitar erro de entrada
         # Se a conversão para date for bem sucedida, retorna o texto
         try:
             # Quebra cada informação de texto para verificar se é uma data válida
-            values = input(": ").split("-")
+            values = input(f"{input_message}: ").split("-")
             date(int(values[2]), int(values[1]), int(values[0]))
             
             # Volta a data ao formato original de texto
@@ -99,3 +99,14 @@ def turn_code_into_message(module, message): # Mensagens de status para Menu e M
             print("ERRO: Já existe uma sessão cadastrada com os mesmos dados!")
         else:
             print("ERRO: Código já cadastrado!")
+
+# Garante o retorno de um element que existe na list
+# def element_in_list(list, tipo):
+#     element = None
+#     while element not in list:
+#         # Recebe o element 
+#         element = input(f"{tipo}: ").upper()
+
+#         # Avisa que a key é repetida
+#         if element not in dict:
+#             print("Chave não encontrada!")
