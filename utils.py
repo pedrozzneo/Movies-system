@@ -38,12 +38,11 @@ def valid_int(): # Validação de dados (inteiros) para evitar erro de entrada
             value = int(input(": "))
             
             # Quebra de linha e retorna 
-            print()
             return value
         
         # Se deu erro, informa!
         except:
-            print("Valor deve ser um inteiro!")
+            print("O valor deve ser um inteiro!")
 
 def valid_date(): # Validação de dados (data) para evitar erro de entrada
     # Importa biblioteca para lidar com datas
@@ -75,12 +74,11 @@ def valid_float():# Validação de dados (float) para evitar erro de entrada
             # Tenta fazer a conversão permitindo entrada com "," e "."
             value = float(input(": ").replace(',','.'))
             # Quebra de linha e retorna 
-            print()
             return value
         
         # Se deu erro, informa!
         except:
-            print("Valor deve ser um número real!")
+            print("O valor deve ser um número real!")
 
 def format_cash(value): # Apenas para exibição em listagem
     value = f"R$ {value}".replace('.',',')
