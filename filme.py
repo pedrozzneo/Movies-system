@@ -1,4 +1,5 @@
 import utils
+import dict as dict_utils
 
 def include_film(film_dict): # Inclui um novo filme no dicionário e registra em arquivo
     # Garante a entrada de um código único
@@ -91,12 +92,13 @@ def alterar_filme(film_dict, key): # Altera uma das informações de um filme
 
 def main():
     # Declara e monta o dicionário do filme
-    film_dict = utils.build_dict_through_file("filme")
+    module = "filme"
+    film_dict = dict_utils.build_dict_through_file(module)
 
     # Oferece opções até o usuário decidir sair (6)
     escolha = 0
     while escolha != 6:
-        escolha = utils.menu("filme")
+        escolha = utils.menu(module)
         if escolha == 1: # Listar todos os filmes no catálogo
             list_dict(film_dict)
 
@@ -116,13 +118,8 @@ def main():
             alterar_filme(film_dict,key)
 
         elif escolha == 5: # Excluir um filme do catálogo
-            status = utils.delete_element_in_dict(film_dict)
-            if status == "NO_DATA":
-                print("Código não encontrado")
-            elif status == "CANCELLED":
-                print("Operação cancelada")
-            elif status == "SUCCESS":
-                print("Exclusão realizada com sucesso")
+            utils.status(module,dict_utils.delete_element_in_dict(film_dict))
+
         elif escolha == 6:
-            utils.save_dict_to_file("filme",film_dict)
+            utils.save_dict_to_file(module,film_dict)
             return

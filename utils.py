@@ -8,47 +8,6 @@ def file_exists(nome_arquivo): # Verifica existência de arquivo para construir 
     else:
         return False
 
-def build_dict_through_file(file_name): # Constrói dicionários ao abrir submenu
-    # Declara o caminho para acessar o arquivo
-    file_path = f"arquivos/{file_name}.txt"
-    
-    # Declara o dicionário
-    dict = {}
-
-    # Verifica se o arquivo existe
-    if not file_exists(file_path):
-        return dict
-    
-    # Abre o arquivo e lê o conteúdo
-    arquivo = open(file_path, "r")
-
-    # Percorre cada linha do arquivo para montar o dict
-    for linha in arquivo:
-        # Separa os dados pelo separador '/'
-        partes = linha.upper().replace("\n","").split("/")
-
-        # Tratamento específico de sessao para construir suas keys e values
-        if file_name == "sessao":
-            key = (partes[0], partes[1], partes[2], partes[3])
-            value = [partes[4]]
-
-        # Tratamento específico de sala para construir suas keys e values
-        elif file_name == "sala":
-            key = partes[0]
-            value = partes[1:]
-
-        # Tratamento específico de filme para construir suas keys e values
-        elif file_name == "filme":
-            key = partes[0]
-            partes[4] = partes[4].split(", ") # É pra ser uma lista de atores
-            value = partes[1:]
-
-        # Coloca na estrutura de dicionários
-        dict[key] = value
-        
-    # Fecha o arquivo e retorna o dicionário
-    arquivo.close()
-    return dict
 
 def save_dict_to_file(file_name, dict): # Exporta dicionários aos arquivos ao fechar cada submenu
     # Abre o arquivo para escrita
@@ -101,7 +60,7 @@ def menu(titulo):
         else:
             return escolha
 
-def valid_int(): # Validação de dados (inteiros) para evitar erro
+def valid_int(): # Validação de dados (inteiros) para evitar erro de entrada
     # Loop em que só é possivel sair ao entra um inteiro válido
     while True:
         # Se a conversão para inteiro for bem sucedida, retorna
@@ -115,9 +74,9 @@ def valid_int(): # Validação de dados (inteiros) para evitar erro
         
         # Se deu erro, informa!
         except:
-            print("valor deve ser um inteiro!")
+            print("Valor deve ser um inteiro!")
 
-def valid_date(): # Validação de dados (data) para evitar erro
+def valid_date(): # Validação de dados (data) para evitar erro de entrada
     # Importa biblioteca para lidar com datas
     from datetime import date
 
@@ -137,6 +96,44 @@ def valid_date(): # Validação de dados (data) para evitar erro
 
          # Se deu erro, informa! 
         except:
-            print("valor deve ser uma data válida (DD-MM-AAAA)")
+            print("Valor deve ser uma data válida (DD-MM-AAAA)")
+
+def valid_float():# Validação de dados (float) para evitar erro de entrada
+    # Loop em que só é possivel sair ao entra um float válido
+    while True:
+        # Se a conversão para float for bem sucedida, retorna
+        try:
+            # Tenta fazer a conversão permitindo entrada com "," e "."
+            value = float(input(": ").replace(',','.'))
+            # Quebra de linha e retorna 
+            print()
+            return value
+        
+        # Se deu erro, informa!
+        except:
+            print("Valor deve ser um número real!")
+
+def format_cash(value): # Apenas para exibição em listagem
+    value = f"R$ {value}".replace('.',',')
+    return value
+
+def status(module,message): # Mensagens de status para Menu e Main
+    if message == "SUCCESS":
+        print("Operação realizada com sucesso!")
+    if message == "CANCELLED":
+        print("Operação cancelada!")
+    if message == "NO_DATA":
+        print(f"ERRO: {module} não encontrado(a)!")
+    if message == "NO_FILM":
+        print("ERRO: filme não cadastrado!")
+    if message == "NO_ROOM":
+        print("ERRO: sala não cadastrada!")
+    if message == "USED_KEY":
+        if module == "sessao":
+            print("ERRO: Já existe uma sessão cadastrada com os mesmos dados!")
+        else:
+            print("ERRO: Código já cadastrado!")
 
 # change_dict foi movido para dict.py (dict_utils.change_dict)
+# build_dict_through_file foi movido para dict.py (dict_utils.change_dict)
+# element_exists foi movido para dict.py (dict_utils.change_dict)

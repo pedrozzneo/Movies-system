@@ -14,7 +14,7 @@ def listar_todos(sala_dict):
 def listar_especifico(sala_dict):
     # Coleta o código que o usuário deseja exibir 
     codigo = input("Código: ").upper()
-
+    
     # Exibe caso o codigo exista no dicionário
     if codigo in sala_dict:
         print(f"Nome: {sala_dict[codigo][0]} // Capacidade: {sala_dict[codigo][1]} // Tipo de exibição: {sala_dict[codigo][2]} // Acessível: {sala_dict[codigo][3]}")
@@ -78,13 +78,14 @@ def excluir(sala_dict):
 
 def main():
     # Declara e monta o dicionário da sala 
-    sala_dict = utils.build_dict_through_file("sala")
+    module = "sala"
+    sala_dict = dict_utils.build_dict_through_file(module)
 
     # Continua oferecendo opções até o usuário decidir sair (6)
     escolha = 0
     while escolha != 6:
         # Coleta a escolha do usuário a partir do menu
-        escolha = utils.menu("salas")
+        escolha = utils.menu(module)
 
         # Trata a escolha de listar todos
         if escolha == 1:
@@ -100,32 +101,15 @@ def main():
 
         # Trata a escolha de incluir um novo elemento
         elif escolha == 3:
-            status = incluir(sala_dict)
-            if status:
-                print("Sala incluída com sucesso")
-        
+            utils.status(module,incluir(sala_dict))
         # Trata a escolha de alterar um elemento existente
         elif escolha == 4:
-            status = alterar(sala_dict)
-            if status == "NO_DATA":
-                print("Código não encontrado")
-            elif status == "CANCELLED":
-                print("Operação cancelada")
-            elif status == "SUCCESS":
-                print("Alteração realizada com sucesso")
-        
+            utils.status(module,alterar(sala_dict))
         # Trata a escolha de excluir um elemento existente
         elif escolha == 5:
-            status = excluir(sala_dict)
-            if status == "NO_DATA":
-                print("Código não encontrado")
-            elif status == "CANCELLED":
-                print("Operação cancelada")
-            elif status == "SUCCESS":
-                print("Exclusão realizada com sucesso")
-        
+            utils.status(module,excluir(sala_dict))
         # Trata a escolha de sair
         elif escolha == 6:
             # Salva todas as alterações no arquivo antes de sair
-            utils.save_dict_to_file("sala", sala_dict)
+            utils.save_dict_to_file(module, sala_dict)
             return "EXIT"

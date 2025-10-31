@@ -8,7 +8,7 @@ def listar_todos(sessao_dict):
     
     # Exibe todas as sessões sem distinção 
     for key in sessao_dict.keys():
-        print(f"Código do Filme: {key[0]} // Código da Sala: {key[1]} // Data: {key[2]} // Horário: {key[3]} // Preço do Ingresso: {sessao_dict[key][0]}")
+        print(f"Código do Filme: {key[0]} // Código da Sala: {key[1]} // Data: {key[2]} // Horário: {key[3]} // Preço do Ingresso: {utils.format_cash(sessao_dict[key][0])}")
     return True
 
 def listar_especifico(sessao_dict, key=None):
@@ -23,7 +23,7 @@ def listar_especifico(sessao_dict, key=None):
 
     # Exibe caso o codigo exista no dicionário
     if key in sessao_dict:
-        print(f"Preço do Ingresso: {sessao_dict[key][0]}")
+        print(f"Preço do Ingresso: {utils.format_cash(sessao_dict[key][0])}")
         return True
     else:
         return False
@@ -31,22 +31,27 @@ def listar_especifico(sessao_dict, key=None):
 def incluir(sessao_dict):
     # Constrói a key
     filme = input("Código do filme: ").upper()
+    if not utils.element_exists(filme,"filme"):
+        return "NO_FILM"
     sala = input("Código do sala: ").upper()
+    if not utils.element_exists(sala,"sala"):
+        return "NO_ROOM"
     print("Data", end = "")
     data = utils.valid_date()
     horario = input("Horario: ")
-    key = (filme, sala, data, horario)
+    key = [(filme,) (sala, data, horario)]
 
     # Retorna caso essa key já esteja em uso
     if key in sessao_dict.keys():
-        return False
+        return "USED_KEY"
     
     # Obtém o preco associado a essa key
-    preco = input("Preço do Ingresso: ")
+    print("Preço do Ingresso", end="")
+    preco = utils.valid_float()
 
     # Adiciona ao dicionário a nova chave e seus elementos
     sessao_dict[key] = [preco]
-    return True
+    return "SUCCESS"
 
 def alterar(sessao_dict):
     # Constrói a key
@@ -62,7 +67,7 @@ def alterar(sessao_dict):
         return "NO_DATA"
     
     # Exibe o preco atual associado a essa key
-    print(f"Preço do Ingresso: {sessao_dict[key][0]}")
+    print(f"Preço do Ingresso: {utils.format_cash(sessao_dict[key][0])}")
 
     # Coleta o valor que vai substituir o anterior
     novo_preco = input("Digite o novo valor: ")
@@ -88,13 +93,14 @@ def excluir(sessao_dict):
 
 def main():
     # Declara e monta o dicionário de sessões 
-    sessao_dict = utils.build_dict_through_file("sessao")
+    module = "sessao"
+    sessao_dict = dict_utils.build_dict_through_file(module)
 
     # Continua oferecendo opções até o usuário decidir sair (6)
     escolha = 0
     while escolha != 6:
         # Coleta a escolha do usuário a partir do menu
-        escolha = utils.menu("sessao")
+        escolha = utils.menu(module)
 
         # Trata a escolha de listar todos
         if escolha == 1:
@@ -103,41 +109,25 @@ def main():
                 print("Lista de sessões está vazia")
 
         # Trata a escolha de listar um elemento específico
-        elif escolha == 2:
+        if escolha == 2:
             result = listar_especifico(sessao_dict)
             if not result:
-                print("Sessão não encontrada")
+                print("Sessão não encontrada!")
 
         # Trata a escolha de incluir um novo elemento
-        elif escolha == 3:
-            result = incluir(sessao_dict)
-            if result:
-                print("Sessão incluída com sucesso")
-            elif not result:
-                print("Chave já em uso!")
+        if escolha == 3:
+            utils.status(module,incluir(sessao_dict))
 
         # Trata a escolha de alterar um elemento existente
-        elif escolha == 4:
-            result = alterar(sessao_dict)
-            if result == "NO_DATA":
-                print("Sessão não encontrada")
-            elif result == "CANCELLED":
-                print("Operação cancelada")
-            elif result == "SUCCESS":
-                print("Alteração realizada com sucesso")
+        if escolha == 4:
+            utils.status(module,alterar(sessao_dict))
 
         # Trata a escolha de excluir um elemento existente
-        elif escolha == 5:
-            result = excluir(sessao_dict)
-            if result == "NO_DATA":
-                print("Sessão não encontrada")
-            elif result == "CANCELLED":
-                print("Operação cancelada")
-            elif result == "SUCCESS":
-                print("Exclusão realizada com sucesso")
+        if escolha == 5:
+            utils.status(module,excluir(sessao_dict))
 
         # Trata a escolha de sair
-        elif escolha == 6:
+        if escolha == 6:
             # Salva todas as alterações no arquivo antes de sair
-            utils.save_dict_to_file("sessao", sessao_dict)
+            utils.save_dict_to_file(module, sessao_dict)
             return "EXIT"
