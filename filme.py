@@ -27,14 +27,12 @@ def include_film(film_dict): # Inclui um novo filme no dicionário e registra em
     
     # Obtém os atributos do filme
     title = input("Informe o título do filme: ").upper()
-    print("Informe o ano de lançamento do filme", end="")
-    year = str(utils.valid_int())
+    year = str(utils.valid_int(input_message="Informe o ano de lançamento do filme: "))
     director = input("Informe o nome do diretor: ").upper()
 
     # Obtém os nomes dos atores/atrizes e armazena em lista de str
     actors = []
-    print("Informe quantos atores/atrizes quer incluir no elenco", end="")
-    actors_length = utils.valid_int()
+    actors_length = utils.valid_int(input_message="Informe quantos atores/atrizes quer incluir no elenco: ")
     for i in range(actors_length):
         actor_name = input(f"Informe o nome do {i+1}º Ator/Atriz: ").upper()
         actors.append(actor_name)
@@ -82,26 +80,22 @@ def edit_film(film_dict): # Altera uma das informações de um filme
     # Exibe as opções que podem ser trocadas da key escolhida pela posicao
     print(f"\nQual dado deseja mudar?\n\t1- Título: {film_dict[key][0]} // 2- Lançamento: {film_dict[key][1]}")
     print(f"\t3- Diretor: {film_dict[key][2]} // 4- Elenco: {','.join(film_dict[key][3])}")
-    print("Escolha", end='')
-    opcao = utils.valid_int()
+    opcao = utils.valid_int(input_message="Escolha: ")
     # Força entrada válida
     while opcao < 1 and opcao > 4:
-        print("Escolha", end='')
-        opcao = utils.valid_int()
+        opcao = utils.valid_int(input_message="Escolha: ")
         if opcao < 1 and opcao > 4:
             print("\nPosição inválida, escolha de 1 a 4!")
     # Se opção for atores, cria lista com atores
     if opcao == 4:
         new = []
-        print("Informe quantos atores/atrizes quer incluir no elenco", end="")
-        actors_length = utils.valid_int()
+        actors_length = utils.valid_int(input_message="Informe quantos atores/atrizes quer incluir no elenco: ")
         for i in range(actors_length):
             actor_name = input(f"Informe o nome do {i+1}º Ator/Atriz: ").upper()
             new.append(actor_name)
     # Se opção for ano de lançamento, força entrada em inteiros
     if opcao == 2:
-        print("Informe o novo valor", end='')
-        new = utils.valid_int()
+        new = utils.valid_int(input_message="Informe o novo valor: ")
     # Se opção for Título ou Diretor, preenche com texto
     if opcao == 1 or opcao == 3:
         new = input("Informe o novo valor: ")

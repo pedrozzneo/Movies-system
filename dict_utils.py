@@ -100,9 +100,9 @@ def change_dict(dict, key, posicao, novo_valor):
    dict[key][posicao - 1] = novo_valor
    return True
 
-def element_exists_in_dict(KEY,element):
+def element_exists_in_dict(key,element):
     dictionary = build_dict_from_file(element)
-    if KEY not in dictionary.keys():
+    if key not in dictionary.keys():
         return True
     else:
         return False

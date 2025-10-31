@@ -11,8 +11,7 @@ def menu():
         print("2- Listar todos os filmes a partir de um ano")
         print("3- Exibir todas as informações das sessões de uma data determinada até outra")
         print("4- Sair")
-        print("\nEscolha: ", end="")
-        escolha = utils.valid_int()
+        escolha = utils.valid_int(input_message="\nEscolha: ")
 
         # Trata a escolha do usuário
         if escolha > 4 or escolha < 1:
@@ -20,71 +19,112 @@ def menu():
         else:
             return escolha
 
-def listarSalaPorExibicaoCapacidade(sala_dict):
+def gerar_relatorio_sala_por_exibicao_capacidade(sala_dict):
     # Coleta os filtros do usuário
     exibicao = (input("Exibição: ")).upper()
-    print("Capacidade: ", end="")
-    capacidade = utils.valid_int()
+    capacidade = utils.valid_int(input_message="Capacidade: ")
 
-    # Percorre o dicionário e exibe os itens encontrados
-    found = False
+    # Abre o arquivo em modo write para reescrever todo o conteúdo
+    file = open("arquivos/relatorios.txt", "w")
+
+    # Adiciona o título explicando o relatório
+    file.write(f"Salas {exibicao} com capacidade para {capacidade} pessoas\n\n")
+
+    # Percorre o dicionário e adiciona os itens encontrados ao arquivo
+    vazio = True
     for item in sala_dict.items():
         if int(item[1][1]) >= capacidade and str(item[1][2]).upper() == exibicao:
-            print(f"Código: {item[0]}// Nome: {item[1][0]}// Capacidade: {item[1][1]}// Exibição {item[1][2]}// Acessível: {item[1][3]}")
-            found = True
+            # Converte a lista de atores para string
+            linha = f"{item[0]}/{item[1][0]}/{item[1][1]}/{item[1][2]}/{item[1][3]}\n"
+
+            # Adiciona a linha ao arquivo
+            file.write(linha)
+            vazio = False
+
+    # Fecha o arquivo
+    file.close()
 
     # Retorna status booleano conforme encontrou algo
-    if found:
+    if not vazio:
         return True
     else:
         return False
 
-def listarFilmeAPartirAno(filme_dict):
+def gerar_relatorio_filme_apartir_ano(filme_dict):
     # Coleta o ano mínimo informado pelo usuário
-    print("Ano: ", end="")
-    ano = utils.valid_int()
+    ano = utils.valid_int(input_message="Ano: ")
 
-    # Percorre o dicionário e exibe os filmes a partir do ano informado
-    found = False
+    # Abre o arquivo em modo write para reescrever todo o conteúdo
+    file = open("arquivos/relatorios.txt", "w")
+
+    # Adiciona o título explicando o relatório
+    file.write(f"Filmes a partir de {ano}\n\n")
+
+    # Variável para verificar se o arquivo é vazio
+    vazio = True
+
+    # Percorre o dicionário e adiciona os filmes a partir do ano informado ao arquivo
     for item in filme_dict.items():
         if int(item[1][1]) >= ano:
-            print(f"Código: {item[0]}// Nome: {item[1][0]}// Ano de lançamento: {item[1][1]}// Diretor {item[1][2]}// Atores: {item[1][3]}")
-            found = True
+            # Converte a lista de atores para string
+            atores = ", ".join(item[1][3])
+            linha = f"{item[0]}/{item[1][0]}/{item[1][1]}/{item[1][2]}/{atores}\n"
+
+            # Adiciona a linha ao arquivo
+            file.write(linha)
+            vazio = False
+
+    # Fecha o arquivo
+    file.close()
 
     # Retorna status booleano conforme encontrou algo
-    if found:
+    if not vazio:
         return True
     else:
         return False
 
-def listSessionFromDateToDate(session_dict):
+def gerar_relatorio_sessao_por_periodo(session_dict):
     # Importa biblioteca para lidar com datas
     from datetime import date
 
     # Coleta e formata as datas iniciais
-    print("Data início (DD-MM-AAAA)", end="")
-    fromDate = (utils.valid_date()).split("-")
+    fromDate = utils.valid_date(input_message="Data início (DD-MM-AAAA)").split("-")
     fromDate = date(int(fromDate[2]), int(fromDate[1]), int(fromDate[0]))
 
     # Coleta e formata as datas finais
-    print("Data final (DD-MM-AAAA)", end="")
-    toDate = (utils.valid_date()).split("-")
+    toDate = utils.valid_date(input_message="Data final (DD-MM-AAAA)").split("-")
     toDate = date(int(toDate[2]), int(toDate[1]), int(toDate[0]))
 
-    # Percorre as sessões e exibe as que estão no intervalo
-    found = False
+    # Abre o arquivo em modo write para reescrever todo o conteúdo
+    file = open("arquivos/relatorios.txt", "w")
+
+    # Adiciona o título explicando o relatório
+    file.write(f"Sessoes entre {fromDate.strftime('%d/%m/%Y')} e {toDate.strftime('%d/%m/%Y')}\n\n")
+
+    # Variável para verificar se o arquivo é vazio
+    vazio = True
+
+    # Percorre as sessões e adiciona as que estão no intervalo ao arquivo
     for key in session_dict:
         # Coleta e formata a data da sessao
         sessionDate = key[2].split("-")
         sessionDate = date(int(sessionDate[2]), int(sessionDate[1]), int(sessionDate[0]))
 
-        # Exibe as sessões que satisfazem os filtros e guarda a informação que pelo menos 1 foi encontado
+        # Adiciona as sessões que satisfazem os filtros ao arquivo
         if sessionDate >= fromDate and sessionDate <= toDate:
-            print(f"\nCódigo do Filme: {key[0]} // Código da Sala: {key[1]} // Data: {key[2]} // Horário: {key[3]} // Preço do Ingresso: {session_dict[key]}", end = "")
-            found = True
+            # Converte o preço para string formatada
+            preco_formatado = utils.format_cash(session_dict[key][0])
+
+            # Define a linha a ser adicionada ao arquivo
+            linha = f"{key[0]}/{key[1]}/{key[2]}/{key[3]}/{preco_formatado}\n"
+            file.write(linha)
+            vazio = False
+
+    # Fecha o arquivo
+    file.close()
 
     # Retorna status booleano conforme encontrou algo
-    if found:
+    if not vazio:
         return True
     else:
         return False
@@ -103,22 +143,21 @@ def main():
 
         # Trata cada uma das escolhas
         if escolha == 1:
-           status = listarSalaPorExibicaoCapacidade(sala_dict)
-           if not status:
-               print("Nenhuma sala encontrada com os critérios especificados")
-
+            if gerar_relatorio_sala_por_exibicao_capacidade(sala_dict):
+               print("Relatório gerado com sucesso")
+            else:
+                print("Nenhuma sala encontrada com os critérios especificados")
+            
         # Trata a escolha de listar filmes a partir de um ano
         elif escolha == 2:
-            status = listarFilmeAPartirAno(filme_dict)
-            if not status:
+            if gerar_relatorio_filme_apartir_ano(filme_dict):
+                print("Relatório gerado com sucesso")
+            else:
                 print("Nenhum filme encontrado a partir do ano especificado")
 
         # Trata a escolha de listar sessões dentro de um período
         elif escolha == 3:
-            status = listSessionFromDateToDate(session_dict)
-            if not status:
+            if gerar_relatorio_sessao_por_periodo(session_dict):
+                print("Relatório gerado com sucesso")
+            else:
                 print("Nenhuma sessão encontrada no período especificado")
-        
-        # Trata a escolha de sair
-        elif escolha == 4:
-            return "EXIT"

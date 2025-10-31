@@ -16,8 +16,7 @@ def menu():
         print("4- Submenu de Relatórios")
         print("5- Sair")
         
-        print("\nEscolha", end="")
-        escolha = utils.valid_int()
+        escolha = utils.valid_int(input_message="\nEscolha: ")
         # Trata a escolha do usuário
         if escolha > 5 or escolha < 1:
             print("escolha inválida")

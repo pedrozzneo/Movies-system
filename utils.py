@@ -22,20 +22,19 @@ def menu(module):
         print("6- Sair")
         
         # Permite o usuário escolher e valida
-        print("\nEscolha", end="")
-        escolha = valid_int()
+        escolha = valid_int(input_message="\nEscolha: ")
         if escolha > 6 or escolha < 1:
             print("Escolha inválida")
         else:
             return escolha
 
-def valid_int(): # Validação de dados (inteiros) para evitar erro de entrada
+def valid_int(input_message): # Validação de dados (inteiros) para evitar erro de entrada
     # Loop em que só é possivel sair ao entra um inteiro válido
     while True:
         # Se a conversão para inteiro for bem sucedida, retorna
         try:
             # Tenta fazer a conversão e retorna se bem sucedida
-            value = int(input(": "))
+            value = int(input(input_message))
             
             # Quebra de linha e retorna 
             return value

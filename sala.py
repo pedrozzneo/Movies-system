@@ -49,8 +49,7 @@ def incluir(sala_dict):
     
     # Obtém todos os valores
     nome = input("Nome: ").upper()
-    print("Capacidade", end = "")
-    capacidade = str(utils.valid_int())
+    capacidade = str(utils.valid_int(input_message="Capacidade: "))
     exibicao = input("Tipo de exibição: ").upper()
     acessivel = input("Acessível: ").upper()
 
