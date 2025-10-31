@@ -8,43 +8,12 @@ def file_exists(nome_arquivo): # Verifica existência de arquivo para construir 
     else:
         return False
 
-
-def save_dict_to_file(file_name, dict): # Exporta dicionários aos arquivos ao fechar cada submenu
-    # Abre o arquivo para escrita
-    file = open(f"arquivos/{file_name}.txt", "w")
-    
-    # Percorre todo o dicionário para codificar seus dados em strings no loop com contador e chave
-    for i, key in enumerate(dict):
-        # Converte os itens de sessao para texto no formato correto 
-        if file_name == "sessao":
-            linha = f"{'/'.join(key)}/{dict[key][0]}"
-
-        # Converte os itens de sala para texto no formato correto 
-        elif file_name == "sala":
-            linha = f"{key}/{'/'.join(dict[key])}" 
-
-        # Converte os itens de filme para texto no formato correto
-        elif file_name == "filme":
-            dict[key][3] = ", ".join(dict[key][3])
-            linha = f"{key}/{'/'.join(dict[key])}"
-
-        # Coloca o '\n' desde que não seja o último item para evitar linhas em branco
-        if i != len(dict) - 1:
-            linha += "\n"
-
-        # Escreve a linha no arquivo
-        file.write(linha)
-    
-    # fecha o arquivo e retorna
-    file.close()
-    return True
-
-def menu(titulo):
+def menu(module):
     # Força uma entrada válida para escolha
     escolha = 0
     while escolha > 6 or escolha < 1:
         # Exibe as opções e coleta a escolha do usuário no final
-        print(f"\nSubmenu de {titulo}:")
+        print(f"\nSubmenu de {module}:")
         print("1- Listar todos")
         print("2- Listar um elemento específico")
         print("3- Incluir (sem repetição)")
@@ -137,3 +106,4 @@ def status(module,message): # Mensagens de status para Menu e Main
 # change_dict foi movido para dict.py (dict_utils.change_dict)
 # build_dict_through_file foi movido para dict.py (dict_utils.change_dict)
 # element_exists foi movido para dict.py (dict_utils.change_dict)
+# save_dict_to_file foi movido para dict.py (dict_utils.change_dict)

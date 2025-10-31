@@ -14,7 +14,7 @@ def listar_todos(sala_dict):
 def listar_especifico(sala_dict):
     # Coleta o código que o usuário deseja exibir 
     codigo = input("Código: ").upper()
-    
+
     # Exibe caso o codigo exista no dicionário
     if codigo in sala_dict:
         print(f"Nome: {sala_dict[codigo][0]} // Capacidade: {sala_dict[codigo][1]} // Tipo de exibição: {sala_dict[codigo][2]} // Acessível: {sala_dict[codigo][3]}")
@@ -111,5 +111,5 @@ def main():
         # Trata a escolha de sair
         elif escolha == 6:
             # Salva todas as alterações no arquivo antes de sair
-            utils.save_dict_to_file(module, sala_dict)
+            dict_utils.save_dict_to_file(module, sala_dict)
             return "EXIT"

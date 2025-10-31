@@ -121,5 +121,5 @@ def main():
             utils.status(module,dict_utils.delete_element_in_dict(film_dict))
 
         elif escolha == 6:
-            utils.save_dict_to_file(module,film_dict)
+            dict_utils.save_dict_to_file(module,film_dict)
             return

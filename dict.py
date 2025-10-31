@@ -42,6 +42,36 @@ def build_dict_through_file(file_name): # Constrói dicionários ao abrir submen
     arquivo.close()
     return dict
 
+def save_dict_to_file(file_name, dict): # Exporta dicionários aos arquivos ao fechar cada submenu
+    # Abre o arquivo para escrita
+    file = open(f"arquivos/{file_name}.txt", "w")
+    
+    # Percorre todo o dicionário para codificar seus dados em strings no loop com contador e chave
+    for i, key in enumerate(dict):
+        # Converte os itens de sessao para texto no formato correto 
+        if file_name == "sessao":
+            linha = f"{'/'.join(key)}/{dict[key][0]}"
+
+        # Converte os itens de sala para texto no formato correto 
+        elif file_name == "sala":
+            linha = f"{key}/{'/'.join(dict[key])}" 
+
+        # Converte os itens de filme para texto no formato correto
+        elif file_name == "filme":
+            dict[key][3] = ", ".join(dict[key][3])
+            linha = f"{key}/{'/'.join(dict[key])}"
+
+        # Coloca o '\n' desde que não seja o último item para evitar linhas em branco
+        if i != len(dict) - 1:
+            linha += "\n"
+
+        # Escreve a linha no arquivo
+        file.write(linha)
+    
+    # fecha o arquivo e retorna
+    file.close()
+    return True
+
 def delete_element_in_dict(dict, key):
     # Verifica se o usuário realmente deseja confirmar a operação
     confirmacao = ""

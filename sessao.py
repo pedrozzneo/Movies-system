@@ -129,5 +129,5 @@ def main():
         # Trata a escolha de sair
         if escolha == 6:
             # Salva todas as alterações no arquivo antes de sair
-            utils.save_dict_to_file(module, sessao_dict)
+            dict_utils.save_dict_to_file(module, sessao_dict)
             return "EXIT"
