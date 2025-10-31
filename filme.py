@@ -93,7 +93,7 @@ def alterar_filme(film_dict, key): # Altera uma das informações de um filme
 def main():
     # Declara e monta o dicionário do filme
     module = "filme"
-    film_dict = dict_utils.build_dict_through_file(module)
+    film_dict = dict_utils.build_dict_from_file(module)
 
     # Oferece opções até o usuário decidir sair (6)
     escolha = 0

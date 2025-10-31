@@ -94,7 +94,7 @@ def excluir(sessao_dict):
 def main():
     # Declara e monta o dicionário de sessões 
     module = "sessao"
-    sessao_dict = dict_utils.build_dict_through_file(module)
+    sessao_dict = dict_utils.build_dict_from_file(module)
 
     # Continua oferecendo opções até o usuário decidir sair (6)
     escolha = 0

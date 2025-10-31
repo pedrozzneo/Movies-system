@@ -79,7 +79,7 @@ def excluir(sala_dict):
 def main():
     # Declara e monta o dicionário da sala 
     module = "sala"
-    sala_dict = dict_utils.build_dict_through_file(module)
+    sala_dict = dict_utils.build_dict_from_file(module)
 
     # Continua oferecendo opções até o usuário decidir sair (6)
     escolha = 0

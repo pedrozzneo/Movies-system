@@ -1,6 +1,6 @@
 import utils
 
-def build_dict_through_file(file_name): # Constrói dicionários ao abrir submenu
+def build_dict_from_file(file_name): # Constrói dicionários ao abrir submenu
     # Declara o caminho para acessar o arquivo
     file_path = f"arquivos/{file_name}.txt"
     
@@ -87,46 +87,22 @@ def delete_element_in_dict(dict, key):
     return "SUCCESS"
 
 def change_dict(dict, key, posicao, novo_valor):
-    # Determina o valor atual apresentado na confirmação
-    if posicao is not None:
-        valor_atual = dict[key][posicao]
-    else:
-        valor_atual = dict[key]
+   # Verifica se o usuário realmente deseja confirmar a operação
+   confirmacao = ""
+   while confirmacao != "SIM" and confirmacao != "NAO":
+       confirmacao = input(f"{dict[key][posicao-1]} -> {novo_valor} \nConfirma essa troca? (entre apenas 'SIM' ou 'NAO'): ").upper()
+   
+   # Retorna caso o usuário escolheu interromper a operação
+   if confirmacao == "NAO":
+       return "CANCELLED"
+   
+   # Atualiza o dicionário e retorna sucesso
+   dict[key][posicao - 1] = novo_valor
+   return "SUCCESS"
 
-    # Confirmação (SIM/NAO) em maiúsculas
-    confirmacao = ""
-    while confirmacao != "SIM" and confirmacao != "NAO":
-        confirmacao = input(f"{valor_atual} -> {novo_valor} \nConfirma essa troca? (entre apenas 'SIM' ou 'NAO'): ").upper()
-
-    if confirmacao == "NAO":
-        return "CANCELLED"
-
-    # Aplica a alteração (posicao é índice 0-based quando fornecido)
-    if posicao is not None:
-        dict[key][posicao] = novo_valor
-    else:
-        dict[key] = novo_valor
-
-    return "SUCCESS"
-
-def element_exists(KEY,element):
-    dictionary = build_dict_through_file(element)
+def element_exists_in_dict(KEY,element):
+    dictionary = build_dict_from_file(element)
     if KEY not in dictionary.keys():
         return True
     else:
         return False
-
-#def change_dict(dict, key, posicao, novo_valor):
-#    # Verifica se o usuário realmente deseja confirmar a operação
-#    confirmacao = ""
-#    while confirmacao != "SIM" and confirmacao != "NAO":
-#        confirmacao = input(f"{dict[key][posicao-1]} -> {novo_valor} \nConfirma essa troca? (entre apenas 'SIM' ou 'NAO'): ").upper()
-#    
-#    # Retorna caso o usuário escolheu interromper a operação
-#    if confirmacao == "NAO":
-#        return "CANCELLED"
-#    
-#    # Atualiza o dicionário e retorna sucesso
-#    dict[key][posicao - 1] = novo_valor
-#    return "SUCCESS"
-#
