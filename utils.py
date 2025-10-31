@@ -66,13 +66,13 @@ def valid_date(input_message): # Validação de dados (data) para evitar erro de
         except:
             print("Valor deve ser uma data válida (DD-MM-AAAA)")
 
-def valid_float():# Validação de dados (float) para evitar erro de entrada
+def valid_float(input_message):# Validação de dados (float) para evitar erro de entrada
     # Loop em que só é possivel sair ao entra um float válido
     while True:
         # Se a conversão para float for bem sucedida, retorna
         try:
             # Tenta fazer a conversão permitindo entrada com "," e "."
-            value = float(input(": ").replace(',','.'))
+            value = float(input(input_message).replace(',','.'))
             # Quebra de linha e retorna 
             return value
         

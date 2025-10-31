@@ -69,7 +69,7 @@ def alterar(sala_dict):
     index = -1
     while index < 0 or index > 3:
         # Coleta a posição computacional do dado que o usuário quer alterar
-        index = int(input(f"\nEscolha: ")) - 1
+        index = int(input(f"\nEscolha: ")) - 1 
 
         # Verifica se a posição é inválida
         if index < 0 or index > 3:

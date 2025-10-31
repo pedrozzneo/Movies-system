@@ -21,8 +21,8 @@ def build_dict_from_file(file_name): # Constrói dicionários ao abrir submenu
 
         # Tratamento específico de sessao para construir suas keys e values
         if file_name == "sessao":
-            key = (partes[1], partes[2], partes[3])
-            value = [partes[0], partes[4]]
+            key = (partes[0], partes[1], partes[2])
+            value = [partes[3], partes[4]]
 
         # Tratamento específico de sala para construir suas keys e values
         elif file_name == "sala":
@@ -50,7 +50,7 @@ def save_dict_in_file(file_name, dict): # Exporta dicionários aos arquivos ao f
     for i, key in enumerate(dict):
         # Converte os itens de sessao para texto no formato correto 
         if file_name == "sessao":
-            linha = f"{dict[key][0]}/{'/'.join(key)}/{dict[key][1]}"
+            linha = f"{'/'.join(key)}/{dict[key][0]}/{dict[key][1]}"
 
         # Converte os itens de sala para texto no formato correto 
         elif file_name == "sala":
@@ -86,18 +86,18 @@ def delete_element_in_dict(dict, key):
     del dict[key]
     return True
 
-def change_dict(dict, key, posicao, novo_valor):
+def change_dict(dict, key, index, novo_valor):
    # Verifica se o usuário realmente deseja confirmar a operação
    confirmacao = ""
    while confirmacao != "SIM" and confirmacao != "NAO":
-       confirmacao = input(f"{dict[key][posicao]} -> {novo_valor} \nConfirma essa troca? (entre apenas 'SIM' ou 'NAO'): ").upper()
+       confirmacao = input(f"{dict[key][index]} -> {novo_valor} \nConfirma essa troca? (entre apenas 'SIM' ou 'NAO'): ").upper()
    
    # Retorna caso o usuário escolheu interromper a operação
    if confirmacao == "NAO":
        return False
    
    # Atualiza o dicionário e retorna sucesso
-   dict[key][posicao - 1] = novo_valor
+   dict[key][index] = novo_valor
    return True
 
 def element_exists_in_dict(key,module):
