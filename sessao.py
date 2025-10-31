@@ -15,7 +15,8 @@ def listar_especifico(sessao_dict):
     # Coleta os dados da chave
     filme = input("Código do filme: ").upper()
     sala = input("Código do sala: ").upper()
-    data = utils.valid_date(input_message="Data (DD-MM-AAAA)")
+    print("Data (DD-MM-AAAA)", end="")
+    data = utils.valid_date()
     horario = input("Horario: ")
 
     # Constrói a chave
@@ -39,7 +40,7 @@ def incluir(sessao_dict):
     print("Data", end = "")
     data = utils.valid_date()
     horario = input("Horario: ")
-    key = [(filme,) (sala, data, horario)]
+    key = (filme, sala, data, horario)
 
     # Retorna caso essa key já esteja em uso
     if key in sessao_dict.keys():
@@ -78,7 +79,8 @@ def alterar(sessao_dict):
     novo_preco = input("Digite o novo valor: ")
 
     # Confirma e aplica via utilitário compartilhado (posicao 0 para lista de 1 elemento)
-    return dict_utils.change_dict(sessao_dict, key, 0, novo_preco)
+    result = dict_utils.change_dict(sessao_dict, key, 0, novo_preco)
+    return result == "SUCCESS"
 
 def excluir(sessao_dict):
     # Constrói a key
@@ -121,16 +123,14 @@ def main():
 
         # Trata a escolha de incluir um novo elemento
         elif escolha == 3:
-            if not listar_especifico(sessao_dict):
-                print("Chave não encontrada!")
+            utils.turn_code_into_message(module, incluir(sessao_dict))
 
-        # Trata a escolha de alterar um elemento existente
+        # Trata a escolha de alterar um elemento existente com status pois há mais possibilidades
         elif escolha == 4:
-            # Alterar retorna um código que indica o que aconteceu
-            code = alterar(sessao_dict)
-
-            # Traduz de forma mais clara ao usuário
-            utils.turn_code_into_message(module, code)
+            if not alterar(sessao_dict):
+                print("Operação cancelada!")
+            else:
+                print("Operação bem sucedida!")
 
         # Trata a escolha de excluir um elemento existente
         elif escolha == 5:
