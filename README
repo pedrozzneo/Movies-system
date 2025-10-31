@@ -1,0 +1,4 @@
+Nova definição de chave para sessão: eliminamos o código do filme como chave pois ele não é uma característica única, veja o exemplo:
+sala: 1, horário: 13:00, data: 20-10-2025, código do filme: A
+partindo da premissa que filme é uma chave, ao manter os outros e mudar, eu tenho uma nova chave, porém isso gera um absrudo pois não tem como um diferente
+filme passar na mesma sala e horario na mesma data. Ou seja, combos que eu Não posso repetir não contempla filmes, apenas sala, horario e data.
