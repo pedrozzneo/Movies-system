@@ -21,8 +21,8 @@ def build_dict_from_file(file_name): # Constrói dicionários ao abrir submenu
 
         # Tratamento específico de sessao para construir suas keys e values
         if file_name == "sessao":
-            key = (partes[0], partes[1], partes[2], partes[3])
-            value = partes[4]
+            key = (partes[1], partes[2], partes[3])
+            value = [partes[0], partes[4]]
 
         # Tratamento específico de sala para construir suas keys e values
         elif file_name == "sala":
@@ -50,7 +50,7 @@ def save_dict_in_file(file_name, dict): # Exporta dicionários aos arquivos ao f
     for i, key in enumerate(dict):
         # Converte os itens de sessao para texto no formato correto 
         if file_name == "sessao":
-            linha = f"{'/'.join(key)}/{dict[key][0]}"
+            linha = f"{dict[key][0]}/{'/'.join(key)}/{dict[key][1]}"
 
         # Converte os itens de sala para texto no formato correto 
         elif file_name == "sala":
@@ -100,9 +100,12 @@ def change_dict(dict, key, posicao, novo_valor):
    dict[key][posicao - 1] = novo_valor
    return True
 
-def element_exists_in_dict(KEY,element):
-    dictionary = build_dict_from_file(element)
-    if KEY not in dictionary.keys():
+def element_exists_in_dict(key,module):
+    # Constroi o dicionário do módulo
+    module_dict = build_dict_from_file(module)
+    
+    # Retorna se a key existe ou não no dicionário
+    if key in module_dict:
         return True
     else:
         return False

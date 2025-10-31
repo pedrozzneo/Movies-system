@@ -1,53 +1,40 @@
 import utils
 import dict_utils
 
-def ensure_key_exists_in_sessao_dict(sessao_dict):
+def key_exists_in_sessao_dict(sessao_dict):
     # Loop que garante a entrada de uma key composta existente (sessão)
     key = None
     while key not in sessao_dict:
-        filme = input("Código do filme: ").upper()
+        # Coleta os dados da key (sala, data, horário)
         sala = input("Código do sala: ").upper()
-        print("Data (DD-MM-AAAA)", end="")
-        data = utils.valid_date()
+        data = utils.valid_date(input_message = "Data (DD-MM-AAAA)")
         horario = input("Horario: ")
-        key = (filme, sala, data, horario)
+        key = (sala, data, horario)
+
+        # Se a key não existe, avisa e continua o loop
         if key not in sessao_dict:
             print("Chave não encontrada!")
     return key
 
-def ensure_key_dont_exists_in_sessao_dict(sessao_dict):
-    # Loop que garante a entrada de uma key composta que não existe (sessão)
-    filme = input("Código do filme: ").upper()
-    if not utils.element_exists(filme, "filme"):
-        return None
+def new_key_in_sessao_dict(sessao_dict):
+    # Garante uma sala que exista no 'banco de dados' de salas
+    sala = element_exists_in_DB(DB = "sala", input_message = "Código do sala: ")
     
-    sala = input("Código do sala: ").upper()
-    if not utils.element_exists(sala, "sala"):
-        return None
+    # Garante uma data que seja válida
+    data = utils.valid_date(input_message = "Data (DD-MM-AAAA)")
     
-    print("Data", end = "")
-    data = utils.valid_date()
+    # Coleta o horário
     horario = input("Horario: ")
-    key = (filme, sala, data, horario)
-    
-    while key in sessao_dict:
-        # Avisa que a key é repetida
-        print("Chave já em uso!")
-        
-        # Coleta novamente os dados da key
-        filme = input("Código do filme: ").upper()
-        if not utils.element_exists(filme, "filme"):
-            return None
-        
-        sala = input("Código do sala: ").upper()
-        if not utils.element_exists(sala, "sala"):
-            return None
-        
-        print("Data", end = "")
-        data = utils.valid_date()
-        horario = input("Horario: ")
-        key = (filme, sala, data, horario)
-    
+
+    # Constroi a key composta e retorna
+    key = (sala, data, horario)
+
+    # Se a key já existe, iterativamente chama a mesma função
+    if key in sessao_dict:
+        print("Chave já em uso!, insira novamente!")
+        return new_key_in_sessao_dict(sessao_dict)
+
+    # Retorna a key composta
     return key
 
 def listar_todos(sessao_dict):
@@ -57,49 +44,82 @@ def listar_todos(sessao_dict):
     
     # Exibe todas as sessões sem distinção 
     for key in sessao_dict.keys():
-        print(f"Código do Filme: {key[0]} // Código da Sala: {key[1]} // Data: {key[2]} // Horário: {key[3]} // Preço do Ingresso: {utils.format_cash(sessao_dict[key][0])}")
+        print(f"Código da Sala: {key[0]} // Data: {key[1]} // Horário: {key[2]} // Código do Filme: {sessao_dict[key][0]} // Preço do Ingresso: {utils.format_cash(sessao_dict[key][1])}")
     return True
 
 def listar_especifico(sessao_dict):
+    # Confere se a lista está vazia
+    if len(sessao_dict) == 0:
+        return False
+
     # Garante uma key existente neste módulo
-    key = ensure_key_exists_in_sessao_dict(sessao_dict)
+    key = key_exists_in_sessao_dict(sessao_dict)
 
     # Exibe as informações da sessão e retorna True
-    print(f"Preço do Ingresso: {utils.format_cash(sessao_dict[key][0])}")
+    print(f"Código do Filme: {sessao_dict[key][0]} // Preço do Ingresso: {utils.format_cash(sessao_dict[key][1])}")
     return True
 
+def element_exists_in_DB(DB, input_message):
+    # Loop que garante a entrada de um elemento que exista no 'banco de dados' do módulo
+    exists = False
+    while not exists:
+        # Coleta o elemento
+        element = input(input_message).upper()
+        
+        if dict_utils.element_exists_in_dict(element, DB):
+            exists = True
+        else:
+            print("Elemento não encontrado!")
+    return element
+
 def incluir(sessao_dict):
-    # Garante uma key composta que não existe neste módulo
-    key = ensure_key_dont_exists_in_sessao_dict(sessao_dict)
-    
-    # Retorna False se não foi possível garantir uma key válida
-    if key is None:
-        return False
+    # Garante a entrada de uma nova key 
+    key = new_key_in_sessao_dict(sessao_dict)
+
+    # Garante a entrada de um filme que exista no 'banco de dados' de filmes
+    filme = element_exists_in_DB(DB = "filme", input_message = "Código do filme: ")
     
     # Obtém o preço associado a essa key
     print("Preço do Ingresso", end="")
     preco = utils.valid_float()
 
     # Adiciona a nova key e seus elementos ao dicionário
-    sessao_dict[key] = [preco]
+    sessao_dict[key] = [filme, preco]
     return True
 
 def alterar(sessao_dict):
     # Garante uma key composta existente neste módulo
-    key = ensure_key_exists_in_sessao_dict(sessao_dict)
+    key = key_exists_in_sessao_dict(sessao_dict)
     
-    # Exibe o preço atual associado à key
-    print(f"Preço do Ingresso: {utils.format_cash(sessao_dict[key][0])}")
+    # Exibe as opções que podem ser trocadas da key escolhida pela posição
+    print(f"\nQual dado deseja mudar?\n1- Código do Filme: {sessao_dict[key][0]} // 2- Preço do Ingresso: {utils.format_cash(sessao_dict[key][1])}")
 
-    # Coleta o valor que vai substituir o anterior
-    novo_preco = input("Digite o novo valor: ")
+    # Força uma posição válida para alterar
+    index = -1
+    while index < 0 or index > 1:
+        # Coleta a posição computacional do dado que o usuário quer alterar
+        index = int(input(f"\nEscolha: ")) - 1
+
+        # Verifica se a posição é inválida
+        if index < 0 or index > 1:
+            print("Posição inválida!")
+
+    # Coleta o novo valor que vai substituir o anterior
+    if index == 0:  # Se for filme
+        novo_valor = input("Código do filme: ").upper()
+        if not utils.element_exists(novo_valor, "filme"):
+            print("Filme não encontrado!")
+            return False
+    else:  # Se for preço
+        print("Preço do Ingresso", end="")
+        novo_valor = utils.valid_float()
 
     # Aplica as alterações no dicionário a partir dos dados coletados
-    return dict_utils.change_dict(sessao_dict, key, 0, novo_preco)
+    return dict_utils.change_dict(sessao_dict, key, index, novo_valor)
 
 def excluir(sessao_dict):
     # Garante uma key composta existente neste módulo
-    key = ensure_key_exists_in_sessao_dict(sessao_dict)
+    key = key_exists_in_sessao_dict(sessao_dict)
 
     # Deleta o item com aquela key do dicionário a partir dos dados coletados
     return dict_utils.delete_element_in_dict(sessao_dict, key)
@@ -125,7 +145,7 @@ def main():
         # Trata a escolha de listar um elemento específico
         elif escolha == 2:
             if not listar_especifico(sessao_dict):
-                print("Chave não encontrada!")
+                print("Lista vazia!")
 
         # Trata a escolha de incluir um novo elemento
         elif escolha == 3:
