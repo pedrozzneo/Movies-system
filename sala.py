@@ -1,5 +1,5 @@
 import utils
-import dict as dict_utils
+import dict_utils
 
 def listar_todos(sala_dict):
     # Confere se a lista está vazia
@@ -47,38 +47,47 @@ def alterar(dict):
     
     # Retorna caso essa key não exista no dicionário
     if key not in dict:
-        return "NO_DATA"
+        return "NO_KEY"
 
     # Exibe as opções que podem ser trocadas da key escolhida pela posicao
     print(f"\nQual dado deseja mudar?\n1- Nome: {dict[key][0]} // 2- Capacidade: {dict[key][1]} // 3- Tipo de exibição: {dict[key][2]} // 4- Acessível: {dict[key][3]}")
 
     # Força uma posição válida para alterar
-    posicao = 0
-    while posicao < 1 or posicao > 4:
-        # Coleta a posição do dado que o usuário quer alterar
-        posicao = int(input(f"\nEscolha: "))
+    index = -1
+    while index < 0 or index > 3:
+        # Coleta a posição computacional do dado que o usuário quer alterar
+        index = int(input(f"\nEscolha: ")) - 1
 
         # Verifica se a posição é inválida
-        if posicao < 1 or posicao > 4:
+        if index < 0 or index > 3:
             print("Posição inválida!")
 
-    # Coleta o novo valor que vai substituir o anterior
-    novo_valor = (input("Digite o novo valor: ")).upper()
+    # Loop que garante um novo valor
+    novo_valor = dict[key][index]
+    while novo_valor == dict[key][index]:
+        # Coleta o valor do usuário
+        novo_valor = (input("Digite o novo valor: ")).upper()
 
-    return dict_utils.change_dict(dict, key, posicao, novo_valor)
+        # Verifica se não é igual ao que já tinha
+        if novo_valor == dict[key][index]:
+            print("O novo valor deve ser diferente!")
+
+    return dict_utils.change_dict(dict, key, index, novo_valor)
     
 def excluir(sala_dict):
     # Força uma entrada válida de código para continuar com a operação
     codigo = input("Código: ").upper()
     if codigo not in sala_dict.keys():
-        return "NO_DATA"
+        return "NO_KEY"
 
     # Delegar confirmação e exclusão para função compartilhada
     return dict_utils.delete_element_in_dict(sala_dict, codigo)
 
 def main():
-    # Declara e monta o dicionário da sala 
+    # Declara o módulo que as operações se referem neste arquivo python
     module = "sala"
+
+    # Declara e monta o dicionário da sala 
     sala_dict = dict_utils.build_dict_from_file(module)
 
     # Continua oferecendo opções até o usuário decidir sair (6)
@@ -89,27 +98,35 @@ def main():
 
         # Trata a escolha de listar todos
         if escolha == 1:
-            status = listar_todos(sala_dict)
-            if not status:
-                print("Lista de salas está vazia")
+            if not listar_todos(sala_dict):
+                print("Lista de salas está vazia!")
 
         # Trata a escolha de listar um elemento específico
         elif escolha == 2:
-            status = listar_especifico(sala_dict)
-            if not status:
-                print("Código não encontrado")
+            if not listar_especifico(sala_dict):
+                print("Código não encontrado!")
 
         # Trata a escolha de incluir um novo elemento
         elif escolha == 3:
-            utils.status(module,incluir(sala_dict))
-        # Trata a escolha de alterar um elemento existente
+            if not incluir(sala_dict):
+                print("Código já em uso!")
+
+        # Trata a escolha de alterar um elemento existente com status pois há mais possibilidades
         elif escolha == 4:
-            utils.status(module,alterar(sala_dict))
-        # Trata a escolha de excluir um elemento existente
+            # Alterar retorna um código que indica o que aconteceu
+            code = alterar(sala_dict)
+
+            # Traduz de forma mais clara ao usuário
+            utils.turn_code_into_message(module, code)
+
+        # Trata a escolha de excluir um elemento existente com status pois há mais possibilidades
         elif escolha == 5:
-            utils.status(module,excluir(sala_dict))
-        # Trata a escolha de sair
+            # Alterar retorna um código que indica o que aconteceu
+            code = excluir(sala_dict)
+
+            # Traduz de forma mais clara ao usuário
+            utils.turn_code_into_message(module, code)
+            
+        # Trata a escolha de sair e salvar as alterações no arquivo
         elif escolha == 6:
-            # Salva todas as alterações no arquivo antes de sair
-            dict_utils.save_dict_to_file(module, sala_dict)
-            return "EXIT"
+            dict_utils.save_dict_in_file(module, sala_dict)

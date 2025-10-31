@@ -1,4 +1,5 @@
 import utils
+import dict_utils
 
 def menu():
     # Força uma entrada válida para escolha
@@ -90,9 +91,9 @@ def listSessionFromDateToDate(session_dict):
 
 def main():
     # Declara e monta o dicionário da sala, filme e sessao
-    sala_dict = utils.build_dict_through_file("sala")
-    filme_dict = utils.build_dict_through_file("filme")
-    session_dict = utils.build_dict_through_file("sessao")
+    sala_dict = dict_utils.build_dict_from_file("sala")
+    filme_dict = dict_utils.build_dict_from_file("filme")
+    session_dict = dict_utils.build_dict_from_file("sessao")
 
     # Continua oferecendo opções até o usuário decidir sair (4)
     escolha = 0

@@ -1,5 +1,5 @@
 import utils
-import dict as dict_utils
+import dict_utils
 
 def listar_todos(sessao_dict):
     # Confere se a lista está vazia
@@ -116,18 +116,18 @@ def main():
 
         # Trata a escolha de incluir um novo elemento
         if escolha == 3:
-            utils.status(module,incluir(sessao_dict))
+            utils.turn_code_into_message(module,incluir(sessao_dict))
 
         # Trata a escolha de alterar um elemento existente
         if escolha == 4:
-            utils.status(module,alterar(sessao_dict))
+            utils.turn_code_into_message(module,alterar(sessao_dict))
 
         # Trata a escolha de excluir um elemento existente
         if escolha == 5:
-            utils.status(module,excluir(sessao_dict))
+            utils.turn_code_into_message(module,excluir(sessao_dict))
 
         # Trata a escolha de sair
         if escolha == 6:
             # Salva todas as alterações no arquivo antes de sair
-            dict_utils.save_dict_to_file(module, sessao_dict)
+            dict_utils.save_dict_in_file(module, sessao_dict)
             return "EXIT"

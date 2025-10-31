@@ -1,5 +1,5 @@
 import utils
-import dict as dict_utils
+import dict_utils
 
 def include_film(film_dict): # Inclui um novo filme no dicionário e registra em arquivo
     # Garante a entrada de um código único
@@ -118,8 +118,8 @@ def main():
             alterar_filme(film_dict,key)
 
         elif escolha == 5: # Excluir um filme do catálogo
-            utils.status(module,dict_utils.delete_element_in_dict(film_dict))
+            utils.turn_code_into_message(module,dict_utils.delete_element_in_dict(film_dict))
 
         elif escolha == 6:
-            dict_utils.save_dict_to_file(module,film_dict)
+            dict_utils.save_dict_in_file(module,film_dict)
             return

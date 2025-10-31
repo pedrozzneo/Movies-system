@@ -34,11 +34,8 @@ def valid_int(): # Validação de dados (inteiros) para evitar erro de entrada
     while True:
         # Se a conversão para inteiro for bem sucedida, retorna
         try:
-            # Tenta fazer a conversão
+            # Tenta fazer a conversão e retorna se bem sucedida
             value = int(input(": "))
-            
-            # Quebra de linha e retorna 
-            print()
             return value
         
         # Se deu erro, informa!
@@ -86,13 +83,13 @@ def format_cash(value): # Apenas para exibição em listagem
     value = f"R$ {value}".replace('.',',')
     return value
 
-def status(module,message): # Mensagens de status para Menu e Main
+def turn_code_into_message(module, message): # Mensagens de status para Menu e Main
     if message == "SUCCESS":
         print("Operação realizada com sucesso!")
     if message == "CANCELLED":
         print("Operação cancelada!")
-    if message == "NO_DATA":
-        print(f"ERRO: {module} não encontrado(a)!")
+    if message == "NO_KEY":
+        print(f"Chave não encontrada!")
     if message == "NO_FILM":
         print("ERRO: filme não cadastrado!")
     if message == "NO_ROOM":
@@ -102,8 +99,3 @@ def status(module,message): # Mensagens de status para Menu e Main
             print("ERRO: Já existe uma sessão cadastrada com os mesmos dados!")
         else:
             print("ERRO: Código já cadastrado!")
-
-# change_dict foi movido para dict.py (dict_utils.change_dict)
-# build_dict_through_file foi movido para dict.py (dict_utils.change_dict)
-# element_exists foi movido para dict.py (dict_utils.change_dict)
-# save_dict_to_file foi movido para dict.py (dict_utils.change_dict)

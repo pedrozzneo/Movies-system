@@ -41,5 +41,5 @@ def main():
         elif escolha == 4:
             relatorio.main()
         elif escolha == 5:
-            return "EXIT"
+            print("saindo...")
 main()
