@@ -100,6 +100,34 @@ def turn_code_into_message(module, message): # Mensagens de status para Menu e M
         else:
             print("ERRO: Código já cadastrado!")
 
+# Utilidades de coleta/validação de key para reuso entre módulos
+def ensure_key_exists_in_dict(dictionary):
+    # Loop que garante a entrada de uma key existente (para estruturas com key simples)
+    key = None
+    while key not in dictionary:
+        key = input("codigo: ").upper()
+        if key not in dictionary:
+            print("Chave não encontrada!")
+    return key
+
+def build_session_key_from_input():
+    # Coleta e constrói a key composta de sessão
+    filme = input("Código do filme: ").upper()
+    sala = input("Código do sala: ").upper()
+    print("Data (DD-MM-AAAA)", end="")
+    data = valid_date()
+    horario = input("Horario: ")
+    return (filme, sala, data, horario)
+
+def ensure_session_key_exists(sessao_dict):
+    # Loop que garante a entrada de uma key composta existente (sessões)
+    key = None
+    while key not in sessao_dict:
+        key = build_session_key_from_input()
+        if key not in sessao_dict:
+            print("Chave não encontrada!")
+    return key
+
 # Garante o retorno de um element que existe na list
 # def element_in_list(list, tipo):
 #     element = None

@@ -1,6 +1,26 @@
 import utils
 import dict_utils
 
+def ensure_key_exists_in_sala_dict(sala_dict):
+    # Loop que garante a entrada de uma key existente (sala)
+    key = None
+    while key not in sala_dict:
+        key = input("codigo: ").upper()
+        if key not in sala_dict:
+            print("Chave não encontrada!")
+    return key
+
+def ensure_key_dont_exists_in_sala_dict(sala_dict):
+    # Loop que garante a entrada de uma key que não existe (sala)
+    key = input("codigo: ").upper()
+    while key in sala_dict:
+        # Avisa que a key é repetida
+        print("Chave já em uso!")
+
+        # Coleta uma nova key
+        key = input("codigo: ").upper()
+    return key
+
 def listar_todos(sala_dict):
     # Confere se a lista está vazia
     if len(sala_dict) == 0:
@@ -12,23 +32,20 @@ def listar_todos(sala_dict):
     return True
 
 def listar_especifico(sala_dict):
-    # Coleta o código que o usuário deseja exibir 
-    codigo = input("Código: ").upper()
-
-    # Exibe caso o codigo exista no dicionário
-    if codigo in sala_dict:
-        print(f"Nome: {sala_dict[codigo][0]} // Capacidade: {sala_dict[codigo][1]} // Tipo de exibição: {sala_dict[codigo][2]} // Acessível: {sala_dict[codigo][3]}")
-        return True
-    else:
+    # Confere se a lista está vazia
+    if len(sala_dict) == 0:
         return False
 
-def incluir(dict):
-    # Recebe a key
-    key = input("codigo: ").upper()
-    
-    # Retorna caso essa key já esteja em uso
-    if key in dict.keys():
-        return False
+    # Garante uma key existente neste módulo
+    key = ensure_key_exists_in_sala_dict(sala_dict)
+
+    # Exibe as informações da sala e retorna True
+    print(f"Nome: {sala_dict[key][0]} // Capacidade: {sala_dict[key][1]} // Tipo de exibição: {sala_dict[key][2]} // Acessível: {sala_dict[key][3]}")
+    return True
+
+def incluir(sala_dict):
+    # Garante uma key que não existe neste módulo
+    key = ensure_key_dont_exists_in_sala_dict(sala_dict)
     
     # Obtém todos os valores
     nome = input("Nome: ").upper()
@@ -37,20 +54,13 @@ def incluir(dict):
     exibicao = input("Tipo de exibição: ").upper()
     acessivel = input("Acessível: ").upper()
 
-    # Adiciona ao dicionário a nova chave e seus elementos
-    dict[key] = [nome, capacidade, exibicao, acessivel]
+    # Adiciona a nova key e seus elementos ao dicionário
+    sala_dict[key] = [nome, capacidade, exibicao, acessivel]
     return True
 
 def alterar(sala_dict):
-    # Loop que garante a entrada de uma key existente
-    key = None
-    while key not in sala_dict:
-        # Recebe a key 
-        key = input("codigo: ").upper()
-
-        # Avisa que a key é repetida
-        if key not in sala_dict:
-            print("Chave não encontrada!")
+    # Garante uma key existente neste módulo
+    key = ensure_key_exists_in_sala_dict(sala_dict)
 
     # Exibe as opções que podem ser trocadas da key escolhida pela posicao
     print(f"\nQual dado deseja mudar?\n1- Nome: {sala_dict[key][0]} // 2- Capacidade: {sala_dict[key][1]} // 3- Tipo de exibição: {sala_dict[key][2]} // 4- Acessível: {sala_dict[key][3]}")
@@ -79,15 +89,8 @@ def alterar(sala_dict):
     return dict_utils.change_dict(sala_dict, key, index, novo_valor)
     
 def excluir(sala_dict):
-    # Loop que garante a entrada de uma key existente
-    key = None
-    while key not in sala_dict:
-        # Recebe a key 
-        key = input("codigo: ").upper()
-
-        # Avisa que a key é repetida
-        if key not in sala_dict:
-            print("Chave não encontrada!")
+    # Garante uma key existente neste módulo
+    key = ensure_key_exists_in_sala_dict(sala_dict)
 
     # Deleta o item com aquela key do dicionário a partir dos dados coletados
     return dict_utils.delete_element_in_dict(sala_dict, key)

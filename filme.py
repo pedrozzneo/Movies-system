@@ -1,11 +1,29 @@
 import utils
 import dict_utils
 
-def include_film(film_dict): # Inclui um novo filme no dicionário e registra em arquivo
-    # Garante a entrada de um código único
+def ensure_key_exists_in_filme_dict(film_dict):
+    # Loop que garante a entrada de uma key existente (filme)
+    key = None
+    while key not in film_dict:
+        key = input("Código: ").upper()
+        if key not in film_dict:
+            print("Chave não encontrada!")
+    return key
+
+def ensure_key_dont_exists_in_filme_dict(film_dict):
+    # Loop que garante a entrada de uma key que não existe (filme)
     key = input("Código: ").upper()
-    while key in film_dict.keys():
-        key = input("Código já em uso, insira outro: ").upper()
+    while key in film_dict:
+        # Avisa que a key é repetida
+        print("Chave já em uso!")
+        
+        # Coleta uma nova key
+        key = input("Código: ").upper()
+    return key
+
+def include_film(film_dict): # Inclui um novo filme no dicionário e registra em arquivo
+    # Garante uma key que não existe neste módulo
+    key = ensure_key_dont_exists_in_filme_dict(film_dict)
     
     # Obtém os atributos do filme
     title = input("Informe o título do filme: ").upper()
@@ -103,22 +121,27 @@ def main():
             list_dict(film_dict)
 
         elif escolha == 2: # Listar um filme específico
-            key = input("Informe o código do filme que deseja detalhar: ").upper()
-            while key not in film_dict.keys():
-                key = input("Código inexistente! Informe um código existente: ").upper()
+            # Garante uma key existente neste módulo
+            key = ensure_key_exists_in_filme_dict(film_dict)
             list_film(film_dict, key)
 
         elif escolha == 3: # Incluir novo filme no catálogo
             include_film(film_dict)
 
         elif escolha == 4: # Alterar dados de um filme do catálogo (não é possível alterar Chave/Key/Código)
-            key = input("Informe o código do filme que deseja alterar: ").upper()
-            while key not in film_dict.keys():
-                key = input("Código inexistente! Informe o código do filme que deseja alterar: ").upper()
+            # Garante uma key existente neste módulo
+            key = ensure_key_exists_in_filme_dict(film_dict)
             alterar_filme(film_dict,key)
 
         elif escolha == 5: # Excluir um filme do catálogo
-            utils.turn_code_into_message(module,dict_utils.delete_element_in_dict(film_dict))
+            # Garante uma key existente neste módulo
+            key = ensure_key_exists_in_filme_dict(film_dict)
+            
+            # Deleta o item com aquela key do dicionário a partir dos dados coletados
+            if not dict_utils.delete_element_in_dict(film_dict, key):
+                print("Operação cancelada!")
+            else:
+                print("Operação bem sucedida!")
 
         elif escolha == 6:
             dict_utils.save_dict_in_file(module,film_dict)
