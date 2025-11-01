@@ -68,9 +68,9 @@ def edit(film_dict):
     option = utils.valid_int(input_message="Escolha: ")
     
     # Força entrada válida
-    while option < 1 and option > 4:
+    while option < 1 or option > 4:
         option = utils.valid_int(input_message="Escolha: ")
-        if option < 1 and option > 4:
+        if option < 1 or option > 4:
             print("\nPosição inválida, escolha de 1 a 4!")
     
     # Se opção for atores, cria lista com atores
@@ -81,13 +81,13 @@ def edit(film_dict):
             actor_name = input(f"Informe o nome do {i+1}º Ator/Atriz: ").upper()
             new.append(actor_name)
     
-    # Se opção for ano de lançamento, força entrada em inteiros
-    if option == 2:
-        new = utils.valid_int(input_message="Informe o novo valor: ")
+    # Se opção for ano de lançamento, força entrada em inteiros e converte para string
+    elif option == 2:
+        new = str(utils.valid_int(input_message="Informe o novo valor: "))
     
-    # Se opção for Título ou Diretor, preenche com texto
-    if option == 1 or option == 3:
-        new = input("Informe o novo valor: ")
+    # Se opção for Título ou Diretor, preenche com texto em maiúsculo
+    elif option == 1 or option == 3:
+        new = input("Informe o novo valor: ").upper()
     
     return dict_utils.change_dict(film_dict, key, option-1, new)
 
