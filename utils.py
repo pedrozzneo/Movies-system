@@ -8,10 +8,10 @@ def file_exists(nome_arquivo): # Verifica existência de arquivo para construir 
     else:
         return False
 
-def menu(module):
+def menu(module): # Menu comum entre módulos
     # Força uma entrada válida para escolha
-    escolha = 0
-    while escolha > 6 or escolha < 1:
+    option = 0
+    while option > 6 or option < 1:
         # Exibe as opções e coleta a escolha do usuário no final
         print(f"\nSubmenu de {module}:")
         print("1- Listar todos")
@@ -22,11 +22,11 @@ def menu(module):
         print("6- Sair")
         
         # Permite o usuário escolher e valida
-        escolha = valid_int(input_message="\nEscolha: ")
-        if escolha > 6 or escolha < 1:
+        option = valid_int(input_message="\nEscolha: ")
+        if option > 6 or option < 1:
             print("Escolha inválida")
         else:
-            return escolha
+            return option
 
 def valid_int(input_message): # Validação de dados (inteiros) para evitar erro de entrada
     # Loop em que só é possivel sair ao entra um inteiro válido
@@ -79,11 +79,12 @@ def valid_float(input_message):# Validação de dados (float) para evitar erro d
         except:
             print("O valor deve ser um número real!")
 
-def format_cash(value): # Apenas para exibição em listagem
+def format_cash(value): # Formata valores em R$XX,XX - Apenas para exibição em listagem
     value = f"R$ {value}".replace('.',',')
     return value
 
-def turn_code_into_message(module, message): # Mensagens de status para Menu e Main
+# Função inutilizada, tratamento de dados se provou mais eficiente
+""" def turn_code_into_message(module, message): # Mensagens de status para Menu e Main
     if message == "SUCCESS":
         print("Operação realizada com sucesso!")
     if message == "CANCELLED":
@@ -96,9 +97,9 @@ def turn_code_into_message(module, message): # Mensagens de status para Menu e M
         print("ERRO: sala não cadastrada!")
     if message == "USED_KEY":
         if module == "sessao":
-            print("ERRO: Já existe uma sessão cadastrada com os mesmos dados!")
+           print("ERRO: Já existe uma sessão cadastrada com os mesmos dados!")
         else:
-            print("ERRO: Código já cadastrado!")
+            print("ERRO: Código já cadastrado!")"""
 
 # Utilidades de coleta/validação de key para reuso entre módulos
 def ensure_key_exists_in_dict(dictionary):
@@ -110,14 +111,15 @@ def ensure_key_exists_in_dict(dictionary):
             print("Chave não encontrada!")
     return key
 
+# Constroi a key das sessões
 def build_session_key_from_input():
     # Coleta e constrói a key composta de sessão
-    filme = input("Código do filme: ").upper()
-    sala = input("Código do sala: ").upper()
+    film = input("Código do filme: ").upper()
+    screen = input("Código do sala: ").upper()
     print("Data (DD-MM-AAAA)", end="")
-    data = valid_date()
-    horario = input("Horario: ")
-    return (filme, sala, data, horario)
+    date = valid_date()
+    time = input("Horario: ")
+    return (film, screen, date, time)
 
 def ensure_session_key_exists(sessao_dict):
     # Loop que garante a entrada de uma key composta existente (sessões)

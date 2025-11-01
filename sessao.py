@@ -82,7 +82,7 @@ def new_valid_value_in_dict_index(dict, key, index):
         # Retorna o novo valor
         return novo_valor
 
-def listar_todos(sessao_dict):
+def list_dict(sessao_dict):
     # Confere se a lista está vazia
     if len(sessao_dict) == 0:
         return False
@@ -92,7 +92,7 @@ def listar_todos(sessao_dict):
         print(f"Código da Sala: {key[0]} // Data: {key[1]} // Horário: {key[2]} // Código do Filme: {sessao_dict[key][0]} // Preço do Ingresso: {utils.format_cash(sessao_dict[key][1])}")
     return True
 
-def listar_especifico(sessao_dict):
+def list_element(sessao_dict):
     # Confere se a lista está vazia
     if len(sessao_dict) == 0:
         return False
@@ -104,7 +104,7 @@ def listar_especifico(sessao_dict):
     print(f"Código do Filme: {sessao_dict[key][0]} // Preço do Ingresso: {utils.format_cash(sessao_dict[key][1])}")
     return True
 
-def incluir(sessao_dict):
+def include(sessao_dict):
     # Garante a entrada de uma nova key 
     key = new_key_in_dict(dict = sessao_dict)
 
@@ -118,7 +118,7 @@ def incluir(sessao_dict):
     sessao_dict[key] = [filme, preco]
     return True
 
-def alterar(sessao_dict):
+def edit(sessao_dict):
     # Garante uma key composta existente neste módulo
     key = existing_key_in_dict(dict = sessao_dict)
     
@@ -134,7 +134,7 @@ def alterar(sessao_dict):
     # Atualiza o dicionário com as alterações
     return dict_utils.change_dict(dict = sessao_dict, key = key, index = index, new_value = novo_valor)
 
-def excluir(sessao_dict):
+def delete(sessao_dict):
     # Garante uma key composta existente neste módulo
     key = existing_key_in_dict(sessao_dict)
 
@@ -156,29 +156,29 @@ def main():
 
         # Trata a escolha de listar todos
         if escolha == 1:
-            if not listar_todos(sessao_dict):
+            if not list_dict(sessao_dict):
                 print("Lista vazia!")
 
         # Trata a escolha de listar um elemento específico
         elif escolha == 2:
-            if not listar_especifico(sessao_dict):
+            if not list_element(sessao_dict):
                 print("Lista vazia!")
 
         # Trata a escolha de incluir um novo elemento
         elif escolha == 3:
-            if not incluir(sessao_dict):
+            if not include(sessao_dict):
                 print("Chave já em uso!")
 
         # Trata a escolha de alterar um elemento existente com status pois há mais possibilidades
         elif escolha == 4:
-            if not alterar(sessao_dict):
+            if not edit(sessao_dict):
                 print("Operação cancelada!")
             else:
                 print("Operação bem sucedida!")
     
         # Trata a escolha de excluir um elemento existente com status pois há mais possibilidades
         elif escolha == 5:
-            if not excluir(sessao_dict):
+            if not delete(sessao_dict):
                 print("Operação cancelada!")
             else:
                 print("Operação bem sucedida!")

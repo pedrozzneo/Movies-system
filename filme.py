@@ -43,8 +43,9 @@ def include(film_dict): # Inclui um novo filme no dicionário e registra em arqu
 
 def list_dictionary(film_dict):# Lista os filmes, ordenados por inclusão no sistema
     for key in film_dict.keys():
-        print(key)
+        print(f"Código: {key}")
         list_element(film_dict,key)
+        print()
 
 def list_element(film_dict, key): # Exibe as informações de um filme
     if key in film_dict:

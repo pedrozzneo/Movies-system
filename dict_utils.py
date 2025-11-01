@@ -50,23 +50,23 @@ def save_dict_in_file(file_name, dict): # Exporta dicionários aos arquivos ao f
     for i, key in enumerate(dict):
         # Converte os itens de sessao para texto no formato correto 
         if file_name == "sessao":
-            linha = f"{'/'.join(key)}/{dict[key][0]}/{dict[key][1]}"
+            line = f"{'/'.join(key)}/{dict[key][0]}/{dict[key][1]}"
 
         # Converte os itens de sala para texto no formato correto 
         elif file_name == "sala":
-            linha = f"{key}/{'/'.join(dict[key])}" 
+            line = f"{key}/{'/'.join(dict[key])}" 
 
         # Converte os itens de filme para texto no formato correto
         elif file_name == "filme":
             dict[key][3] = ", ".join(dict[key][3])
-            linha = f"{key}/{'/'.join(dict[key])}"
+            line = f"{key}/{'/'.join(dict[key])}"
 
         # Coloca o '\n' desde que não seja o último item para evitar linhas em branco
         if i != len(dict) - 1:
-            linha += "\n"
+            line += "\n"
 
         # Escreve a linha no arquivo
-        file.write(linha)
+        file.write(line)
     
     # fecha o arquivo e retorna
     file.close()

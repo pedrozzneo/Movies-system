@@ -6,8 +6,8 @@ import utils
 
 def menu():
     # Força uma entrada válida de "escolha"
-    escolha = 0
-    while escolha > 5 or escolha < 1:
+    option = 0
+    while option > 5 or option < 1:
         # Exibe as opções para receber a escolha
         print("\nMenu principal:")
         print("1- Submenu de Salas")
@@ -16,29 +16,29 @@ def menu():
         print("4- Submenu de Relatórios")
         print("5- Sair")
         
-        escolha = utils.valid_int(input_message="\nEscolha: ")
+        option = utils.valid_int(input_message="\nEscolha: ")
         # Trata a escolha do usuário
-        if escolha > 5 or escolha < 1:
+        if option > 5 or option < 1:
             print("escolha inválida")
         else:
-            return escolha
+            return option
 
 def main():
-    escolha = 0
+    option = 0
     # Fica oferecendo as opções até o usuário decidir sair com valor 5
-    while escolha != 5:
+    while option != 5:
         # Exibe o menu e coleta a escolha do usuário
-        escolha = menu()
+        option = menu()
 
         # Atribui a escolha do usuário a uma função
-        if escolha == 1:
+        if option == 1:
             sala.main()
-        elif escolha == 2:
+        elif option == 2:
             filme.main()
-        elif escolha == 3:
+        elif option == 3:
             sessao.main()
-        elif escolha == 4:
+        elif option == 4:
             relatorio.main()
-        elif escolha == 5:
+        elif option == 5:
             print("saindo...")
 main()
