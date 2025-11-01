@@ -132,7 +132,7 @@ def alterar(sessao_dict):
     novo_valor = new_valid_value_in_dict_index(dict = sessao_dict, key = key, index = index)
 
     # Atualiza o dicionário com as alterações
-    return dict_utils.change_dict(dict = sessao_dict, key = key, index = index, novo_valor = novo_valor)
+    return dict_utils.change_dict(dict = sessao_dict, key = key, index = index, new_value = novo_valor)
 
 def excluir(sessao_dict):
     # Garante uma key composta existente neste módulo
