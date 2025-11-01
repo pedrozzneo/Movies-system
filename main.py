@@ -19,7 +19,7 @@ def menu():
         option = utils.valid_int(input_message="\nEscolha: ")
         # Trata a escolha do usuário
         if option > 5 or option < 1:
-            print("escolha inválida")
+            print("Escolha inválida")
         else:
             return option
 

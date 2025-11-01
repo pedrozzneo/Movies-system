@@ -25,7 +25,7 @@ def gerar_relatorio_sala_por_exibicao_capacidade(screen_dict):
     capacity = utils.valid_int(input_message="Capacidade: ")
 
     # Abre o arquivo em modo write para reescrever todo o conteúdo
-    file = open("arquivos/relatorio_salas.txt", "w")
+    file = open("arquivos/relatorio_salas.txt", "w", encoding="utf-8")
 
     # Adiciona o título explicando o relatório
     file.write(f"Salas {display_type} com capacidade para pelo menos {capacity} pessoas\n\n")
@@ -56,13 +56,13 @@ def gerar_relatorio_filme_a_partir_ano(film_dict):
     year = utils.valid_int(input_message="Ano: ")
 
     # Abre ou cria o arquivo em modo write para reescrever todo o conteúdo
-    file = open("arquivos/relatorio_filmes.txt", "w")
+    file = open("arquivos/relatorio_filmes.txt", "w", encoding="utf-8")
 
     # Adiciona o título explicando o relatório
     file.write(f"Filmes a partir de {year}\n\n")
 
     # Variável para verificar se o arquivo é vazio
-    vazio = True
+    is_void = True
 
     # Percorre o dicionário e adiciona os filmes a partir do ano informado ao arquivo
     for key in film_dict.keys():
@@ -75,34 +75,34 @@ def gerar_relatorio_filme_a_partir_ano(film_dict):
 
             # Adiciona a linha ao arquivo
             file.write(linha)
-            vazio = False
+            is_void = False
 
     # Fecha o arquivo
     file.close()
 
     # Retorna status booleano conforme encontrou algo
-    if not vazio:
+    if not is_void:
         return True
     else:
         return False
 
-def gerar_relatorio_sessao_por_periodo(session_dict,film_dict,screen_dict):
+def gerar_relatorio_sessao_por_periodo(session_dict, film_dict, screen_dict):
     # Importa biblioteca para lidar com datas
     from datetime import date
 
     # Coleta e formata as datas iniciais
-    fromDate = utils.valid_date(input_message="Data início (DD-MM-AAAA)").split("-")
-    fromDate = date(int(fromDate[2]), int(fromDate[1]), int(fromDate[0]))
+    from_date = utils.valid_date(input_message="Data início (DD-MM-AAAA)").split("-")
+    from_date = date(int(from_date[2]), int(from_date[1]), int(from_date[0]))
 
     # Coleta e formata as datas finais
-    toDate = utils.valid_date(input_message="Data final (DD-MM-AAAA)").split("-")
-    toDate = date(int(toDate[2]), int(toDate[1]), int(toDate[0]))
+    to_date = utils.valid_date(input_message="Data final (DD-MM-AAAA)").split("-")
+    to_date = date(int(to_date[2]), int(to_date[1]), int(to_date[0]))
 
     # Abre o arquivo em modo write para reescrever todo o conteúdo
-    file = open("arquivos/relatorio_sessoes.txt", "w")
+    file = open("arquivos/relatorio_sessoes.txt", "w", encoding="utf-8")
 
     # Adiciona o título explicando o relatório
-    file.write(f"Sessoes entre {fromDate.strftime('%d/%m/%Y')} e {toDate.strftime('%d/%m/%Y')}\n\n")
+    file.write(f"Sessoes entre {from_date.strftime('%d/%m/%Y')} e {to_date.strftime('%d/%m/%Y')}\n\n")
 
     # Variável para verificar se o arquivo é vazio
     is_void = True
@@ -114,7 +114,7 @@ def gerar_relatorio_sessao_por_periodo(session_dict,film_dict,screen_dict):
         sessionDate = date(int(sessionDate[2]), int(sessionDate[1]), int(sessionDate[0]))
 
         # Adiciona as sessões que satisfazem os filtros ao arquivo
-        if sessionDate >= fromDate and sessionDate <= toDate:
+        if sessionDate >= from_date and sessionDate <= to_date:
             # Formata os dados do filme
             film_ID = session_dict[key][0]
             actors = ', '.join(film_dict[film_ID][3])

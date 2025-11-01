@@ -1,14 +1,5 @@
-def file_exists(nome_arquivo): # Verifica existência de arquivo para construir dicionários
-    # Importa biblioteca para lidar com arquivos no armazenamento do pc
-    import os
-
-    # Informa se o arquivo existe no computador
-    if os.path.exists(nome_arquivo):
-        return True
-    else:
-        return False
-
-def menu(module): # Menu comum entre módulos
+# Menu comum entre módulos
+def menu(module):
     # Força uma entrada válida para escolha
     option = 0
     while option > 6 or option < 1:
@@ -28,7 +19,8 @@ def menu(module): # Menu comum entre módulos
         else:
             return option
 
-def valid_int(input_message): # Validação de dados (inteiros) para evitar erro de entrada
+# Validação de dados (inteiros) para evitar erro de entrada
+def valid_int(input_message):
     # Loop em que só é possivel sair ao entra um inteiro válido
     while True:
         # Se a conversão para inteiro for bem sucedida, retorna
@@ -43,7 +35,8 @@ def valid_int(input_message): # Validação de dados (inteiros) para evitar erro
         except:
             print("O valor deve ser um inteiro!")
 
-def valid_date(input_message): # Validação de dados (data) para evitar erro de entrada
+# Validação de dados (data) para evitar erro de entrada
+def valid_date(input_message):
     # Importa biblioteca para lidar com datas
     from datetime import date
 
@@ -65,78 +58,26 @@ def valid_date(input_message): # Validação de dados (data) para evitar erro de
         except:
             print("Valor deve ser uma data válida (DD-MM-AAAA)")
 
-def valid_float(input_message):# Validação de dados (float) para evitar erro de entrada
+# Validação de dados (float) para evitar erro de entrada
+def valid_float(input_message):
     # Loop em que só é possivel sair ao entra um float válido
     while True:
         # Se a conversão para float for bem sucedida, retorna
         try:
+            # Recebe o valor e substitui "," por "." caso o usuário tenha utilizado
+            value = input(input_message).replace(',','.')
+
             # Tenta fazer a conversão permitindo entrada com "," e "."
-            value = float(input(input_message).replace(',','.'))
-            # Quebra de linha e retorna 
+            float(value)
+            
+            # Se conversao for possivel, retorna o valor
             return value
         
         # Se deu erro, informa!
         except:
             print("O valor deve ser um número real!")
 
-def format_cash(value): # Formata valores em R$XX,XX - Apenas para exibição em listagem
+# Formata valores em R$XX,XX - Apenas para exibição em listagem
+def format_cash(value):
     value = f"R$ {value}".replace('.',',')
     return value
-
-# Função inutilizada, tratamento de dados se provou mais eficiente
-""" def turn_code_into_message(module, message): # Mensagens de status para Menu e Main
-    if message == "SUCCESS":
-        print("Operação realizada com sucesso!")
-    if message == "CANCELLED":
-        print("Operação cancelada!")
-    if message == "NO_KEY":
-        print(f"Chave não encontrada!")
-    if message == "NO_FILM":
-        print("ERRO: filme não cadastrado!")
-    if message == "NO_ROOM":
-        print("ERRO: sala não cadastrada!")
-    if message == "USED_KEY":
-        if module == "sessao":
-           print("ERRO: Já existe uma sessão cadastrada com os mesmos dados!")
-        else:
-            print("ERRO: Código já cadastrado!")"""
-
-# Utilidades de coleta/validação de key para reuso entre módulos
-def ensure_key_exists_in_dict(dictionary):
-    # Loop que garante a entrada de uma key existente (para estruturas com key simples)
-    key = None
-    while key not in dictionary:
-        key = input("codigo: ").upper()
-        if key not in dictionary:
-            print("Chave não encontrada!")
-    return key
-
-# Constroi a key das sessões
-def build_session_key_from_input():
-    # Coleta e constrói a key composta de sessão
-    film = input("Código do filme: ").upper()
-    screen = input("Código do sala: ").upper()
-    print("Data (DD-MM-AAAA)", end="")
-    date = valid_date()
-    time = input("Horario: ")
-    return (film, screen, date, time)
-
-def ensure_session_key_exists(sessao_dict):
-    # Loop que garante a entrada de uma key composta existente (sessões)
-    key = None
-    while key not in sessao_dict:
-        key = build_session_key_from_input()
-        if key not in sessao_dict:
-            print("Chave não encontrada!")
-    return key
-
-# Garante o retorno de um element que existe na list
-# def element_in_list(list, tipo):
-#     element = None
-#     while element not in list:
-#         # Recebe o element 
-#         element = input(f"{tipo}: ").upper()
-
-#         # Avisa que a key é repetida
-#         if element not in dict:
-#             print("Chave não encontrada!")

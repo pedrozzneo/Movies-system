@@ -1,29 +1,9 @@
 import utils
 import dict_utils
 
-def ensure_key_exists_in_filme_dict(film_dict):
-    # Loop que garante a entrada de uma key existente (filme)
-    key = None
-    while key not in film_dict:
-        key = input("Código: ").upper()
-        if key not in film_dict:
-            print("Chave não encontrada!")
-    return key
-
-def ensure_key_dont_exists_in_filme_dict(film_dict):
-    # Loop que garante a entrada de uma key que não existe (filme)
-    key = input("Código: ").upper()
-    while key in film_dict:
-        # Avisa que a key é repetida
-        print("Chave já em uso!")
-        
-        # Coleta uma nova key
-        key = input("Código: ").upper()
-    return key
-
-def include(film_dict): # Inclui um novo filme no dicionário e registra em arquivo
+def include(film_dict):
     # Garante uma key que não existe neste módulo
-    key = ensure_key_dont_exists_in_filme_dict(film_dict)
+    key = dict_utils.ensure_key_dont_exists_in_dict(film_dict)
     
     # Obtém os atributos do filme
     title = input("Informe o título do filme: ").upper()
@@ -37,17 +17,27 @@ def include(film_dict): # Inclui um novo filme no dicionário e registra em arqu
         actor_name = input(f"Informe o nome do {i+1}º Ator/Atriz: ").upper()
         actors.append(actor_name)
 
-    # Adiciona ao dicionário a nova chave e seus elementos
+    # Adiciona a nova key e seus elementos ao dicionário
     film_dict[key] = [title, year, director, actors]
-    list_element(film_dict,key)
+    return True
 
-def list_dictionary(film_dict):# Lista os filmes, ordenados por inclusão no sistema
+def list_dict(film_dict):
+    # Confere se a lista está vazia
+    if len(film_dict) == 0:
+        return False
+
     for key in film_dict.keys():
         print(f"Código: {key}")
-        list_element(film_dict,key)
+        list_element(film_dict, key)
         print()
+    return True
 
-def list_element(film_dict, key): # Exibe as informações de um filme
+# Exibe as informações de um filme
+def list_element(film_dict, key):
+    # Confere se a lista está vazia
+    if len(film_dict) == 0:
+        return False
+
     if key in film_dict:
         print(f"\tTítulo: {film_dict[key][0]} // Ano de Lançamento: {film_dict[key][1]}")
         print(f"\tDiretor: {film_dict[key][2]}\n\tElenco: ", end="")
@@ -58,20 +48,31 @@ def list_element(film_dict, key): # Exibe as informações de um filme
                 print(f"{film_dict[key][3][i-1]}", end=".\n")
             else:
                 print(f"{film_dict[key][3][i-1]}", end=", ")
+        return True
     else:
         print("Código não encontrado!")
+        return False
 
-def edit(film_dict,key): # Altera uma das informações de um filme
-  
+# Altera uma das informações de um filme
+def edit(film_dict):
+    # Confere se a lista está vazia
+    if len(film_dict) == 0:
+        return False
+
+    # Garante uma key existente neste módulo
+    key = dict_utils.ensure_key_exists_in_dict(film_dict)
+
     # Exibe as opções que podem ser trocadas da key escolhida pela posicao
     print(f"\nQual dado deseja mudar?\n\t1- Título: {film_dict[key][0]} // 2- Lançamento: {film_dict[key][1]}")
     print(f"\t3- Diretor: {film_dict[key][2]} // 4- Elenco: {', '.join(film_dict[key][3])}")
     option = utils.valid_int(input_message="Escolha: ")
+    
     # Força entrada válida
     while option < 1 and option > 4:
         option = utils.valid_int(input_message="Escolha: ")
         if option < 1 and option > 4:
             print("\nPosição inválida, escolha de 1 a 4!")
+    
     # Se opção for atores, cria lista com atores
     if option == 4:
         new = []
@@ -79,13 +80,27 @@ def edit(film_dict,key): # Altera uma das informações de um filme
         for i in range(actors_length):
             actor_name = input(f"Informe o nome do {i+1}º Ator/Atriz: ").upper()
             new.append(actor_name)
+    
     # Se opção for ano de lançamento, força entrada em inteiros
     if option == 2:
         new = utils.valid_int(input_message="Informe o novo valor: ")
+    
     # Se opção for Título ou Diretor, preenche com texto
     if option == 1 or option == 3:
         new = input("Informe o novo valor: ")
-    dict_utils.change_dict(film_dict,key,option-1,new)
+    
+    return dict_utils.change_dict(film_dict, key, option-1, new)
+
+def delete(film_dict):
+    # Confere se a lista está vazia
+    if len(film_dict) == 0:
+        return False
+
+    # Garante uma key existente neste módulo
+    key = dict_utils.ensure_key_exists_in_dict(film_dict)
+
+    # Deleta o item com aquela key do dicionário a partir dos dados coletados
+    return dict_utils.delete_element_in_dict(film_dict, key)
     
 def main():
     # Declara e monta o dicionário do filme
@@ -96,29 +111,31 @@ def main():
     option = 0
     while option != 6:
         option = utils.menu(module)
-        if option == 1: # Listar todos os filmes no catálogo
-            list_dictionary(film_dict)
+        if option == 1:  # Listar todos os filmes no catálogo
+            if not list_dict(film_dict):
+                print("Lista vazia!")
 
-        elif option == 2: # Listar um filme específico
-            # Garante uma key existente neste módulo
-            key = ensure_key_exists_in_filme_dict(film_dict)
-            list_element(film_dict, key)
+        elif option == 2:  # Listar um filme específico
+            # Confere se a lista está vazia
+            if len(film_dict) == 0:
+                print("Lista vazia!")
+            else:
+                # Garante uma key existente neste módulo
+                key = dict_utils.ensure_key_exists_in_dict(film_dict)
+                list_element(film_dict, key)
 
-        elif option == 3: # Incluir novo filme no catálogo
+        elif option == 3:  # Incluir novo filme no catálogo
             include(film_dict)
 
-        elif option == 4: # Alterar dados de um filme do catálogo (não é possível alterar Chave/Key/Código)
-            # Garante uma key existente neste módulo
-            key = ensure_key_exists_in_filme_dict(film_dict)
-            edit(film_dict,key)
+        elif option == 4:  # Alterar dados de um filme do catálogo (não é possível alterar Chave/Key/Código)
+            if not edit(film_dict):
+                print("Operação cancelada ou lista vazia!")
+            else:
+                print("Operação bem sucedida!")
 
-        elif option == 5: # Excluir um filme do catálogo
-            # Garante uma key existente neste módulo
-            key = ensure_key_exists_in_filme_dict(film_dict)
-            
-            # Deleta o item com aquela key do dicionário a partir dos dados coletados
-            if not dict_utils.delete_element_in_dict(film_dict, key):
-                print("Operação cancelada!")
+        elif option == 5:  # Excluir um filme do catálogo
+            if not delete(film_dict):
+                print("Operação cancelada ou lista vazia!")
             else:
                 print("Operação bem sucedida!")
 

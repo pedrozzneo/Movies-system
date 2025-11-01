@@ -1,4 +1,100 @@
-Nova definição de chave para sessão: eliminamos o código do filme como chave pois ele não é uma característica única, veja o exemplo:
-sala: 1, horário: 13:00, data: 20-10-2025, código do filme: A
-partindo da premissa que filme é uma chave, ao manter os outros e mudar, eu tenho uma nova chave, porém isso gera um absrudo pois não tem como um diferente
-filme passar na mesma sala e horario na mesma data. Ou seja, combos que eu Não posso repetir não contempla filmes, apenas sala, horario e data.
+# Sistema de Gerenciamento de Cinema
+
+Sistema de gerenciamento para cinemas que permite o controle de salas, filmes e sessões, além da geração de relatórios.
+
+## Descrição
+
+Este projeto é um sistema completo de gerenciamento de cinema desenvolvido em Python, que permite:
+- Gerenciar salas de cinema (cadastro, listagem, edição e exclusão)
+- Gerenciar filmes (cadastro, listagem, edição e exclusão)
+- Gerenciar sessões (cadastro, listagem, edição e exclusão)
+- Gerar relatórios sobre salas, filmes e sessões
+
+## Como Executar
+
+1. Certifique-se de ter Python 3 instalado
+2. Execute o arquivo principal:
+```bash
+python main.py
+```
+
+3. Siga as opções do menu para navegar pelo sistema
+
+## Estrutura do Projeto
+
+```
+Project/
+├── main.py           # Arquivo principal - ponto de entrada do sistema
+├── utils.py          # Funções utilitárias (validação, formatação, menus)
+├── dict_utils.py     # Funções para manipulação de dicionários e arquivos
+├── sala.py           # Módulo de gerenciamento de salas
+├── filme.py          # Módulo de gerenciamento de filmes
+├── sessao.py         # Módulo de gerenciamento de sessões
+├── relatorio.py      # Módulo de geração de relatórios
+└── arquivos/         # Diretório com arquivos de dados (.txt)
+    ├── filme.txt
+    ├── sala.txt
+    ├── sessao.txt
+    ├── relatorio_filmes.txt
+    ├── relatorio_salas.txt
+    └── relatorio_sessoes.txt
+```
+
+## Funcionalidades
+
+### Menu Principal
+1. **Submenu de Salas** - Gerencia as salas de cinema
+2. **Submenu de Filmes** - Gerencia o catálogo de filmes
+3. **Submenu de Sessões** - Gerencia as sessões de exibição
+4. **Submenu de Relatórios** - Gera relatórios específicos
+5. **Sair** - Encerra o programa
+
+### Submenus (Salas, Filmes, Sessões)
+1. **Listar todos** - Exibe todos os itens cadastrados
+2. **Listar um elemento específico** - Busca e exibe um item específico
+3. **Incluir** - Adiciona um novo item (sem repetição de código/chave)
+4. **Alterar um elemento** - Edita dados de um item existente
+5. **Excluir** - Remove um item após confirmação
+6. **Sair** - Retorna ao menu principal e salva as alterações
+
+### Relatórios Disponíveis
+1. **Filtrar salas por exibição e capacidade** - Lista salas que atendem critérios específicos
+2. **Listar todos os filmes a partir de um ano** - Filtra filmes por ano de lançamento
+3. **Exibir todas as informações das sessões de uma data determinada até outra** - Relatório de sessões em um período
+
+## Estrutura de Dados
+
+### Salas
+- **Código** (chave única)
+- Nome
+- Capacidade
+- Tipo de exibição
+- Acessibilidade
+
+### Filmes
+- **Código** (chave única)
+- Título
+- Ano de lançamento
+- Diretor
+- Elenco (lista de atores)
+
+### Sessões
+- **Chave composta**: (Código da Sala, Data, Horário)
+- Código do Filme
+- Preço do Ingresso
+
+**Nota importante sobre sessões:**
+A chave de sessão é composta por (sala, data, horário), e não inclui o código do filme. Isso evita o absurdo lógico de ter filmes diferentes na mesma sala, no mesmo horário e na mesma data. O código do filme é um campo do valor, permitindo que diferentes sessões possam ter o mesmo filme em diferentes salas/horários/datas.
+
+## Formato dos Arquivos
+
+Os dados são armazenados em arquivos `.txt` no diretório `arquivos/`, usando o caractere `/` como separador:
+
+- **filme.txt**: `CÓDIGO/TÍTULO/ANO/DIRETOR/ATOR1, ATOR2, ...`
+- **sala.txt**: `CÓDIGO/NOME/CAPACIDADE/TIPO_EXIBIÇÃO/ACESSIBILIDADE`
+- **sessao.txt**: `CÓDIGO_SALA/DATA/HORÁRIO/CÓDIGO_FILME/PREÇO`
+
+## Requisitos
+
+- Python 3.x
+- Biblioteca padrão do Python (sem dependências externas)

@@ -1,26 +1,6 @@
 import utils
 import dict_utils
 
-def ensure_key_exists_in_sala_dict(screen_dict):
-    # Loop que garante a entrada de uma key existente (sala)
-    key = None
-    while key not in screen_dict:
-        key = input("Codigo: ").upper()
-        if key not in screen_dict:
-            print("Chave não encontrada!")
-    return key
-
-def ensure_key_dont_exists_in_sala_dict(screen_dict):
-    # Loop que garante a entrada de uma key que não existe (sala)
-    key = input("codigo: ").upper()
-    while key in screen_dict:
-        # Avisa que a key é repetida
-        print("Chave já em uso!")
-
-        # Coleta uma nova key
-        key = input("codigo: ").upper()
-    return key
-
 def list_dict(screen_dict):
     # Confere se a lista está vazia
     if len(screen_dict) == 0:
@@ -37,7 +17,7 @@ def list_element(screen_dict):
         return False
 
     # Garante uma key existente neste módulo
-    key = ensure_key_exists_in_sala_dict(screen_dict)
+    key = dict_utils.ensure_key_exists_in_dict(screen_dict)
 
     # Exibe as informações da sala e retorna True
     print(f"Nome: {screen_dict[key][0]} // Capacidade: {screen_dict[key][1]} // Tipo de exibição: {screen_dict[key][2]} // Acessível: {screen_dict[key][3]}")
@@ -45,7 +25,7 @@ def list_element(screen_dict):
 
 def include(screen_dict):
     # Garante uma key que não existe neste módulo
-    key = ensure_key_dont_exists_in_sala_dict(screen_dict)
+    key = dict_utils.ensure_key_dont_exists_in_dict(screen_dict)
     
     # Obtém todos os valores
     name = input("Nome: ").upper()
@@ -58,8 +38,12 @@ def include(screen_dict):
     return True
 
 def edit(screen_dict):
+    # Confere se a lista está vazia
+    if len(screen_dict) == 0:
+        return False
+
     # Garante uma key existente neste módulo
-    key = ensure_key_exists_in_sala_dict(screen_dict)
+    key = dict_utils.ensure_key_exists_in_dict(screen_dict)
 
     # Exibe as opções que podem ser trocadas da key escolhida pela posicao
     print(f"\nQual dado deseja mudar?\n1- Nome: {screen_dict[key][0]} // 2- Capacidade: {screen_dict[key][1]} // 3- Tipo de exibição: {screen_dict[key][2]} // 4- Acessível: {screen_dict[key][3]}")
@@ -88,8 +72,12 @@ def edit(screen_dict):
     return dict_utils.change_dict(screen_dict, key, index, new_value)
     
 def delete(screen_dict):
+    # Confere se a lista está vazia
+    if len(screen_dict) == 0:
+        return False
+
     # Garante uma key existente neste módulo
-    key = ensure_key_exists_in_sala_dict(screen_dict)
+    key = dict_utils.ensure_key_exists_in_dict(screen_dict)
 
     # Deleta o item com aquela key do dicionário a partir dos dados coletados
     return dict_utils.delete_element_in_dict(screen_dict, key)
@@ -115,7 +103,7 @@ def main():
         # Trata a escolha de listar um elemento específico
         elif option == 2:
             if not list_element(screen_dict):
-                print("Chave não encontrada!")
+                print("Lista vazia!")
 
         # Trata a escolha de incluir um novo elemento
         elif option == 3:
@@ -125,14 +113,14 @@ def main():
         # Trata a escolha de alterar um elemento existente com status pois há mais possibilidades
         elif option == 4:
             if not edit(screen_dict):
-                print("Operação cancelada!")
+                print("Operação cancelada ou lista vazia!")
             else:
                 print("Operação bem sucedida!")
     
         # Trata a escolha de excluir um elemento existente com status pois há mais possibilidades
         elif option == 5:
             if not delete(screen_dict):
-                print("Operação cancelada!")
+                print("Operação cancelada ou lista vazia!")
             else:
                 print("Operação bem sucedida!")
             

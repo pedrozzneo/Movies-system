@@ -1,14 +1,14 @@
-Salas 3D com capacidade para pelo menos 25 pessoas
+Salas 2D com capacidade para pelo menos 80 pessoas
 
-SALA VERDE
-	3D com capacidade para 80
-	Acessível: NAO
+SALA STANDARD
+	2D com capacidade para 200
+	Acessibilidade: NAO
 
-SALA ROXA
-	3D com capacidade para 90
-	Acessível: SIM
+SALA MULTIUSO
+	2D com capacidade para 180
+	Acessibilidade: NAO
 
-SALA BRANCA
-	3D com capacidade para 70
-	Acessível: NAO
+SALA CONVENCIONAL
+	2D com capacidade para 220
+	Acessibilidade: NAO
 
