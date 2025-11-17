@@ -141,12 +141,12 @@ def ensure_key_dont_exists_in_dict(dictionary):
 
     # Loop que garante a entrada de uma key que não existe
     while key in dictionary:
-        # Coleta a key
-        key = input("Código: ").upper()
-
         # Se a key existe, avisa e continua o loop
         if key in dictionary:
             print("Código já em uso!")
+            
+        # Coleta a key
+        key = input("Código: ").upper()
     return key
 
 # Retorna uma key composta existente dos dicionários de sessão
